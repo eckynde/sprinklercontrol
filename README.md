@@ -1,0 +1,2 @@
+# sprinklercontrol
+Smart sprinkling controller
