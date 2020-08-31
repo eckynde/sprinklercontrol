@@ -1,2 +1,2 @@
 # sprinklercontrol
-Smart sprinkling controller
+Smart sprinkling controller project
