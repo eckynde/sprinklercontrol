@@ -1,18 +1,21 @@
 ## PostgreSQL Setup Notes
 
-PostgreSQL version: 12
+1. PostgreSQL version 12 installieren von Installer, StackBuilder optional
+    * [Download](https://www.postgresql.org/download/)
+    * User heißt `postgres` mit Passwort aus Installer
+    * pgAdmin ist das Webinterface
+2. SQL-Skript ausführen
+    * `psql -U postgres -f postgres.sql`
+3. Python-Adapter für Postgres installieren
+    * PowerShell öffnen (Virtual environment)
+    * `py -m pipenv shell`
+    * Python-Adapter für Postgres installieren
+    * `pipenv install`
+4. Migrate
+    * models in der Datenbank anwenden
+    * `py manage.py migrate`
 
-### Initial setup
-
-CREATE DATABASE sprinklercontrol;
-CREATE ROLE sprinklercontrol WITH ENCRYPTED PASSWORD 'sprinkler-password';
-ALTER ROLE sprinklercontrol WITH LOGIN;
-GRANT ALL PRIVILEGES ON DATABASE sprinklercontrol TO sprinklercontrol;
-
-### Configuration
+### Notiz für Linux
 
 `pg_hba.conf` for connection settings
 
-ALTER ROLE sprinklercontrol IN DATABASE sprinklercontrol SET client_encoding TO utf8;
-ALTER ROLE sprinklercontrol IN DATABASE sprinklercontrol SET default_transaction_isolation TO 'read committed';
-ALTER ROLE sprinklercontrol IN DATABASE sprinklercontrol SET timezone TO 'Europe/Berlin';
