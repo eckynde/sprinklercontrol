@@ -1,49 +1,41 @@
 from django.db import models
 
+
 # Create your models here.
 class Sprinkler(models.Model):
-    label = models.CharField(max_length=10)
-    location = models.CharField(max_length=25)
-    power = models.BooleanField()
+    label = models.CharField(max_length=40, verbose_name='Bezeichnung')
+    location = models.CharField(max_length=150, verbose_name='Ort/Beschreibung')
+    power = models.BooleanField(verbose_name='Eingeschaltet')
+    enabled = models.BooleanField(verbose_name='Aktiviert')
 
+    class Meta:
+        verbose_name_plural = "Sprinklers"
 
-class Restriction(models.Model):
-    label = models.CharField(max_length=10)
-    timeStart = models.DateTimeField()
-    timeEnd = models.DateTimeField()
-    description = models.CharField(max_length=25)
-    sprinklerId = models.ForeignKey(Sprinkler,on_delete=models.CASCADE)
+    def __str__(self):
+        return f'{self.label}'
 
-
-class WaterQuantity(models.Model):
-    label = models.CharField(max_length=10)
-    sprinklerId = models.ForeignKey(Sprinkler,on_delete=models.CASCADE)
-    waterQuantity = models.DecimalField(max_digits=10, decimal_places=2)
-    timeStart = models.DateTimeField()
-    timeEnd = models.DateTimeField()
-
-
-class GeneralSettings(models.Model):
-    label = models.CharField(max_length=10)
-    description = models.CharField(max_length=25)
-    value = models.CharField(max_length=10)
-
-
-class Error(models.Model):
-    label = models.CharField(max_length=10)
-    description = models.CharField(max_length=25)
-
-
-class SprinklerError(models.Model):
-    label = models.CharField(max_length=10)
-    sprinklerId = models.ForeignKey(Sprinkler,on_delete=models.CASCADE)
-    errorId = models.ForeignKey(Error,on_delete=models.CASCADE)
-    timeStart = models.DateTimeField()
-    timeEnd = models.DateTimeField()
-
-
-class Irrigation(models.Model):
-    label = models.CharField(max_length=10)
-    timeStart = models.DateTimeField()
-    timeEnd = models.DateTimeField()
-    sprinklerId = models.ForeignKey(Sprinkler,on_delete=models.CASCADE)
+class WeeklyRepeatingTimer(models.Model):
+    weekdays = [
+        (1,'Montag'),
+        (2,'Dienstag'),
+        (3,'Mittwoch'),
+        (4,'Donnerstag'),
+        (5,'Freitag'),
+        (6,'Samstag'),
+        (7,'Sonntag'),
+    ]
+    label = models.CharField(max_length=40, verbose_name='Bezeichnung')
+    description = models.CharField(max_length=150, verbose_name='Beschreibung')
+    timestart = models.TimeField(verbose_name='Startzeit')
+    timestop = models.TimeField(verbose_name='Stopzeit')
+    monday = models.BooleanField(verbose_name='Montag')
+    tuesday = models.BooleanField(verbose_name='Dienstag')
+    wednesday = models.BooleanField(verbose_name='Mittwoch')
+    thursday = models.BooleanField(verbose_name='Donnerstag')
+    friday = models.BooleanField(verbose_name='Freitag')
+    saturday = models.BooleanField(verbose_name='Samstag')
+    sunday = models.BooleanField(verbose_name='Sonntag')
+    sprinklers = models.ManyToManyField(Sprinkler)
+    
+    def __str__(self):
+        return f'{self.label}'
