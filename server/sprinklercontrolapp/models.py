@@ -15,15 +15,6 @@ class Sprinkler(models.Model):
         return f'{self.label}'
 
 class WeeklyRepeatingTimer(models.Model):
-    weekdays = [
-        (1,'Montag'),
-        (2,'Dienstag'),
-        (3,'Mittwoch'),
-        (4,'Donnerstag'),
-        (5,'Freitag'),
-        (6,'Samstag'),
-        (7,'Sonntag'),
-    ]
     label = models.CharField(max_length=40, verbose_name='Bezeichnung')
     description = models.CharField(max_length=150, verbose_name='Beschreibung')
     timestart = models.TimeField(verbose_name='Startzeit')
