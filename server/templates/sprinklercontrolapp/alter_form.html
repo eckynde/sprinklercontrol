@@ -1,0 +1,14 @@
+{% extends 'sprinklercontrolapp/base.html' %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-3">
+	<div class="col" style="margin-top: 20px">
+		<div class="form-group">
+			<form method="post">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" class="btn btn-success" value="Speichern">
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
