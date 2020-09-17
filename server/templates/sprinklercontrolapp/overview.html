@@ -1,63 +1,25 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" 
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
-			crossorigin="anonymous"
-		>
-		<title>Overview</title>
-	</head>
-
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<span  class="navbar-brand mb-0 h1">Rasensprenger</span >
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="/">Overview <span class="sr-only">(current)</span></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/statistics">Statistik</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/settings">Einstellungen</a>
-					</li>
-				</ul>
+{% extends 'sprinklercontrolapp/base.html' %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-4">
+	{% for s in Sprinkler %}
+	<div class="col" style="margin-top: 20px">
+		<div class="card text-white bg-dark mb-3">
+			<div class="card-body">
+			   <h5 class="card-title">{{ s.label }}
+				   <a href="/settings/{{ s.id }}_alter_sprinkler">
+						<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-gear-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"/>
+						  </svg>
+					</a>
+				</h5>
+				<p class="card-text">
+					{{ s.location }}
+				</p>
+				{% if s.power %}<p>Der Sprinklerkreis ist gerade <b>angeschaltet</b>.</p>{% else %}<p>Der Sprinklerkreis ist gerade <b>ausgeschaltet</b>.</p>{% endif %}
+				{% if s.enabled %}<p>Der Sprinklerkreis ist gerade <b>aktiviert</b>.</p>{% else %}<p>Der Sprinklerkreis ist gerade <b>deaktiviert</b>.</p>{% endif %}
 			</div>
-		</nav>
-		<div class="container-fluid">
-            {% block content %}
-            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-4">
-                {% for s in Sprinkler %}
-                <div class="col" style="margin-top: 20px">
-                    <div class="card text-white bg-dark mb-3">
-                        <div class="card-body">
-						   <h5 class="card-title">{{ s.label }}
-							   <a href="/settings/{{ s.id }}_alter_sprinkler">
-									<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-gear-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd" d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 0 0-5.86 2.929 2.929 0 0 0 0 5.858z"/>
-								  	</svg>
-								</a>
-							</h5>
-                            <p class="card-text">
-                                {{ s.location }}
-							</p>
-							{% if s.power %}<p>Der Sprinklerkreis ist gerade <b>angeschaltet</b>.</p>{% else %}<p>Der Sprinklerkreis ist gerade <b>ausgeschaltet</b>.</p>{% endif %}
-							{% if s.enabled %}<p>Der Sprinklerkreis ist gerade <b>aktiviert</b>.</p>{% else %}<p>Der Sprinklerkreis ist gerade <b>deaktiviert</b>.</p>{% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endblock %}
-        </div>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-	</body>
-</html>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

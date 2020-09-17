@@ -30,5 +30,5 @@ class WeeklyTimersForm(forms.ModelForm):
             'friday': forms.CheckboxInput(attrs={'class': 'form-control'}),
             'saturday': forms.CheckboxInput(attrs={'class': 'form-control'}),
             'sunday': forms.CheckboxInput(attrs={'class': 'form-control'}),
-            'sprinklers': forms.CheckboxSelectMultiple()
+            'sprinklers': forms.SelectMultiple(attrs={'class': 'form-control'})
         }

@@ -1,121 +1,65 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" 
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
-			crossorigin="anonymous"
-		>
-		<title>Overview</title>
-	</head>
-
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<span  class="navbar-brand mb-0 h1">Rasensprenger</span >
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="/">Overview <span class="sr-only">(current)</span></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/statistics">Statistik</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/settings">Einstellungen</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<div class="container-fluid">
-            {% block content %}
-            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-3">
-                <div class="col" style="margin-top: 20px">
-                    <div class="card">
-                        <div class="card-body">
-							<div class="container">
-								<div class="row">
-									<div class="col-3">
-										<a href="/settings/create_sprinkler">
-											<svg width="auto" height="auto" viewBox="0 0 16 16" class="bi bi-bag-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-												<path fill-rule="evenodd" d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5H2z"/>
-												<path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"/>
-											</svg>
-										</a>
-									</div>
-									<div class="col-9">
-										<h5 class="card-title">Neuen Sprenklerkreis erstellen</h5>
-										<p class="card-text">
-											Innerhalb dieses Menüpunktes können neue Sprenkler mit allen relevanten Eigenschaften hinzugefügt werden.
-										</p>
-									</div>
-								</div>
-							</div>
-                        </div>
-                    </div>
-				</div>
-				<div class="col" style="margin-top: 20px">
-                    <div class="card">
-                        <div class="card-body">
-							<div class="container">
-								<div class="row">
-									<div class="col-3">
-										<a href="/settings/weekly_timers_list">
-											<svg width="auto" height="auto" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-												<path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-												<path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
-												<circle cx="3.5" cy="5.5" r=".5"/>
-												<circle cx="3.5" cy="8" r=".5"/>
-												<circle cx="3.5" cy="10.5" r=".5"/>
-											</svg>
-										</a>
-									</div>
-									<div class="col-9">
-										<h5 class="card-title">Wöchentliche Zeitplanung ansehen</h5>
-										<p class="card-text">
-											Innerhalb dieses Menüpunktes können sie die Zeitplanung mit allen relevanten Eigenschaften ansehen.
-										</p>
-									</div>
-								</div>
-							</div>
-                        </div>
-                    </div>
-				</div>
-				<div class="col" style="margin-top: 20px">
-					<div class="card">
-						<div class="card-body">
-							<div class="container">
-								<div class="row">
-									<div class="col-3">
-										<a href="/settings/create_timer">
-											<svg width="auto" height="auto" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-												<path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-												<path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
-												<circle cx="3.5" cy="5.5" r=".5"/>
-												<circle cx="3.5" cy="8" r=".5"/>
-												<circle cx="3.5" cy="10.5" r=".5"/>
-											</svg>
-										</a>
-									</div>
-									<div class="col-9">
-										<h5 class="card-title">Neuen Bewässerungszeitraum erstellen</h5>
-										<p class="card-text">
-											Innerhalb dieses Menüpunktes können sie einen neuen Bewässerungszeitraum mit allen zugehörigen Eigenschaften erstellen.
-										</p>
-									</div>
-								</div>
-							</div>
+{% extends 'sprinklercontrolapp/base.html' %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-3">
+	<div class="col" style="margin-top: 20px">
+		<div class="card">
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-3">
+							<a href="/settings/create_sprinkler">
+								<svg width="auto" height="auto" viewBox="0 0 16 16" class="bi bi-bag-plus"
+									fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd"
+										d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5H2z" />
+									<path fill-rule="evenodd"
+										d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
+								</svg>
+							</a>
+						</div>
+						<div class="col-9">
+							<h5 class="card-title">Neuen Sprenklerkreis erstellen</h5>
+							<p class="card-text">
+								Innerhalb dieses Menüpunktes können neue Sprenkler mit allen relevanten Eigenschaften
+								hinzugefügt werden.
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div class="col" style="margin-top: 20px">
+		<div class="card">
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-3">
+							<a href="/settings/create_timer">
+								<svg width="auto" height="auto" viewBox="0 0 16 16" class="bi bi-card-list"
+									fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd"
+										d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+									<path fill-rule="evenodd"
+										d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z" />
+									<circle cx="3.5" cy="5.5" r=".5" />
+									<circle cx="3.5" cy="8" r=".5" />
+									<circle cx="3.5" cy="10.5" r=".5" />
+								</svg>
+							</a>
+						</div>
+						<div class="col-9">
+							<h5 class="card-title">Neuen Bewässerungszeitraum erstellen</h5>
+							<p class="card-text">
+								Innerhalb dieses Menüpunktes können sie einen neuen Bewässerungszeitraum mit allen
+								zugehörigen Eigenschaften erstellen.
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
-            {% endblock %}
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-	</body>
-</html>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm
 
@@ -14,19 +14,24 @@ class settings(TemplateView):
     template_name = 'sprinklercontrolapp/settings.html'
 
 
-class statistics(TemplateView):
-    template_name = 'sprinklercontrolapp/statistics.html'
-
-
 class create_sprinkler(CreateView):
-    template_name = 'sprinklercontrolapp/create_sprinkler.html'
+    template_name = 'sprinklercontrolapp/create_form.html'
     model = Sprinkler
     form_class = SprinklerForm
     success_url = "/"
+    
 
+class delete_sprinkler(DeleteView):
+    template_name = 'sprinklercontrolapp/delete_form.html'
+    model = Sprinkler
+    success_url = "/"
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Sprinkler, id=id_)
 
 class alter_sprinkler(UpdateView):
-    template_name = 'sprinklercontrolapp/alter_sprinkler.html'
+    template_name = 'sprinklercontrolapp/alter_form.html'
     model = Sprinkler
     form_class = SprinklerForm
     success_url = '/'
@@ -43,7 +48,7 @@ class weekly_timers_list(ListView):
 
 
 class alter_weekly_timers(UpdateView):
-    template_name = 'sprinklercontrolapp/alter_timer.html'
+    template_name = 'sprinklercontrolapp/alter_form.html'
     model = WeeklyRepeatingTimer
     form_class = WeeklyTimersForm
     success_url = "weekly_timers_list"
@@ -53,7 +58,7 @@ class alter_weekly_timers(UpdateView):
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
 
 class create_weekly_timers(CreateView):
-    template_name = 'sprinklercontrolapp/alter_timer.html'
+    template_name = 'sprinklercontrolapp/alter_form.html'
     model = WeeklyRepeatingTimer
     form_class = WeeklyTimersForm
     success_url = "weekly_timers_list"

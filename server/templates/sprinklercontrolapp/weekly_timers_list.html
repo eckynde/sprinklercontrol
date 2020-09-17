@@ -1,79 +1,41 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" 
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
-			crossorigin="anonymous"
-		>
-		<title>Overview</title>
-	</head>
-
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<span  class="navbar-brand mb-0 h1">Rasensprenger</span >
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="/">Overview</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/statistics">Statistik</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/settings">Einstellungen<span class="sr-only">(current)</span></a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<div class="container-fluid">
-			{% block content %}
-			<table class="table">
-				<thead>
-					<th scope="coll">Bezeichnung</th>
-					<th scope="coll">Beschreibung</th>
-					<th scope="coll">Startzeit</th>
-					<th scope="coll">Stopzeit</th>
-					<th scope="coll">Montag</th>
-					<th scope="coll">Dienstag</th>
-					<th scope="coll">Mittwoch</th>
-					<th scope="coll">Donnerstag</th>
-					<th scope="coll">Freitag</th>
-					<th scope="coll">Samstag</th>
-					<th scope="coll">Sonntag</th>
-					<th scope="coll">Rasensprenger</th>
-				</thead>
-				<tbody>
-					{% for s in WeeklyRepeatingTimer %}
-					<tr>
-						<td><a href="/settings/{{ s.id }}_alter_timer">{{ s.label }}</a></td>
-						<td>{{ s.description }}</td>
-						<td>{{ s.timestart }}</td>
-						<td>{{ s.timestop }}</td>
-						<td>{{ s.monday }}</td>
-						<td>{{ s.tuesday }}</td>
-						<td>{{ s.wednesday }}</td>
-						<td>{{ s.thursday }}</td>
-						<td>{{ s.friday }}</td>
-						<td>{{ s.saturday }}</td>
-						<td>{{ s.sunday }}</td>
-						<td>
-							{% for i in s.sprinklers.all %}
-							{{ i }}</br>
-							{% endfor %}
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-            {% endblock %}
-        </div>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-	</body>
-</html>
+{% extends 'sprinklercontrolapp/base.html' %}
+{% block content %}
+<table class="table">
+	<thead>
+		<th scope="coll">Bezeichnung</th>
+		<th scope="coll">Beschreibung</th>
+		<th scope="coll">Startzeit</th>
+		<th scope="coll">Stopzeit</th>
+		<th scope="coll">Montag</th>
+		<th scope="coll">Dienstag</th>
+		<th scope="coll">Mittwoch</th>
+		<th scope="coll">Donnerstag</th>
+		<th scope="coll">Freitag</th>
+		<th scope="coll">Samstag</th>
+		<th scope="coll">Sonntag</th>
+		<th scope="coll">Rasensprenger</th>
+	</thead>
+	<tbody>
+		{% for s in WeeklyRepeatingTimer %}
+		<tr>
+			<td><a href="/settings/{{ s.id }}_alter_timer">{{ s.label }}</a></td>
+			<td>{{ s.description }}</td>
+			<td>{{ s.timestart }}</td>
+			<td>{{ s.timestop }}</td>
+			<td>{{ s.monday }}</td>
+			<td>{{ s.tuesday }}</td>
+			<td>{{ s.wednesday }}</td>
+			<td>{{ s.thursday }}</td>
+			<td>{{ s.friday }}</td>
+			<td>{{ s.saturday }}</td>
+			<td>{{ s.sunday }}</td>
+			<td>
+				{% for i in s.sprinklers.all %}
+				{{ i }}</br>
+				{% endfor %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
