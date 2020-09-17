@@ -6,6 +6,9 @@ import sys
 from weatherClass.weatherClass import weatherClass
 
 #Prüfen ob Parameter übergeben wurde
+
+print("______________________________________________________"+"\n")
+
 if not(len(sys.argv) != 2):
     city = sys.argv[1]
     #City im Skript angeben
@@ -22,9 +25,10 @@ if not(len(sys.argv) != 2):
 
     ## Prüfe ob Data-load erfolgreich
     if str(res)=="<Response [200]>":
-        print("Data load = success")
+        print("[ Data load = success ]"+"\n")
 
-        ## Regen:
+        ## Regen in mm
+        # 1mm = 1L / m²:
         if "rain" in data:
             rain1h = data['rain']['1h']
         else:
@@ -56,7 +60,10 @@ if not(len(sys.argv) != 2):
 
         currentData.printObject()
     else:
-        print("Data load = error")
-        print(res)
+        print("[ Data load = error ]"+"\n")
+        if "message" in data:
+            print(str(res)+": "+data['message'])
 else:
-    print('Invalid Numbers of Arguments.')
+    print('[ Invalid Number of Arguments. ]')
+
+print("\n"+"______________________________________________________")

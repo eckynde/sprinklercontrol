@@ -14,12 +14,12 @@ class weatherClass:
         self.timeStamp_Sunset = timeStamp_Sunset
 
     def printObject(self):
-        print("rain1h: " + "\t" + "\t" + str(self.rain1h))
-        print("clouds: " + "\t" + "\t" + str(self.clouds))
+        print("rain1h: " + "\t" + "\t" + str(self.rain1h) +"mm")
+        print("clouds: " + "\t" + "\t" + str(self.clouds) + "%")
         print("weather_id: " + "\t" + "\t" + str(self.weather_id))
         print("weather_type: " + "\t" + "\t" + str(self.weather_type))
         print("weather_desc: " + "\t" + "\t" + str(self.weather_desc))
-        print("temperature: " + "\t" + "\t" + str(self.temperature))
+        print("temperature: " + "\t" + "\t" + str(self.temperature)+"°C")
         print("timeStamp_DataLoad: " + "\t" + str(self.timeStamp_DataLoad))
         print("timeStamp_Sunrise: " + "\t" + str(self.timeStamp_Sunrise))
         print("timeStamp_Sunset: " + "\t" + str(self.timeStamp_Sunset))
