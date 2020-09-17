@@ -1,0 +1,41 @@
+{% extends 'sprinklercontrolapp/base.html' %}
+{% block content %}
+<table class="table">
+	<thead>
+		<th scope="coll">Bezeichnung</th>
+		<th scope="coll">Beschreibung</th>
+		<th scope="coll">Startzeit</th>
+		<th scope="coll">Stopzeit</th>
+		<th scope="coll">Montag</th>
+		<th scope="coll">Dienstag</th>
+		<th scope="coll">Mittwoch</th>
+		<th scope="coll">Donnerstag</th>
+		<th scope="coll">Freitag</th>
+		<th scope="coll">Samstag</th>
+		<th scope="coll">Sonntag</th>
+		<th scope="coll">Rasensprenger</th>
+	</thead>
+	<tbody>
+		{% for s in WeeklyRepeatingTimer %}
+		<tr>
+			<td><a href="/settings/{{ s.id }}_alter_timer">{{ s.label }}</a></td>
+			<td>{{ s.description }}</td>
+			<td>{{ s.timestart }}</td>
+			<td>{{ s.timestop }}</td>
+			<td>{{ s.monday }}</td>
+			<td>{{ s.tuesday }}</td>
+			<td>{{ s.wednesday }}</td>
+			<td>{{ s.thursday }}</td>
+			<td>{{ s.friday }}</td>
+			<td>{{ s.saturday }}</td>
+			<td>{{ s.sunday }}</td>
+			<td>
+				{% for i in s.sprinklers.all %}
+				{{ i }}</br>
+				{% endfor %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
