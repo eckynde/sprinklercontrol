@@ -8,7 +8,7 @@ urlpatterns = [
     path("settings/create_sprinkler", create_sprinkler.as_view(), name="create_sprinkler"),
     path("settings/<int:id>_alter_sprinkler", alter_sprinkler.as_view(), name="alter_sprinkler"),
     path("settings/<int:id>_delete_sprinkler", delete_sprinkler.as_view(), name="delete_sprinkler"),
-    path("calendar", CalendarView.as_view(), name="calendar"),
+    path("calendar/", CalendarView.as_view(), name="calendar"),
     path("settings/create_timer", create_weekly_timers.as_view(), name="create_timer"),
     path("settings/<int:id>_alter_timer", alter_weekly_timers.as_view(), name="alter_timer"),
 ]

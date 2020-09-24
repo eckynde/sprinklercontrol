@@ -11,10 +11,28 @@ class Calendar(HTMLCalendar):
 	# formats a day as a td
 	# filter events by day
 	def formatday(self, day, weekday, events):
-		events_per_day = events.filter(timestart__day=day)
+		#events_per_day = events.filter(start_time__day=day)
+		events_per_day = []
+		for event in events:
+			if event.monday == True and weekday == 0:
+				events_per_day.append(event)
+			elif event.tuesday == True and weekday == 1:
+				events_per_day.append(event)
+			elif event.wednesday == True and weekday == 2:
+				events_per_day.append(event)
+			elif event.thursday == True and weekday == 3:
+				events_per_day.append(event)
+			elif event.friday == True and weekday == 4:
+				events_per_day.append(event)
+			elif event.saturday == True and weekday == 5:
+				events_per_day.append(event)
+			elif event.sunday == True and weekday == 6:
+				events_per_day.append(event)
 		d = ''
 		for event in events_per_day:
-			d += f'<li> {event.label} </li>'
+			formatedTimeStart = event.timestart.strftime("%H:%M")
+			formatedTimeStop = event.timestop.strftime("%H:%M")
+			d += f'<li> {event.label} <br> {formatedTimeStart} - {formatedTimeStop} </li>'
 
 		if day != 0:
 			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
