@@ -20,4 +20,5 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("sprinklercontrolapp.urls"), name='index'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
