@@ -49,19 +49,18 @@ class weekly_timers_list(ListView):
 
 class alter_weekly_timers(UpdateView):
     template_name = 'sprinklercontrolapp/alter_form.html'
-    model = WeeklyRepeatingTimer
     form_class = WeeklyTimersForm
-    success_url = "weekly_timers_list"
+    success_url = "/calendar"
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
 
 class create_weekly_timers(CreateView):
-    template_name = 'sprinklercontrolapp/alter_form.html'
+    template_name = 'sprinklercontrolapp/create_form.html'
     model = WeeklyRepeatingTimer
     form_class = WeeklyTimersForm
-    success_url = "weekly_timers_list"
+    success_url = "/calendar"
 
     def get_object(self):
         id_ = self.kwargs.get("id")

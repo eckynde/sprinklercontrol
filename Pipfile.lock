@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "271babbdaa61c381c2b0c21ed28e430b9bb416ff5ae6ccd1e398c16a7673418d"
+            "sha256": "e01ad88979c08044ac30431891254fc7d89e2b17ee5d19c79d41ad68d455c776"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,6 +31,14 @@
             ],
             "index": "pypi",
             "version": "==3.1.1"
+        },
+        "django-materializecss-form": {
+            "hashes": [
+                "sha256:29cb4f1cb371d0f7a2b2c10af842e03d6e8b5de5b78aadf1416f24efd854494b",
+                "sha256:648e81cc801fda172c7405966b29877d1242d9712b3d52c7b20aa3a78833a96a"
+            ],
+            "index": "pypi",
+            "version": "==1.1.17"
         },
         "psycopg2": {
             "hashes": [
