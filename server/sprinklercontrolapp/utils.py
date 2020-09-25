@@ -14,25 +14,26 @@ class Calendar(HTMLCalendar):
 		#events_per_day = events.filter(start_time__day=day)
 		events_per_day = []
 		for event in events:
-			if event.monday == True and weekday == 0:
-				events_per_day.append(event)
-			elif event.tuesday == True and weekday == 1:
-				events_per_day.append(event)
-			elif event.wednesday == True and weekday == 2:
-				events_per_day.append(event)
-			elif event.thursday == True and weekday == 3:
-				events_per_day.append(event)
-			elif event.friday == True and weekday == 4:
-				events_per_day.append(event)
-			elif event.saturday == True and weekday == 5:
-				events_per_day.append(event)
-			elif event.sunday == True and weekday == 6:
-				events_per_day.append(event)
+			for weekdayEvent in event.weekdays.all():
+				if weekdayEvent.label == 'Montag' and weekday == 0:
+					events_per_day.append(event)
+				if weekdayEvent.label == 'Dienstag' and weekday == 1:
+					events_per_day.append(event)
+				if weekdayEvent.label == 'Mittwoch' and weekday == 2:
+					events_per_day.append(event)
+				if weekdayEvent.label == 'Donnerstag' and weekday == 3:
+					events_per_day.append(event)
+				if weekdayEvent.label == 'Freitag' and weekday == 4:
+					events_per_day.append(event)
+				if weekdayEvent.label == 'Samstag' and weekday == 5:
+					events_per_day.append(event)
+				if weekdayEvent.label == 'Sonntag' and weekday == 6:
+					events_per_day.append(event)
 		d = ''
 		for event in events_per_day:
 			formatedTimeStart = event.timestart.strftime("%H:%M")
 			formatedTimeStop = event.timestop.strftime("%H:%M")
-			d += f'<li> {event.label} <br> {formatedTimeStart} - {formatedTimeStop} </li>'
+			d += f'<li> <a href="/settings/{event.id}_alter_timer"> {event.label} <br> {formatedTimeStart} - {formatedTimeStop} </a> </li>'
 
 		if day != 0:
 			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
