@@ -1,0 +1,9 @@
+{% extends 'sprinklercontrolapp/base.html' %}
+{% block content %}
+<div class="clearfix">
+    <a class="btn btn-dark" href="?{{ prev_month }}"> Previous Month </a>
+    <a class="btn btn-dark" href="?"> Current Month </a>
+	<a class="btn btn-dark" href="?{{ next_month }}"> Next Month </a>
+</div>
+{{ calendar }}
+{% endblock %}
