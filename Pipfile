@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 django = "*"
 psycopg2 = "*"
+pyserial = "*"
+django-materializecss-form = "*"
 
 [requires]
 python_version = "3.8"
