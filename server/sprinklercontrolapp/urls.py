@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import overview, settings, create_sprinkler, alter_sprinkler, delete_sprinkler, weekly_timers_list, alter_weekly_timers, create_weekly_timers, CalendarView
+from .views import overview, settings, create_sprinkler, alter_sprinkler, delete_sprinkler, weekly_timers_list, alter_weekly_timers, create_weekly_timers, CalendarView, weather
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path("calendar/", CalendarView.as_view(), name="calendar"),
     path("settings/create_timer", create_weekly_timers.as_view(), name="create_timer"),
     path("settings/<int:id>_alter_timer", alter_weekly_timers.as_view(), name="alter_timer"),
+    path("weather/", weather.as_view(), name="weather"),
 ]

@@ -13,7 +13,7 @@ import calendar
 
 # Create your views here.
 class overview(ListView):
-    template_name = 'sprinklercontrolapp/overview.html'
+    template_name = 'sprinklerControlDesign/overview.html'
     model = Sprinkler
     context_object_name = "Sprinkler"
 
@@ -106,3 +106,7 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
+
+
+class weather(TemplateView):
+    template_name = 'sprinklercontrolapp/weather.html'

@@ -1,0 +1,107 @@
+{% extends 'sprinklerControlDesign/base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h5>Sprinklerkreise</h5>
+
+    <div class="row">
+        {% for s in Sprinkler %}
+        <div class="col s12 m6 l4">
+            <div class="card yellow lighten-5">
+                <div class="card-content teal">
+                    <span style="color:#FFFFFF" class="card-title">{{s.label}}</span>
+                    <p style="color:#FFFFFF">{{s.description}}</p>
+                </div>
+                <table border="1" class="teal lighten-5">
+                    <tr>
+                        {% if s.power %}
+                        <td style="background-image:URL(https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png); background-size:100%; background-repeat: no-repeat;"
+                            width=175>
+                            <!--R1 C1-->
+                            <!-- Switch -->
+                            <h1></h1>
+                            <div style="text-align: center;" class="switch">
+                                <label>
+                                    Off
+                                    <input type="checkbox">
+                                    <span class="lever"></span>
+                                    On
+                                </label>
+                            </div>
+                        </td>
+                        {% else %}
+                        <td style="background-image:URL(https://i.ibb.co/JBSGC8t/Icon-Sprinkler-Aus-V2.png); background-size:100%; background-repeat: no-repeat;"
+                            width=175>
+                            <!--R1 C1-->
+                            <!-- Switch -->
+                            <h1></h1>
+                            <div style="text-align: center;" class="switch">
+                                <label>
+                                    Off
+                                    <input type="checkbox">
+                                    <span class="lever"></span>
+                                    On
+                                </label>
+                            </div>
+                        </td>
+                        {% endif %}
+
+                        <td>
+                            <!--R1 C2-->
+                            <h10><b>Ansteuerungsmodus</b></h10>
+                            <form action="#">
+                                <p>
+                                    <label>
+                                        <input name="group1" type="radio" checked />
+                                        <span>Manuell</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        <input name="group1" type="radio" />
+                                        <span>Zeitplan</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        <input name="group1" type="radio" />
+                                        <span>Smart</span>
+                                    </label>
+                                </p>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="col s12 m6 l4">
+            <div style="box-shadow: 0px 0px;" class="card yellow lighten-5">
+                <div class="card-content yellow lighten-5">
+                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Sprinklerkreis hinzufügen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+<div class="divider"></div>
+<div class="section">
+    <h5>Zeitpläne</h5>
+    <p>Stuff</p>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}
