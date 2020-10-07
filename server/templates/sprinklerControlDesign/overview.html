@@ -10,12 +10,12 @@
     <div class="row">
         {% for s in Sprinkler %}
         <div class="col s12 m6 l4">
-            <div class="card yellow lighten-5">
+            <div class="card yellow lighten-5 medium" style="box-shadow: 0px 0px;">
                 <div class="card-content teal">
-                    <span style="color:#FFFFFF" class="card-title">{{s.label}}</span>
+                    <span style="color:#FFFFFF" class="card-title"><b>{{s.label}}</b></span>
                     <p style="color:#FFFFFF">{{s.description}}</p>
                 </div>
-                <table border="1" class="teal lighten-5">
+                <table class="teal lighten-5">
                     <tr>
                         {% if s.power %}
                         <td style="background-image:URL(https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png); background-size:100%; background-repeat: no-repeat;"
@@ -82,7 +82,8 @@
         <div class="col s12 m6 l4">
             <div style="box-shadow: 0px 0px;" class="card yellow lighten-5">
                 <div class="card-content yellow lighten-5">
-                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Sprinklerkreis hinzufügen</a>
+                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Sprinklerkreis
+                        hinzufügen</a>
                 </div>
             </div>
         </div>
@@ -95,9 +96,51 @@
 <div class="divider"></div>
 <div class="section">
     <h5>Zeitpläne</h5>
-    <p>Stuff</p>
+    <div class="row">
+        {% for z in IrrigationPlan %}
+        <div class="col s12 m6 l4">
+
+            <div class="card-image waves-effect waves-block waves-light">
+
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4"><b>{{z.label}}</b><i
+                        class="material-icons right">more_vert</i></span>
+                <p>{{z.description}}</p>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i
+                        class="material-icons right">close</i></span>
+                <p> {% for t in z.timers.all %}
+                <div class="divider"></div>
+                <div class="section">
+                    <p>{{t.label}}</p>
+                    </p>
+                </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
+
+<div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+        test
+    </div>
+    <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">Card Title<i
+                class="material-icons right">more_vert</i></span>
+        <p><a href="#">This is a link</a></p>
+    </div>
+    <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+</div>
 
 
 

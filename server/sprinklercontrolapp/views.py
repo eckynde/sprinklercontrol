@@ -17,6 +17,11 @@ class overview(ListView):
     model = Sprinkler
     context_object_name = "Sprinkler"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['IrrigationPlan'] = IrrigationPlan.objects.all()
+        return context
+
 
 class settings(TemplateView):
     template_name = 'sprinklercontrolapp/settings.html'
