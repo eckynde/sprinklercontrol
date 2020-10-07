@@ -14,5 +14,8 @@ urlpatterns = [
     path("settings/create_plan", create_IrrigationPlan.as_view(), name="create_IrrigationPlan"),
     path("settings/<int:id>_alter_plan",alter_IrrigationPlan.as_view(), name="alter_IrrigationPlan"),
     path("settings/<int:id>_delete_plan", delete_IrrigationPlan.as_view(), name="delete_IrrigationPlan"),
+<<<<<<< HEAD
     path("weather/", weather.as_view(), name="weather"),
+=======
+>>>>>>> lukesnextcode
 ]
