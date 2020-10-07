@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer
-from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan
+from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm
 
 from datetime import datetime, timedelta, date
 from django.shortcuts import render
@@ -87,6 +87,32 @@ class CalendarView(generic.ListView):
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         return context
+
+class create_IrrigationPlan(CreateView):
+    template_name = 'sprinklercontrolapp/create_form.html'
+    model = IrrigationPlan
+    form_class = IrrigationPlanForm
+    success_url = "/"
+
+class delete_IrrigationPlan(DeleteView):
+    template_name = 'sprinklercontrolapp/delete_form.html'
+    model = IrrigationPlan
+    success_url = "/"
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(IrrigationPlan, id=id_)
+
+class alter_IrrigationPlan(UpdateView):
+    template_name = 'sprinklercontrolapp/alter_form.html'
+    model = IrrigationPlan
+    form_class = IrrigationPlanForm
+    success_url = '/'
+    
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(IrrigationPlan, id=id_)
+
 
 def get_date(req_month):
     if req_month:
