@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'materializecssform',
     'sprinklercontrolapp'
 ]
 
@@ -52,6 +53,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'server.urls'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/var/www/static/',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -65,7 +71,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'tagsfilters': 'sprinklercontrolapp.tagsfilters'
+                'custom_tags': 'sprinklercontrolapp.tags'
             }
         },
     },
@@ -129,4 +135,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/sprinklercontrolapp/static/'

@@ -1,14 +1,49 @@
 {% extends 'sprinklercontrolapp/base.html' %}
+{% load materializecss %}
+
+
 {% block content %}
-<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-3">
-	<div class="col" style="margin-top: 20px">
-		<div class="form-group">
-			<form method="post">
-				{% csrf_token %}
-				{{ form.as_p }}
-				<input type="submit" class="btn btn-success" value="Speichern">
-			</form>
+<div class="row">
+	<div class="col s12 m9 l9 xl7">
+		<div class="card white darken-3">
+			<div class="card-content white-text">
+				<span class="card-title">Alter</span>
+				<form method="post">
+					{% csrf_token %}
+					{{ form|materializecss }}
+					<br>
+					<button style="margin-top: 10px;" type="submit" class="waves-effect waves light btn-large">Ändern</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$(document).ready(function () {
+		$('select').formSelect();
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$('#id_timestart').timepicker({
+			twelveHour: false,
+			i18n: {
+				cancel: 'Abbrechen',
+				clear: 'Leeren',
+				done: 'Weiter'
+			}
+		});
+		$('#id_timestop').timepicker({
+			twelveHour: false,
+			i18n: {
+				cancel: 'Abbrechen',
+				clear: 'Leeren',
+				done: 'Weiter'
+			}
+		});
+	});
+</script>
 {% endblock %}
