@@ -1,5 +1,5 @@
 from django.contrib import admin
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, Weekday
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, Weekday, IrrigationPlan
 
 # Register your models here.
 class SprinklerAdmin (admin.ModelAdmin):
@@ -15,3 +15,8 @@ admin.site.register(WeeklyRepeatingTimer, WeeklyRepeatingTimerAdmin)
 class WeekdayAdmin (admin.ModelAdmin):
     pass
 admin.site.register(Weekday, WeekdayAdmin)
+
+
+class IrrigationPlanAdmin (admin.ModelAdmin):
+    pass
+admin.site.register(IrrigationPlan, IrrigationPlanAdmin)

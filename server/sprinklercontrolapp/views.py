@@ -1,14 +1,14 @@
+from datetime import datetime, timedelta, date
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer
-from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from datetime import datetime, timedelta, date
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
+
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday
+from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm
 from .utils import Calendar
 import calendar
 
@@ -17,6 +17,13 @@ class overview(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/overview.html'
     model = Sprinkler
     context_object_name = "Sprinkler"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['IrrigationPlan'] = IrrigationPlan.objects.all()
+        context['Weekdays'] = Weekday.objects.all()
+        context['Sprinklers'] = Sprinkler.objects.all()
+        return context
 
 
 class settings(LoginRequiredMixin, TemplateView):
@@ -88,6 +95,32 @@ class CalendarView(generic.ListView):
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         return context
+
+class create_IrrigationPlan(CreateView):
+    template_name = 'sprinklercontrolapp/create_form.html'
+    model = IrrigationPlan
+    form_class = IrrigationPlanForm
+    success_url = "/"
+
+class delete_IrrigationPlan(DeleteView):
+    template_name = 'sprinklercontrolapp/delete_form.html'
+    model = IrrigationPlan
+    success_url = "/"
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(IrrigationPlan, id=id_)
+
+class alter_IrrigationPlan(UpdateView):
+    template_name = 'sprinklercontrolapp/alter_form.html'
+    model = IrrigationPlan
+    form_class = IrrigationPlanForm
+    success_url = '/'
+    
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(IrrigationPlan, id=id_)
+
 
 def get_date(req_month):
     if req_month:

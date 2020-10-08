@@ -32,3 +32,20 @@ class WeeklyRepeatingTimer(models.Model):
     
     def __str__(self):
         return f'{self.label}'
+
+
+class IrrigationPlan(models.Model):
+    label = models.CharField(max_length=40, verbose_name='Bezeichnung')
+    description = models.CharField(max_length=150, verbose_name='Beschreibung')
+    active = models.BooleanField()
+    timers = models.ManyToManyField(WeeklyRepeatingTimer)
+    
+    def __str__(self):
+        return f'{self.label}'
+
+    def save(self, *args, **kwargs):
+
+        if self.active == True:
+            IrrigationPlan.objects.filter(active=True).update(active=False)
+            
+        super(IrrigationPlan, self).save(*args, **kwargs)
