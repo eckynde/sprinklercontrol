@@ -1,0 +1,78 @@
+{% extends 'sprinklerControlDesign/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
+
+    <script>
+
+        $(document).ready(function () {
+            var calendar = $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay, listMonth'
+                },
+                events: [
+                     {% for event in events %}
+                        {
+                            title: "{{ event.label }}",
+                            start: "{{ event.timestart|date:'H:i' }}",
+                            end: "{{ event.timestop|date:'H:i' }}",
+                            
+                            dow: [ {% for eventWeekday in event.weekdays.all %}
+                                "{{ eventWeekday.id }}" {% if not forloop.last %}, {% endif %} 
+                                {% endfor %}
+                            ],
+                            id: '{{ event.id }}'
+                        },
+                    {% endfor %}
+                ],
+                eventColor: '#e0f2f1',
+                eventTextColor: 'black',
+                monthNames: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','December'],
+                monthNamesShort: ['Jan','Feb','März','Apr','Mai','Jun','Jul','Aug','Sept','Okt','Nov','Dez'],
+                dayNames: ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'],
+                dayNamesShort: ['Mo','Di','Mi','Do','Fr','Sa','So'],
+                timeFormat: 'H(:mm)',
+                buttonText: {
+                    today: 'heute',
+                    month: 'Monat',
+                    week: 'Woche',
+                    day: 'Tag',
+                    list: 'Liste',
+                },
+                slotLabelFormat:"HH:mm",
+                allDayText: "Ganztägig",
+                selectable: true,
+                editable: false,
+
+                eventClick: function (event) {
+                    window.open("http://127.0.0.1:8000/settings/" + event.id + "_alter_timer")
+                },
+
+            });
+        });
+
+    </script>
+</head>
+<body>
+<div class="container test">
+    <div id="calendar"></div>
+</div>
+</body>
+</html>
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}
