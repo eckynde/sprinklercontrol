@@ -9,6 +9,12 @@ from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, Irrigati
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm
 import calendar
 
+from django.http.response import JsonResponse
+from rest_framework.parsers import JSONParser 
+from rest_framework import status
+from sprinklercontrolapp.serializers import SprinklerSerializer
+from rest_framework.decorators import api_view
+
 # Create your views here.
 class overview(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/overview.html'
@@ -88,3 +94,63 @@ def CalendarView(request):
 
 class weather(TemplateView):
     template_name = 'sprinklercontrolapp/weather.html'
+
+
+#CRUD API Views
+#@api_view(['GET', 'POST', 'DELETE'])
+#def sprinklercontrolapp_list(request):
+#    # GET list of sprinklers, POST a new sprinkler, DELETE all sprinklers
+ 
+ 
+#@api_view(['GET', 'PUT', 'DELETE'])
+#def sprinkler_detail(request, pk):
+#    # find sprinkler by pk (id)
+#    try: 
+#        sprinkler = Sprinkler.objects.get(pk=pk) 
+#    except sprinkler.DoesNotExist: 
+#        return JsonResponse({'message': 'The Sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+# 
+#    # GET / PUT / DELETE tutorial
+    
+        
+#@api_view(['GET'])
+#def sprinklercontrolapp_published(request):
+#    # GET all published tutorials
+
+#Custom API Views
+#@api_view(['GET', 'PUT', 'DELETE'])
+#def sprinkler_detail(request, pk):
+#    sprinkler = Sprinkler.objects.get(pk=pk)
+#    # ...
+# 
+#    if request.method == 'PUT': 
+#        sprinkler_data = JSONParser().parse(request) 
+#        sprinkler_serializer = SprinklerSerializer(sprinkler, data=sprinkler_data) 
+#        if sprinkler_serializer.is_valid(): 
+#            sprinkler_serializer.save() 
+#            return JsonResponse(sprinkler_serializer.data) 
+#        return JsonResponse(sprinkler_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# 
+@api_view(['GET', 'PUT', 'DELETE'])
+def sprinkler_detail(request, pk):
+
+    try: 
+        sprinkler = Sprinkler.objects.get(pk=pk) 
+    except Sprinkler.DoesNotExist: 
+        return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    if request.method == 'GET': 
+        sprinkler_serializer = SprinklerSerializer(sprinkler) 
+        return JsonResponse(sprinkler_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        sprinkler_data = JSONParser().parse(request) 
+        sprinkler_serializer = SprinklerSerializer(sprinkler, data=sprinkler_data) 
+        if sprinkler_serializer.is_valid(): 
+            sprinkler_serializer.save() 
+            return JsonResponse(sprinkler_serializer.data) 
+        return JsonResponse(sprinkler_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        sprinkler.delete() 
+        return JsonResponse({'message': 'Sprinkler was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)

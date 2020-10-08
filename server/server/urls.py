@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.conf.urls import url, include
 
 urlpatterns = [
+    url(r'^', include('sprinklercontrolapp.urls')),
     path('admin/', admin.site.urls),
     path('', include("sprinklercontrolapp.urls"), name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
