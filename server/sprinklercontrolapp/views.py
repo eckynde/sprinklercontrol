@@ -14,6 +14,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from sprinklercontrolapp.serializers import SprinklerSerializer
 from rest_framework.decorators import api_view
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 class overview(LoginRequiredMixin, ListView):
@@ -96,42 +98,9 @@ class weather(TemplateView):
     template_name = 'sprinklercontrolapp/weather.html'
 
 
-#CRUD API Views
-#@api_view(['GET', 'POST', 'DELETE'])
-#def sprinklercontrolapp_list(request):
-#    # GET list of sprinklers, POST a new sprinkler, DELETE all sprinklers
- 
- 
-#@api_view(['GET', 'PUT', 'DELETE'])
-#def sprinkler_detail(request, pk):
-#    # find sprinkler by pk (id)
-#    try: 
-#        sprinkler = Sprinkler.objects.get(pk=pk) 
-#    except sprinkler.DoesNotExist: 
-#        return JsonResponse({'message': 'The Sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
-# 
-#    # GET / PUT / DELETE tutorial
-    
-        
-#@api_view(['GET'])
-#def sprinklercontrolapp_published(request):
-#    # GET all published tutorials
-
-#Custom API Views
-#@api_view(['GET', 'PUT', 'DELETE'])
-#def sprinkler_detail(request, pk):
-#    sprinkler = Sprinkler.objects.get(pk=pk)
-#    # ...
-# 
-#    if request.method == 'PUT': 
-#        sprinkler_data = JSONParser().parse(request) 
-#        sprinkler_serializer = SprinklerSerializer(sprinkler, data=sprinkler_data) 
-#        if sprinkler_serializer.is_valid(): 
-#            sprinkler_serializer.save() 
-#            return JsonResponse(sprinkler_serializer.data) 
-#        return JsonResponse(sprinkler_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-# 
+#CRUD API Views 
 @api_view(['GET', 'PUT', 'DELETE'])
+@login_required
 def sprinkler_detail(request, pk):
 
     try: 
@@ -157,6 +126,7 @@ def sprinkler_detail(request, pk):
 
 
 @api_view(['GET'])
+@login_required
 def sprinkler_activate(request, pk):
 
     try: 
@@ -165,11 +135,11 @@ def sprinkler_activate(request, pk):
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
 
     Sprinkler.objects.filter(pk=pk).update(power=True)
-    #Sprinkler.objects.save()
 
     return JsonResponse({'message': 'Sprinkler has been activated successfully!'}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@login_required
 def sprinkler_deactivate(request, pk):
 
     try: 
@@ -178,9 +148,5 @@ def sprinkler_deactivate(request, pk):
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
 
     Sprinkler.objects.filter(pk=pk).update(power=False)
-    #Sprinkler.objects.save()
 
     return JsonResponse({'message': 'Sprinkler has been deactivated successfully!'}, status=status.HTTP_200_OK)
-
-
-
