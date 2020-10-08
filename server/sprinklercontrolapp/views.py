@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm
 
 from datetime import datetime, timedelta, date
@@ -20,6 +20,8 @@ class overview(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['IrrigationPlan'] = IrrigationPlan.objects.all()
+        context['Weekdays'] = Weekday.objects.all()
+        context['Sprinklers'] = Sprinkler.objects.all()
         return context
 
 

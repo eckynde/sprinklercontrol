@@ -93,58 +93,105 @@
 
 
 </div>
-<div class="divider"></div>
 <div class="section">
     <h5>Zeitpläne</h5>
+
     <div class="row">
         {% for z in IrrigationPlan %}
-        <div class="col s12 m6 l4">
+        <div class="col s12 m6">
+            <div class="card teal">
+                <div class="card-content white-text">
+                    <span class="card-title"><b>{{z.label}}</b></span>
+                    <ul class="collapsible teal" style="border: 0px">
 
-            <div class="card-image waves-effect waves-block waves-light">
+                        <li>
+                            <div class="collapsible-header teal lighten-5 grey-text text-darken-4"><i
+                                    class="material-icons"></i><b>{{z.description}}</b></div>
 
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4"><b>{{z.label}}</b><i
-                        class="material-icons right">more_vert</i></span>
-                <p>{{z.description}}</p>
-            </div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
-                <p> {% for t in z.timers.all %}
-                <div class="divider"></div>
-                <div class="section">
-                    <p>{{t.label}}</p>
-                    </p>
+                            <div class="collapsible-body teal lighten-5 grey-text text-darken-4">
+                                <div class="divider teal"></div>
+                                {% for t in z.timers.all %}
+
+                                <div class="section">
+
+                                    <p>
+                                    <h5>{{t.label}}</h5>
+</p>
+                                    {% for w in Weekdays %}
+                                    {% if w in t.weekdays.all %}
+                                    <div class="chip teal white-text">{{w.label}}</div>
+                                    {% else %}
+                                    <div class="chip">{{w.label}}</div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    </p>
+                                    </br>
+                                    <p>
+                                        <b>Zeit: </b>
+
+                                    <div class="chip teal white-text">
+                                        {{t.timestart}} - {{t.timestop}}
+                                    </div>
+                                    </br>
+                                    </p>
+
+                                    <p>
+                                        <b>Sprinklerkreise: </b>
+                                        {% for s in t.sprinklers.all %}
+
+
+                                    <div class="chip teal white-text">
+                                        {{s.label}}
+                                    </div>
+
+
+                                    {% endfor %}
+                                    </p>
+
+                                </div>
+                                <div class="divider teal"></div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                {% endfor %}
             </div>
-
         </div>
         {% endfor %}
+
+        <div class="col s12 m6 l4">
+            <div style="box-shadow: 0px 0px;" class="card yellow lighten-5">
+                <div class="card-content yellow lighten-5">
+                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Zeitplan
+                        hinzufügen</a>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </div>
-
-
-<div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-        test
-    </div>
-    <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Card Title<i
-                class="material-icons right">more_vert</i></span>
-        <p><a href="#">This is a link</a></p>
-    </div>
-    <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-        <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    </div>
-</div>
-
-
 
 {% endblock %}
 
 {% block script %}
+<script>
+
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+    });
+
+
+
+    $(document).ready(function () {
+        $('select').formSelect();
+    });
+
+</script>
+
+
+
+
+
 {% endblock %}
