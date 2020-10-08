@@ -154,3 +154,33 @@ def sprinkler_detail(request, pk):
     elif request.method == 'DELETE': 
         sprinkler.delete() 
         return JsonResponse({'message': 'Sprinkler was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def sprinkler_activate(request, pk):
+
+    try: 
+        sprinkler = Sprinkler.objects.get(pk=pk) 
+    except Sprinkler.DoesNotExist: 
+        return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
+    Sprinkler.objects.filter(pk=pk).update(power=True)
+    #Sprinkler.objects.save()
+
+    return JsonResponse({'message': 'Sprinkler has been activated successfully!'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def sprinkler_deactivate(request, pk):
+
+    try: 
+        sprinkler = Sprinkler.objects.get(pk=pk) 
+    except Sprinkler.DoesNotExist: 
+        return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
+    Sprinkler.objects.filter(pk=pk).update(power=False)
+    #Sprinkler.objects.save()
+
+    return JsonResponse({'message': 'Sprinkler has been deactivated successfully!'}, status=status.HTTP_200_OK)
+
+
+

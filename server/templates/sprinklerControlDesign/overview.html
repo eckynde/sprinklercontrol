@@ -8,7 +8,7 @@
     <h5>Sprinklerkreise</h5>
 
     <div class="row">
-        {% for s in Sprinkler %}
+        {% for s in Sprinkler|dictsort:"label" %}
         <div class="col s12 m6 l4">
             <div class="card yellow lighten-5 medium" style="box-shadow: 0px 0px;">
                 <div class="card-content teal">
@@ -26,7 +26,8 @@
                             <div style="text-align: center;" class="switch">
                                 <label>
                                     Off
-                                    <input type="checkbox">
+                                    <input id="switch{{s.id}}" type="checkbox" checked
+                                        onchange="switchSprinklingState('{{s.id}}')" />
                                     <span class="lever"></span>
                                     On
                                 </label>
@@ -41,7 +42,8 @@
                             <div style="text-align: center;" class="switch">
                                 <label>
                                     Off
-                                    <input type="checkbox">
+                                    <input id="switch{{s.id}}" type="checkbox" 
+                                        onchange="switchSprinklingState('{{s.id}}')" />
                                     <span class="lever"></span>
                                     On
                                 </label>
@@ -116,7 +118,7 @@
 
                                     <p>
                                     <h5>{{t.label}}</h5>
-</p>
+                                    </p>
                                     {% for w in Weekdays %}
                                     {% if w in t.weekdays.all %}
                                     <div class="chip teal white-text">{{w.label}}</div>
@@ -180,18 +182,18 @@
 
     $(document).ready(function () {
         $('.collapsible').collapsible();
-    });
-
-
-
-    $(document).ready(function () {
         $('select').formSelect();
     });
 
 </script>
-
-
-
-
+<script>
+    function switchSprinklingState(id) {
+        if ($('#switch' + id)[0].checked) {
+            $.get('/api/sprinkler/' + id + '/activate', function () {location.reload(); });
+        } else {
+            $.get('/api/sprinkler/' + id + '/deactivate', function () {location.reload(); });
+        }
+    }
+</script>
 
 {% endblock %}
