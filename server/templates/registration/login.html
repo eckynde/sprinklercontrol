@@ -1,37 +1,64 @@
-{% extends "../sprinklercontrolapp/base.html" %}
+{% load materializecss %}
+<!DOCTYPE html>
+<html>
 
-{% block content %}
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection" />
 
-  {% if form.errors %}
-    <div class="alert alert-danger" role="alert">Your username and password didn't match. Please try again.</div>
-  {% endif %}
-  
-  {% if next %}
-    {% if user.is_authenticated %}
-        <div class="alert alert-warning" role="alert">Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</div>
-    {% else %}
-        <div class="alert alert-warning" role="alert">Please login to see this page.</div>
-    {% endif %}
-  {% endif %}
-  
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
-  
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <!--<p><a href="{% url 'password_reset' %}">Lost password?</a></p>-->
-  
-{% endblock %}
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    html,
+    body,
+    .login-box {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="valign-wrapper row login-box">
+    <div class="col s6 offset-s3">
+      <div class="card horizontal">
+        <div class="card-image white-text"
+          style="background: rgb(2,0,36); 
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
+
+          <div>
+            <img src="https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png" />
+          </div>
+          <div class="center-align">
+            <h5>SprinklerControl</h5>
+          </div>
+        </div>
+        <div class="card-stacked">
+
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+              {{ form|materializecss }}
+            <div class="center-align">
+              <input class="waves-effect waves-light btn center-align" type="submit" value="login" />
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js%22%3E</script>
+
+</body>
+
+</html>

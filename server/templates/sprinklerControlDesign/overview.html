@@ -13,11 +13,12 @@
         <div class="col s12 m12 l6 xl4">
             <h5 class="header">{{s.label}}   <a href="/settings/{{s.id}}_alter_sprinkler"
                 class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">settings</i></a></h5>
-            <div class="card horizontal">
+            <div class="card horizontal small">
                 <div class="card-image"
                     style="background: rgb(2,0,36); 
                     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
                     {% if s.power %}
+                    <div>
                     <img src="https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png" />
                     <div style="text-align: center; padding-bottom: 5px" class="switch">
                         <label class="white-text">
@@ -27,7 +28,9 @@
                             On
                         </label>
                     </div>
+                </div>
                     {% else %}
+                    <div>
                     <img src="https://i.ibb.co/JBSGC8t/Icon-Sprinkler-Aus-V2.png" />
                     <div style="text-align: center; padding-bottom: 5px" class="switch">
                         <label class="white-text">
@@ -37,6 +40,7 @@
                             On
                         </label>
                     </div>
+                </div>
                     {% endif %}
                 </div>
                 <div class="card-stacked">
