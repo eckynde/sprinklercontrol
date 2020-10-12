@@ -98,34 +98,9 @@ class weather(TemplateView):
     template_name = 'sprinklercontrolapp/weather.html'
 
 
-#CRUD API Views 
-@api_view(['GET', 'PUT', 'DELETE'])
-@login_required
-def sprinkler_detail(request, pk):
-
-    try: 
-        sprinkler = Sprinkler.objects.get(pk=pk) 
-    except Sprinkler.DoesNotExist: 
-        return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
- 
-    if request.method == 'GET': 
-        sprinkler_serializer = SprinklerSerializer(sprinkler) 
-        return JsonResponse(sprinkler_serializer.data) 
- 
-    elif request.method == 'PUT': 
-        sprinkler_data = JSONParser().parse(request) 
-        sprinkler_serializer = SprinklerSerializer(sprinkler, data=sprinkler_data) 
-        if sprinkler_serializer.is_valid(): 
-            sprinkler_serializer.save() 
-            return JsonResponse(sprinkler_serializer.data) 
-        return JsonResponse(sprinkler_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
- 
-    elif request.method == 'DELETE': 
-        sprinkler.delete() 
-        return JsonResponse({'message': 'Sprinkler was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @login_required
 def sprinkler_activate(request, pk):
 
@@ -138,7 +113,7 @@ def sprinkler_activate(request, pk):
 
     return JsonResponse({'message': 'Sprinkler has been activated successfully!'}, status=status.HTTP_200_OK)
 
-@api_view(['GET'])
+@api_view(['POST'])
 @login_required
 def sprinkler_deactivate(request, pk):
 
@@ -150,3 +125,26 @@ def sprinkler_deactivate(request, pk):
     Sprinkler.objects.filter(pk=pk).update(power=False)
 
     return JsonResponse({'message': 'Sprinkler has been deactivated successfully!'}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@login_required
+def sprinkler_mode(request, pk, mode):
+
+    try: 
+        sprinkler = Sprinkler.objects.get(pk=pk) 
+    except Sprinkler.DoesNotExist: 
+        return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
+    if mode=='manual':
+        Sprinkler.objects.filter(pk=pk).update(mode='M')
+    elif mode=='plan':
+        Sprinkler.objects.filter(pk=pk).update(mode='P')
+    elif mode=='smart':
+        Sprinkler.objects.filter(pk=pk).update(mode='S')
+    else:
+        return JsonResponse({'message': 'The mode ' + mode + ' does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    
+    
+
+    return JsonResponse({'message': 'Sprinkler has been set to ' + mode + 'successfully!'}, status=status.HTTP_200_OK)

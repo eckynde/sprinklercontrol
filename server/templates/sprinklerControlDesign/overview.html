@@ -48,19 +48,19 @@
                         <form action="#">
                             <p>
                                 <label>
-                                    <input name="group1" type="radio" checked />
+                                    <input id="radio{{s.id}}" name="group1" type="radio" {% if s.mode == 'M' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','manual')" />
                                     <span class="black-text">Manuell</span>
                                 </label>
                             </p>
                             <p>
                                 <label>
-                                    <input name="group1" type="radio" />
+                                    <input id="radio{{s.id}}" name="group1" type="radio" {% if s.mode == 'P' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','plan')" />
                                     <span class="black-text">Zeitplan</span>
                                 </label>
                             </p>
                             <p>
                                 <label>
-                                    <input name="group1" type="radio" />
+                                    <input id="radio{{s.id}}" name="group1" type="radio" {% if s.mode == 'S' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','smart')" />
                                     <span class="black-text">Smart</span>
                                 </label>
                             </p>
@@ -168,10 +168,13 @@
 <script>
     function switchSprinklingState(id) {
         if ($('#switch' + id)[0].checked) {
-            $.get('/api/sprinkler/' + id + '/activate', function () {location.reload(); });
+            $.post('/api/sprinkler/' + id + '/activate', { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {location.reload(); });
         } else {
-            $.get('/api/sprinkler/' + id + '/deactivate', function () {location.reload(); });
+            $.post('/api/sprinkler/' + id + '/deactivate', { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {location.reload(); });
         }
+    }
+    function switchSprinklingMode(id, mode) {
+        $.post('/api/sprinkler/' + id + '/mode/' + mode, { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {location.reload(); });
     }
 </script>
 

@@ -14,8 +14,7 @@ urlpatterns = [
     path("settings/create_timer", create_weekly_timers.as_view(), name="create_timer"),
     path("settings/<int:id>_alter_timer", alter_weekly_timers.as_view(), name="alter_timer"),
     path("weather/", weather.as_view(), name="weather"),
-    re_path(r'^api/sprinkler$', views.sprinkler_detail),
-    re_path(r'^api/sprinkler/(?P<pk>[0-9]+)$', views.sprinkler_detail),
     re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/activate$', views.sprinkler_activate),
     re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/deactivate$', views.sprinkler_deactivate),
+    re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/mode/(?P<mode>[a-z]+)$', views.sprinkler_mode),
 ]
