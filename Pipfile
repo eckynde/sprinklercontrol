@@ -11,6 +11,7 @@ psycopg2 = "*"
 pyserial = "*"
 django-materializecss-form = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8"
