@@ -109,7 +109,7 @@ def sprinkler_activate(request, pk):
     except Sprinkler.DoesNotExist: 
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
 
-    Sprinkler.objects.filter(pk=pk).update(power=True)
+    Sprinkler.objects.filter(pk=pk).update(mode='M', power=True)
 
     return JsonResponse({'message': 'Sprinkler has been activated successfully!'}, status=status.HTTP_200_OK)
 
@@ -122,7 +122,7 @@ def sprinkler_deactivate(request, pk):
     except Sprinkler.DoesNotExist: 
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND) 
 
-    Sprinkler.objects.filter(pk=pk).update(power=False)
+    Sprinkler.objects.filter(pk=pk).update(mode='M', power=False)
 
     return JsonResponse({'message': 'Sprinkler has been deactivated successfully!'}, status=status.HTTP_200_OK)
 

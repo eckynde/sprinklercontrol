@@ -45,22 +45,22 @@
                     </div>
                     <div class="card-action">
                         <h10><b>Ansteuerungsmodus:</b></h10>
-                        <form action="#">
+                        <form id="form{{s.id}}" action="#">
                             <p>
                                 <label>
-                                    <input id="radio{{s.id}}" name="group1" type="radio" {% if s.mode == 'M' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','manual')" />
+                                    <input id="radio{{s.id}}manual" name="group1" type="radio" autocomplete="off" {% if s.mode == 'M' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','manual')" />
                                     <span class="black-text">Manuell</span>
                                 </label>
                             </p>
                             <p>
                                 <label>
-                                    <input id="radio{{s.id}}" name="group1" type="radio" {% if s.mode == 'P' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','plan')" />
+                                    <input id="radio{{s.id}}plan" name="group1" type="radio" autocomplete="off" {% if s.mode == 'P' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','plan')" />
                                     <span class="black-text">Zeitplan</span>
                                 </label>
                             </p>
                             <p>
                                 <label>
-                                    <input id="radio{{s.id}}" name="group1" type="radio" {% if s.mode == 'S' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','smart')" />
+                                    <input id="radio{{s.id}}smart" name="group1" type="radio" autocomplete="off" {% if s.mode == 'S' %} checked{% endif %} onchange="switchSprinklingMode('{{s.id}}','smart')" />
                                     <span class="black-text">Smart</span>
                                 </label>
                             </p>
