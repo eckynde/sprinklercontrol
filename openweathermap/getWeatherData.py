@@ -3,7 +3,7 @@
 import requests
 import json
 import sys
-from weatherClass.weatherClass import weatherClass
+from weatherClass.weatherClass import weatherCurrent, weatherForecast
 
 apiKey = "ca55cf484b9838023ef2239091a6b5e9"
 
@@ -34,16 +34,61 @@ def getWeatherJson(lon, lat):
             print(str(res)+": "+data['message'])
             sys.exit(99)
 
-##Parse the whole fucking json and start DB Queries
-def parseJson(json):
-    print(json)
+##Parse current data
+def parseJsonCurrent(data):
+
+    if "current" in data:
+        dt = data['current']['dt']
+        status = "200"
+        
+        if "rain" in data['current']:
+            rain1h = data['current']['rain']['1h']
+        else:
+            rain1h = "0" 
+
+        sprinkler1h = "?"
+        clouds = data['current']['clouds']
+        temperature = data['current']['temp']
+        sunrise = data['current']['sunrise']
+        sunset = data['current']['sunset']
+        weatherID = data['current']['weather'][0]['id']
+        weatherType = data['current']['weather'][0]['main']
+        weatherDesc = data['current']['weather'][0]['description']
+
+        currentData = weatherCurrent(dt, status, rain1h, "NULL" ,clouds,weatherID,weatherType,weatherDesc,temperature,sunrise,sunset)
+        currentData.printObject()
+
+##Parse forecast data
+def parseJsonForecast(data):
+
+    forecastList = []
+
+    if "hourly" in data:
+        for objs in data['hourly']:
+            dt = objs['dt']
+            status = "200"
+        
+            if "rain" in objs:
+                rain1h = objs['rain']['1h']
+            else:
+                rain1h = "0" 
+
+            clouds = objs['clouds']
+            temperature = objs['temp']
+            weatherID = objs['weather'][0]['id']
+            weatherType = objs['weather'][0]['main']
+            weatherDesc = objs['weather'][0]['description']   
+
+            forecastList.append(weatherForecast(dt, status, rain1h, clouds, weatherID, weatherType, weatherDesc, temperature))   
+    else:
+        print("yeetS")
+
+    for x in forecastList:
+        x.printObject()
 
 
 
 
-
-
-print("______________________________________________________"+"\n")
 
 #Prüfen ob Parameter übergeben wurde
 if not(len(sys.argv) != 2):
@@ -54,9 +99,8 @@ if not(len(sys.argv) != 2):
     except:
         sys.exit(99)
     else:
-        parseJson(getWeatherJson(lon, lat))
+        parseJsonForecast(getWeatherJson(lon, lat))
+        parseJsonCurrent(getWeatherJson(lon, lat))
 
 else:
     print('[ Invalid Number of Arguments. ]')
-
-print("\n"+"______________________________________________________")
