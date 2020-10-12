@@ -88,9 +88,9 @@ class create_weekly_timers(LoginRequiredMixin, CreateView):
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
 
 def CalendarView(request):
-    all_events = WeeklyRepeatingTimer.objects.all()
+    active_plan = IrrigationPlan.objects.get(active=True)
     context = {
-        "events":all_events,
+        "plan":active_plan,
     }
     return render(request,'sprinklerControlDesign/calendar.html',context)
 

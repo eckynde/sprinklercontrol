@@ -7,61 +7,62 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.css" rel="stylesheet">
+    <script src='{% static "sprinklerControlDesign/de.js" %}'></script>
 
     <script>
 
-        $(document).ready(function () {
-            var calendar = $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay, listMonth'
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'de',
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: [
+                {% for event in plan.timers.all %}
+                {
+                    title: "{{ event.label }}",
+                    startTime: "{{ event.timestart|date:'H:i' }}",
+                    endTime: "{{ event.timestop|date:'H:i' }}",
+                    
+                    daysOfWeek: [ {% for eventWeekday in event.weekdays.all %}
+                        "{{ eventWeekday.id }}" {% if not forloop.last %}, {% endif %} 
+                        {% endfor %}
+                    ],
+                    id: '{{ event.id }}'
                 },
-                events: [
-                     {% for event in events %}
-                        {
-                            title: "{{ event.label }}",
-                            start: "{{ event.timestart|date:'H:i' }}",
-                            end: "{{ event.timestop|date:'H:i' }}",
-                            
-                            dow: [ {% for eventWeekday in event.weekdays.all %}
-                                "{{ eventWeekday.id }}" {% if not forloop.last %}, {% endif %} 
-                                {% endfor %}
-                            ],
-                            id: '{{ event.id }}'
-                        },
-                    {% endfor %}
-                ],
-                eventColor: '#e0f2f1',
-                eventTextColor: 'black',
-                monthNames: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','December'],
-                monthNamesShort: ['Jan','Feb','März','Apr','Mai','Jun','Jul','Aug','Sept','Okt','Nov','Dez'],
-                dayNames: ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'],
-                dayNamesShort: ['Mo','Di','Mi','Do','Fr','Sa','So'],
-                timeFormat: 'H(:mm)',
-                buttonText: {
-                    today: 'heute',
-                    month: 'Monat',
-                    week: 'Woche',
-                    day: 'Tag',
-                    list: 'Liste',
-                },
-                slotLabelFormat:"HH:mm",
-                allDayText: "Ganztägig",
-                selectable: true,
-                editable: false,
+                {% endfor %}
+            ],
+            nowIndicator: true,
+            weekNumbers: true,
+            eventColor: '#009688',
+            eventBackgroundColor: '#009688',
+            eventBorderColor: '#009688',
+            eventTextColor: 'white',
+            firstDay: 1,
+            buttonText: {
+                today: 'heute',
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                list: 'Liste',
+            },
+            allDayText: "Ganztägig",
+            selectable: true,
+            editable: false,
 
-                eventClick: function (event) {
-                    window.open("http://127.0.0.1:8000/settings/" + event.id + "_alter_timer")
-                },
-
-            });
+            eventClick: function (info) {
+                window.open("http://127.0.0.1:8000/settings/" + info.event.id + "_alter_timer")
+            },
         });
+        calendar.render();
+      });
 
     </script>
 </head>

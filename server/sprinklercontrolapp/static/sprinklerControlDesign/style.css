@@ -1,7 +1,25 @@
-.fc-head-container .fc-widget-header {
+.fc-scrollgrid-section .fc-scrollgrid-section-header {
     background-color: #009688;
 }
 
 .container {
     padding-top: 25px;
+}
+
+.fc-button {
+    color: #fff;
+    background-color: #009688 !important;
+    border-color: #009688 !important;
+}
+
+.fc-scrollgrid {
+    color: black !important;
+}
+
+#calendar a {
+    color: #000000 !important;
+}
+
+#calendar .fc-col-header {
+    background-color: #009688;
 }
