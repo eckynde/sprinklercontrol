@@ -10,6 +10,7 @@ django = "*"
 psycopg2 = "*"
 pyserial = "*"
 django-materializecss-form = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.8"
