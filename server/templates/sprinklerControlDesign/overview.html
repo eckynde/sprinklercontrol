@@ -5,88 +5,59 @@
 
 {% block content %}
 <div class="section">
-    <h5>Sprinklerkreise</h5>
+    <h5 style="margin-left: 10px;"><b>Sprinklerkreise </b><a href="/settings/create_sprinkler"
+            class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">add</i></a></h5>
 
     <div class="row">
         {% for s in Sprinkler %}
-        <div class="col s12 m6 l4">
-            <div class="card yellow lighten-5 medium" style="box-shadow: 0px 0px;">
-                <div class="card-content teal">
-                    <span style="color:#FFFFFF" class="card-title"><b>{{s.label}}</b></span>
-                    <p style="color:#FFFFFF">{{s.description}}</p>
+        <div class="col s12 m12 l6 xl4">
+            <h5 class="header">{{s.label}}   <a href="/settings/{{s.id}}_alter_sprinkler"
+                class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">settings</i></a></h5>
+            <div class="card horizontal">
+                <div class="card-image"
+                    style="background: rgb(2,0,36); 
+                    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
+                    <img src="https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png" />
+                    <div style="text-align: center; padding-bottom: 5px" class="switch">
+                        <label class="white-text">
+                            Off
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
                 </div>
-                <table class="teal lighten-5">
-                    <tr>
-                        {% if s.power %}
-                        <td style="background-image:URL(https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png); background-size:100%; background-repeat: no-repeat;"
-                            width=175>
-                            <!--R1 C1-->
-                            <!-- Switch -->
-                            <h1></h1>
-                            <div style="text-align: center;" class="switch">
+                <div class="card-stacked">
+                    <div class="card-content">
+                        {{s.description}}
+                    </div>
+                    <div class="card-action">
+                        <h10><b>Ansteuerungsmodus:</b></h10>
+                        <form action="#">
+                            <p>
                                 <label>
-                                    Off
-                                    <input type="checkbox">
-                                    <span class="lever"></span>
-                                    On
+                                    <input name="group1" type="radio" checked />
+                                    <span class="black-text">Manuell</span>
                                 </label>
-                            </div>
-                        </td>
-                        {% else %}
-                        <td style="background-image:URL(https://i.ibb.co/JBSGC8t/Icon-Sprinkler-Aus-V2.png); background-size:100%; background-repeat: no-repeat;"
-                            width=175>
-                            <!--R1 C1-->
-                            <!-- Switch -->
-                            <h1></h1>
-                            <div style="text-align: center;" class="switch">
+                            </p>
+                            <p>
                                 <label>
-                                    Off
-                                    <input type="checkbox">
-                                    <span class="lever"></span>
-                                    On
+                                    <input name="group1" type="radio" />
+                                    <span class="black-text">Zeitplan</span>
                                 </label>
-                            </div>
-                        </td>
-                        {% endif %}
-
-                        <td>
-                            <!--R1 C2-->
-                            <h10><b>Ansteuerungsmodus</b></h10>
-                            <form action="#">
-                                <p>
-                                    <label>
-                                        <input name="group1" type="radio" checked />
-                                        <span>Manuell</span>
-                                    </label>
-                                </p>
-                                <p>
-                                    <label>
-                                        <input name="group1" type="radio" />
-                                        <span>Zeitplan</span>
-                                    </label>
-                                </p>
-                                <p>
-                                    <label>
-                                        <input name="group1" type="radio" />
-                                        <span>Smart</span>
-                                    </label>
-                                </p>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
+                            </p>
+                            <p>
+                                <label>
+                                    <input name="group1" type="radio" />
+                                    <span class="black-text">Smart</span>
+                                </label>
+                            </p>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}
-
-        <div class="col s12 m6 l4">
-            <div style="box-shadow: 0px 0px;" class="card yellow lighten-5">
-                <div class="card-content yellow lighten-5">
-                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Sprinklerkreis
-                        hinzufügen</a>
-                </div>
-            </div>
-        </div>
     </div>
 
 
@@ -94,7 +65,8 @@
 
 </div>
 <div class="section">
-    <h5>Zeitpläne</h5>
+    <h5 style="margin-left: 10px;"><b>Zeitpläne </b><a href="/settings/create_plan"
+            class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">add</i></a></h5>
 
     <div class="row">
         {% for z in IrrigationPlan %}
@@ -102,33 +74,24 @@
             <div class="card teal">
                 <div class="card-content white-text">
                     <span class="card-title"><b>{{z.label}}</b></span>
-                    <ul class="collapsible teal" style="border: 0px">
-
+                    <ul class="collapsible expandable">
+                        {% for t in z.timers.all %}
                         <li>
-                            <div class="collapsible-header teal lighten-5 grey-text text-darken-4"><i
-                                    class="material-icons"></i><b>{{z.description}}</b></div>
-
-                            <div class="collapsible-body teal lighten-5 grey-text text-darken-4">
-                                <div class="divider teal"></div>
-                                {% for t in z.timers.all %}
-
+                            <div class="collapsible-header black-text grey lighten-4"><b>{{t.label}}</b></div>
+                            <div class="collapsible-body white black-text">
                                 <div class="section">
-
                                     <p>
-                                    <h5>{{t.label}}</h5>
-</p>
-                                    {% for w in Weekdays %}
-                                    {% if w in t.weekdays.all %}
-                                    <div class="chip teal white-text">{{w.label}}</div>
-                                    {% else %}
-                                    <div class="chip">{{w.label}}</div>
-                                    {% endif %}
-                                    {% endfor %}
+                                        <b>Wochentage: </b>
+                                        {% for w in Weekdays %}
+                                        {% if w in t.weekdays.all %}
+                                        <div class="chip teal white-text">{{w.label}}</div>
+                                        {% else %}
+                                        <div class="chip">{{w.label}}</div>
+                                        {% endif %}
+                                        {% endfor %}
                                     </p>
-                                    </br>
                                     <p>
                                         <b>Zeit: </b>
-
                                     <div class="chip teal white-text">
                                         {{t.timestart}} - {{t.timestop}}
                                     </div>
@@ -149,25 +112,15 @@
                                     </p>
 
                                 </div>
-                                <div class="divider teal"></div>
-                                {% endfor %}
                             </div>
                         </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
             </div>
         </div>
         {% endfor %}
-
-        <div class="col s12 m6 l4">
-            <div style="box-shadow: 0px 0px;" class="card yellow lighten-5">
-                <div class="card-content yellow lighten-5">
-                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Zeitplan
-                        hinzufügen</a>
-                </div>
-            </div>
-        </div>
 
     </div>
 
@@ -178,11 +131,21 @@
 {% block script %}
 <script>
 
-    $(document).ready(function () {
-        $('.collapsible').collapsible();
+
+    document.addEventListener('DOMContentLoaded', function () {
+        M.AutoInit();
+
+        let el = document.querySelector('.tabs');
+        let instance = M.Tabs.init(el, {});
+
+
+        let elem = document.querySelectorAll('.collapsible.expandable');
+        let instanceCollapsible = M.Collapsible.init(elem, {
+            accordion: false,
+            onOpenStart: function () {
+            }
+        });
     });
-
-
 
     $(document).ready(function () {
         $('select').formSelect();
