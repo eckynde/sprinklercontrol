@@ -5,7 +5,7 @@ import json
 import sys
 from weatherClass.weatherClass import weatherCurrent, weatherForecast
 
-apiKey = "ca55cf484b9838023ef2239091a6b5e9"
+apiKey = ""
 
 ##Get Longitude and Latitude
 def getLonLat(city):
