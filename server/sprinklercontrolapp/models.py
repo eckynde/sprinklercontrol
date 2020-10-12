@@ -43,9 +43,9 @@ class IrrigationPlan(models.Model):
     def __str__(self):
         return f'{self.label}'
 
-    def save(self, *args, **kwargs):
+    def save(self):
 
         if self.active == True:
             IrrigationPlan.objects.filter(active=True).update(active=False)
-            
-        super(IrrigationPlan, self).save(*args, **kwargs)
+
+        super().save()
