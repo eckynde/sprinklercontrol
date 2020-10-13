@@ -1,6 +1,7 @@
 {% extends 'sprinklerControlDesign/base.html' %}
 
 {% block title %}
+
 {% endblock %}
 
 {% block content %}
@@ -11,36 +12,38 @@
     <div class="row">
         {% for s in Sprinkler|dictsort:"label" %}
         <div class="col s12 m12 l6 xl4">
-            <h5 class="header">{{s.label}}   <a href="/settings/{{s.id}}_alter_sprinkler"
-                class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">settings</i></a></h5>
+            <h5 class="header">{{s.label}} <a href="/settings/{{s.id}}_alter_sprinkler"
+                    class="btn-floating btn-medium waves-effect waves-light teal"><i
+                        class="material-icons">settings</i></a></h5>
             <div class="card horizontal small">
                 <div class="card-image"
                     style="background: rgb(2,0,36); 
                     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
                     {% if s.power %}
                     <div>
-                    <img src="https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png" />
-                    <div style="text-align: center; padding-bottom: 5px" class="switch">
-                        <label class="white-text">
-                            Off
-                            <input id="switch{{s.id}}" type="checkbox" onchange="switchSprinklingState('{{s.id}}')" checked>
-                            <span class="lever"></span>
-                            On
-                        </label>
+                        <img src="https://i.ibb.co/nmg6ZG5/Icon-Sprinkler-An-V2.png" />
+                        <div style="text-align: center; padding-bottom: 5px" class="switch">
+                            <label class="white-text">
+                                Off
+                                <input id="switch{{s.id}}" type="checkbox" onchange="switchSprinklingState('{{s.id}}')"
+                                    checked>
+                                <span class="lever"></span>
+                                On
+                            </label>
+                        </div>
                     </div>
-                </div>
                     {% else %}
                     <div>
-                    <img src="https://i.ibb.co/JBSGC8t/Icon-Sprinkler-Aus-V2.png" />
-                    <div style="text-align: center; padding-bottom: 5px" class="switch">
-                        <label class="white-text">
-                            Off
-                            <input id="switch{{s.id}}" type="checkbox" onchange="switchSprinklingState('{{s.id}}')">
-                            <span class="lever"></span>
-                            On
-                        </label>
+                        <img src="https://i.ibb.co/BZDg3z7/Icon-Sprinkler-Aus-V2.png" />
+                        <div style="text-align: center; padding-bottom: 5px" class="switch">
+                            <label class="white-text">
+                                Off
+                                <input id="switch{{s.id}}" type="checkbox" onchange="switchSprinklingState('{{s.id}}')">
+                                <span class="lever"></span>
+                                On
+                            </label>
+                        </div>
                     </div>
-                </div>
                     {% endif %}
                 </div>
                 <div class="card-stacked">
@@ -100,11 +103,11 @@
                                         <b>Wochentage: </b>
                                         {% for w in Weekdays %}
                                         {% if w in t.weekdays.all %}
-                                        <div class="chip teal white-text">{{w.label}}</div>
-                                        {% else %}
-                                        <div class="chip">{{w.label}}</div>
-                                        {% endif %}
-                                        {% endfor %}
+                                    <div class="chip teal white-text">{{w.label}}</div>
+                                    {% else %}
+                                    <div class="chip">{{w.label}}</div>
+                                    {% endif %}
+                                    {% endfor %}
                                     </p>
                                     <p>
                                         <b>Zeit: </b>
@@ -172,9 +175,9 @@
 <script>
     function switchSprinklingState(id) {
         if ($('#switch' + id)[0].checked) {
-            $.get('/api/sprinkler/' + id + '/activate', function () {location.reload(); });
+            $.get('/api/sprinkler/' + id + '/activate', function () { location.reload(); });
         } else {
-            $.get('/api/sprinkler/' + id + '/deactivate', function () {location.reload(); });
+            $.get('/api/sprinkler/' + id + '/deactivate', function () { location.reload(); });
         }
     }
 </script>

@@ -32,18 +32,18 @@ class overview(LoginRequiredMixin, ListView):
 
 
 class settings(LoginRequiredMixin, TemplateView):
-    template_name = 'sprinklercontrolapp/settings.html'
+    template_name = 'SprinklerControlDesign/settings.html'
 
 
 class create_sprinkler(LoginRequiredMixin, CreateView):
-    template_name = 'sprinklercontrolapp/create_form.html'
+    template_name = 'sprinklerControlDesign/sprinklercreateform.html'
     model = Sprinkler
     form_class = SprinklerForm
     success_url = "/"
     
 
 class delete_sprinkler(LoginRequiredMixin, DeleteView):
-    template_name = 'sprinklercontrolapp/delete_form.html'
+    template_name = 'sprinklerControlDesign/sprinklerdeleteform.html'
     model = Sprinkler
     success_url = "/"
 
@@ -52,7 +52,7 @@ class delete_sprinkler(LoginRequiredMixin, DeleteView):
         return get_object_or_404(Sprinkler, id=id_)
 
 class alter_sprinkler(LoginRequiredMixin, UpdateView):
-    template_name = 'sprinklercontrolapp/alter_form.html'
+    template_name = 'sprinklerControlDesign/sprinkleralterform.html'
     model = Sprinkler
     form_class = SprinklerForm
     success_url = '/'
