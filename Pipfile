@@ -12,6 +12,7 @@ pyserial = "*"
 django-materializecss-form = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+bson = "0.5.10"
 django-q = "*"
 
 [requires]
