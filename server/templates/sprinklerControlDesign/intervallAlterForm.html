@@ -1,0 +1,81 @@
+{% extends 'sprinklerControlDesign/base.html' %}
+{% load static %}
+{% load materializecss %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
+
+	<script>
+		$(document).ready(function () {
+			$('select').formSelect();
+		});
+	</script>
+
+	<link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
+
+	<script>
+		$(document).ready(function () {
+			$('#id_timestart').timepicker({
+				twelveHour: false,
+				i18n: {
+					cancel: 'Abbrechen',
+					clear: 'Leeren',
+					done: 'Weiter'
+				}
+			});
+			$('#id_timestop').timepicker({
+				twelveHour: false,
+				i18n: {
+					cancel: 'Abbrechen',
+					clear: 'Leeren',
+					done: 'Weiter'
+				}
+			});
+		});
+	</script>
+
+</head>
+
+	<body>
+		<div class="row">
+
+			<nav style="background: rgb(2,0,36); 
+			background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
+				<div class="nav-wrapper" style="margin-top: 20px;">
+					<div class="col s12">
+					<a href="/" class="breadcrumb">Übersicht</a>
+					<a href="/settings" class="breadcrumb">Einstellungen</a>
+					<a href="/settings/create_timer" class="breadcrumb">Zeitpläne</a>
+					<a href="/settings/{{ form.instance.id }}_alter_timer?next=/settings/{{ form.instance.id }}_alter_timer"  class="breadcrumb">Zeitintervall bearbeiten</a>
+					</div>
+				</div>
+			</nav>
+
+			<div class="col s12 m9 l6">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-title">Zeitintervall ändern</div>
+					<form method="post">
+						{% csrf_token %}
+						{{ form|materializecss }}
+						<p>
+							<div class="row">
+								<button style="margin-top: 10px;" type="submit"
+								class="waves-effect waves light btn-large col s3">Ändern</button>
+							</div>	
+						</p>
+						<input type="hidden" name="next" value="{{ request.GET.next }}">
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+{% endblock %}

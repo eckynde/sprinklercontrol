@@ -16,6 +16,7 @@ from sprinklercontrolapp.serializers import SprinklerSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 class overview(LoginRequiredMixin, ListView):
@@ -69,23 +70,48 @@ class weekly_timers_list(LoginRequiredMixin, ListView):
 
 
 class alter_weekly_timers(LoginRequiredMixin, UpdateView):
-    template_name = 'sprinklercontrolapp/alter_form.html'
+    template_name = 'sprinklerControlDesign/intervallAlterForm.html'
     form_class = WeeklyTimersForm
-    success_url = "/calendar"
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
+    def post(self, request, *args, **kwargs):
+        id_ = self.kwargs.get("id")
+        instance = WeeklyRepeatingTimer.objects.get(id=id_)
+        form = WeeklyTimersForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            next = request.POST.get('next', '/')
+            print("Next: " + next)
+            if next:
+                return HttpResponseRedirect(next)  
+            else:
+                return HttpResponseRedirect("/")
+                
+            
 
 class create_weekly_timers(LoginRequiredMixin, CreateView):
-    template_name = 'sprinklercontrolapp/create_form.html'
+    template_name = 'sprinklerControlDesign/intervallCreateForm.html'
     model = WeeklyRepeatingTimer
     form_class = WeeklyTimersForm
-    success_url = "/calendar"
+    success_url = "/settings"
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
+
+class alter_irrigation_plan(LoginRequiredMixin, UpdateView):
+    template_name = 'sprinklerControlDesign/irrigationPlanAlterForm.html'
+    model = IrrigationPlan
+    form_class = IrrigationPlanForm
+    success_url = "/"
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(IrrigationPlan, id=id_)
+
+
 
 def CalendarView(request):
     active_plan = IrrigationPlan.objects.get(active=True)

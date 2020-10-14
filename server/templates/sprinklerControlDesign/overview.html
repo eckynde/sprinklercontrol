@@ -92,7 +92,9 @@
         <div class="col s12 m6">
             <div class="card teal">
                 <div class="card-content white-text">
-                    <span class="card-title"><b>{{z.label}}</b></span>
+                    <span class="card-title"><b>{{z.label}} </b>
+                        <a href="/settings/{{z.id}}_alter_irrigation_plan" class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">settings</i></a>
+                    </span>
                     <ul class="collapsible expandable">
                         {% for t in z.timers.all %}
                         <li>
