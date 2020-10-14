@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_q',
     'materializecssform',
     'sprinklercontrolapp',
     'rest_framework',
@@ -99,6 +100,15 @@ DATABASES = {
     }
 }
 
+Q_CLUSTER = {
+    "name": "shop",
+    "orm": "default",
+    "recycle": 100, # Low task throughput so lower value than default (500)
+    "timeout": 60,
+    "max_attempts": 3,
+    "sync": DEBUG, # Should never be True in production. Should be false in development
+    "catch_up": False,
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
