@@ -20,52 +20,42 @@
             <div class="col s12">
             <a href="/" class="breadcrumb">Übersicht</a>
             <a href="/settings" class="breadcrumb">Einstellungen</a>
-            <a class="breadcrumb">Bewässerungszeitplan ändern</a>
+            <a class="breadcrumb">Bewässerungszeitplan erstellen</a>
             </div>
         </div>
     </nav>
     <div class="col s12 m9 l6">
         <div class="card">
             <div class="card-content">
-                <div class="card-title">Bewässerungszeitplan ändern</div>
+                <div class="card-title">Bewässerungsplan erstellen</div>
                 <form method="post">
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     {{ form.source.errors }}
                     {{ form.source }}
-
-                    <div class="input-field col s12">
+                    <div class="col s12">
                         {{ form.label.label_tag }}
                         {{ form.label }}
                     </div>
-                    <div class="input-field col s12">
+                    <div class="col s12">
                         {{ form.description.label_tag }}
                         {{ form.description }}
                     </div>
                     <div class="select-wrapper">
-                        {{form.timers|materializecss}}
+                        {{ form.timers|materializecss }}
                     </div>
                     <div class="input-field col s12">
-                        {{form.active|materializecss}}
+                        {{ form.active|materializecss }}
                     </div>
-
-                    {% for timers in form.instance.timers.all %}
-                    <div class="input-field col s12">
-                        <div class="card teal white-text">
-                            <div class="card-content">
-                                <span class="card-title"><b>{{timers.label}} 
-                                <a style="float: right;" href="/settings/{{timers.id}}_alter_timer?next=/settings/{{timers.id}}_alter_irrigation_plan" class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">settings</i></a>
-                                </b>
+                    <p>
+                        <div class="row">
+                            <div class="col s12">
+                                <button style="margin-top: 10px;" type="submit"
+                                class="waves-effect waves light btn-large col s3">Ändern</button>
                             </div>
-                        </div>   
-                    </div>
-                    {% endfor %}
-                    <div class="row">
-                        <div class="col s12">
-                            <button style="margin-top: 10px;" type="submit"
-                            class="waves-effect waves light btn-large col s3">Ändern</button>
                         </div>
-                    </div>
+                    </p>
+                    
                 </form>
             </div>
         </div>

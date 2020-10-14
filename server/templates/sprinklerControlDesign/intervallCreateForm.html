@@ -1,5 +1,6 @@
 {% extends 'sprinklerControlDesign/base.html' %}
 {% load static %}
+{% load materializecss %}
 {% block title %}
 {% endblock %}
 
@@ -38,11 +39,6 @@
 		});
 	</script>
 
-	<style>
-		body { color: #009688; }
-		td,tr, table {border: none;}
-	</style>
-
 </head>
 
 	<body>
@@ -56,57 +52,24 @@
 					<a class="breadcrumb">Zeitintervall erstellen</a>
 					</div>
 				</div>
-			</nav>
-            <div class="col s12 m9 l9 xl7">
-                
-                <form method="post" id="editForm">
-                    {% csrf_token %}
-            
-                    {{ form.non_field_errors }}
-                    {{ form.source.errors }}
-                    {{ form.source }}
+            </nav>
 
-                    <table>
-                        
-                        <tr>
-                            <th>{{ form.label.label }}</th>
-                            <td >
-                                {{ form.label }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>{{ form.description.label }}</th>
-                            <td>
-                                {{ form.description }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Wochentage</th>
-                            <td>
-                                {{ form.weekdays }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>{{ form.timestart.label }}</th>
-                            <td>
-                                {{ form.timestart }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>{{ form.timestop.label }}</th>
-                            <td>
-                                {{ form.timestop }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Sprinkler</th>
-                            <td>
-                                {{ form.sprinklers }}
-                            </td>
-                        </tr>
-                        <tr><td><button style="margin-top: 10px;" type="submit" class="waves-effect waves light btn-large">Erstellen</button></td></tr>
-                    </table>			
-                </form>
+            <div class="col s12 m9 l6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Zeitintervall erstellen</div>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|materializecss }}
+                        <p>
+                            <div class="row">
+                                <button style="margin-top: 10px;" type="submit"
+                                class="waves-effect waves light btn-large col s3">Ändern</button>
+                            </div>    
+                        </p>
+                    </form>
+                    </div>
+                </div>
             </div>
 		</div>
 	</body>
