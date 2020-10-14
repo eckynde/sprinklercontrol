@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
 from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday
-from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm
+from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm, IrrigationPlanFormCreate
 import calendar
 
 from django.http.response import JsonResponse
@@ -90,7 +90,6 @@ class alter_weekly_timers(LoginRequiredMixin, UpdateView):
                 return HttpResponseRedirect("/")
                 
             
-
 class create_weekly_timers(LoginRequiredMixin, CreateView):
     template_name = 'sprinklerControlDesign/intervallCreateForm.html'
     model = WeeklyRepeatingTimer
@@ -111,6 +110,12 @@ class alter_irrigation_plan(LoginRequiredMixin, UpdateView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(IrrigationPlan, id=id_)
 
+
+class create_irrigation_plan(LoginRequiredMixin, CreateView):
+    template_name = 'sprinklerControlDesign/irrigationPlanCreateForm.html'
+    model = IrrigationPlan
+    form_class = IrrigationPlanFormCreate
+    success_url = "/"
 
 
 def CalendarView(request):
