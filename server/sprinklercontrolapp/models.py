@@ -6,7 +6,7 @@ class Sprinkler(models.Model):
     label = models.CharField(max_length=40, verbose_name='Bezeichnung')
     description = models.CharField(max_length=150, verbose_name='Ort/Beschreibung')
     power = models.BooleanField(verbose_name='Eingeschaltet')
-    enabled = models.BooleanField(verbose_name='Aktiviert')
+    mode = models.CharField(max_length=1, default='P', verbose_name='Modus')
 
     class Meta:
         verbose_name_plural = "Sprinklers"
