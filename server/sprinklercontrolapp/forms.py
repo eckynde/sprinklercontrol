@@ -16,4 +16,8 @@ class IrrigationPlanForm(forms.ModelForm):
     class Meta:
         model = IrrigationPlan
         fields = '__all__'
-        exclude = ('timers',)
+
+class IrrigationPlanFormCreate(forms.ModelForm):
+    class Meta:
+        model = IrrigationPlan
+        fields = '__all__'
