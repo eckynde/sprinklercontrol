@@ -5,7 +5,7 @@ from django.db import models
 class Sprinkler(models.Model):
     label = models.CharField(max_length=40, verbose_name='Bezeichnung')
     description = models.CharField(max_length=150, verbose_name='Ort/Beschreibung')
-    power = models.BooleanField(verbose_name='Eingeschaltet')
+    power = models.BooleanField(verbose_name='Eingeschaltet', default=False)
     mode = models.CharField(max_length=1, default='P', verbose_name='Modus')
 
     class Meta:
@@ -27,8 +27,8 @@ class WeeklyRepeatingTimer(models.Model):
     description = models.CharField(max_length=150, verbose_name='Beschreibung')
     timestart = models.TimeField(verbose_name='Startzeit')
     timestop = models.TimeField(verbose_name='Stopzeit')
-    weekdays = models.ManyToManyField(Weekday)
-    sprinklers = models.ManyToManyField(Sprinkler)
+    weekdays = models.ManyToManyField(Weekday, verbose_name='Wochentage')
+    sprinklers = models.ManyToManyField(Sprinkler, verbose_name='Sprinkler')
     
     def __str__(self):
         return f'{self.label}'
@@ -37,8 +37,8 @@ class WeeklyRepeatingTimer(models.Model):
 class IrrigationPlan(models.Model):
     label = models.CharField(max_length=40, verbose_name='Bezeichnung')
     description = models.CharField(max_length=150, verbose_name='Beschreibung')
-    active = models.BooleanField()
-    timers = models.ManyToManyField(WeeklyRepeatingTimer)
+    active = models.BooleanField(verbose_name='Aktiv')
+    timers = models.ManyToManyField(WeeklyRepeatingTimer, verbose_name='Zeitintervalle')
     
     def __str__(self):
         return f'{self.label}'
