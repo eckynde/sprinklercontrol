@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 django = "*"
 psycopg2 = "*"
-pyserial = "*"
+pyserial = "3.4"
 django-materializecss-form = "*"
 djangorestframework = "*"
 django-cors-headers = "*"

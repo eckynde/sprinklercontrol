@@ -158,3 +158,10 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
     'http://localhost:8000',
 )
+
+# UART Interface configuration
+UART = {
+    "device": "/dev/serial0",
+    "baudrate": 9600,
+}
+
