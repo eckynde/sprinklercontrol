@@ -1,11 +1,11 @@
-#!/usr/bin/env python
-
 import requests
 import json
 import sys
+import datetime
 from weatherClass.weatherClass import weatherCurrent, weatherForecast
+#from models import WeatherCurrent, WeatherForecast
 
-apiKey = ""
+apiKey = "ca55cf484b9838023ef2239091a6b5e9"
 
 ##Get Longitude and Latitude
 def getLonLat(city):
@@ -46,17 +46,24 @@ def parseJsonCurrent(data):
         else:
             rain1h = "0" 
 
-        sprinkler1h = "?"
+        sprinkler1h = "0.00"
         clouds = data['current']['clouds']
         temperature = data['current']['temp']
-        sunrise = data['current']['sunrise']
-        sunset = data['current']['sunset']
-        weatherID = data['current']['weather'][0]['id']
-        weatherType = data['current']['weather'][0]['main']
-        weatherDesc = data['current']['weather'][0]['description']
+        timeStamp_sunrise = data['current']['sunrise']
+        timeStamp_sunset = data['current']['sunset']
+        weather_id = data['current']['weather'][0]['id']
+        weather_type = data['current']['weather'][0]['main']
+        weather_desc = data['current']['weather'][0]['description']
 
-        currentData = weatherCurrent(dt, status, rain1h, "NULL" ,clouds,weatherID,weatherType,weatherDesc,temperature,sunrise,sunset)
+        currentData = weatherCurrent(dt, city, status, rain1h, sprinkler1h, clouds,weather_id,weather_type,weather_desc,temperature,timeStamp_sunrise,timeStamp_sunset)
         currentData.printObject()
+
+        #wC = WeatherCurrent(dt=dt, city=city, status=status, rain1h=rain1h, sprinkler1h=sprinkler1h,\
+        #    clouds=clouds, weather_id=weather_id, weather_type=weather_type,weather_desc=weather_desc, \
+        #    temperature=temperature, timeStamp_sunrise=timeStamp_sunrise, timeStamp_sunset=timeStamp_sunset)
+        #wC.save()
+
+        #print(datetime.datetime.fromtimestamp(dt).strftime('%H'))
 
 ##Parse forecast data
 def parseJsonForecast(data):
@@ -75,11 +82,12 @@ def parseJsonForecast(data):
 
             clouds = objs['clouds']
             temperature = objs['temp']
-            weatherID = objs['weather'][0]['id']
-            weatherType = objs['weather'][0]['main']
-            weatherDesc = objs['weather'][0]['description']   
+            weather_id = objs['weather'][0]['id']
+            weather_type = objs['weather'][0]['main']
+            weather_desc = objs['weather'][0]['description']   
 
-            forecastList.append(weatherForecast(dt, status, rain1h, clouds, weatherID, weatherType, weatherDesc, temperature))   
+            forecastList.append(weatherForecast(dt, city, status, rain1h, clouds, weather_id, weather_type, weather_desc, temperature))   
+
     else:
         print("yeetS")
 

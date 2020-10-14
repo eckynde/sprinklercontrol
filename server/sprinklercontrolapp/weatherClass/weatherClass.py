@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 class weatherCurrent:
-    def __init__(self, dt, status, rain1h, sprinkler1h, clouds, weather_id, weather_type, weather_desc, \
+    def __init__(self, dt, city, status, rain1h, sprinkler1h, clouds, weather_id, weather_type, weather_desc, \
     temperature, timeStamp_Sunrise, timeStamp_Sunset):
         self.dt = dt
+        self.city = city
         self.status = status
         self.rain1h = rain1h
         self.sprinkler1h = sprinkler1h
@@ -19,10 +20,11 @@ class weatherCurrent:
         print("______________________________________________________"+"\n")
         print("C U R R E N T"+"\n")
         print("dt: " + "\t" + "\t" + "\t"  + str(self.dt) +" UTX")
+        print("city: " + "\t" + "\t" + "\t"  + str(self.city))
         print("status: " + "\t" + "\t" + str(self.status))
-        print("rain1h: " + "\t" + "\t" + str(self.rain1h) +"mm")
-        print("sprinkler1h: " + "\t" + "\t" + str(self.sprinkler1h) +"mm")
-        print("clouds: " + "\t" + "\t" + str(self.clouds) + "%")
+        print("rain1h: " + "\t" + "\t" + str(self.rain1h) +" mm")
+        print("sprinkler1h: " + "\t" + "\t" + str(self.sprinkler1h) +" mm")
+        print("clouds: " + "\t" + "\t" + str(self.clouds) + " %")
         print("weather_id: " + "\t" + "\t" + str(self.weather_id))
         print("weather_type: " + "\t" + "\t" + str(self.weather_type))
         print("weather_desc: " + "\t" + "\t" + str(self.weather_desc))
@@ -32,9 +34,10 @@ class weatherCurrent:
         print("______________________________________________________"+"\n")
 
 class weatherForecast:
-    def __init__(self, dt, status, rain1h, clouds, weather_id, weather_type, weather_desc, \
+    def __init__(self, dt, city, status, rain1h, clouds, weather_id, weather_type, weather_desc, \
     temperature):
         self.dt = dt
+        self.city = city
         self.status = status
         self.rain1h = rain1h
         self.clouds = clouds
@@ -46,10 +49,11 @@ class weatherForecast:
     def printObject(self):
         print("______________________________________________________"+"\n")
         print("F O R E C A S T"+"\n")
-        print("dt: " + "\t" + "\t" + "\t" + str(self.dt) +"UTX")
-        print("status: " + "\t" + "\t" + str(self.status) +"mm")
-        print("rain1h: " + "\t" + "\t" + str(self.rain1h) +"mm")
-        print("clouds: " + "\t" + "\t" + str(self.clouds) + "%")
+        print("dt: " + "\t" + "\t" + "\t" + str(self.dt) +" UTX")
+        print("city: " + "\t" + "\t" + "\t"  + str(self.city))
+        print("status: " + "\t" + "\t" + str(self.status))
+        print("rain1h: " + "\t" + "\t" + str(self.rain1h) +" mm")
+        print("clouds: " + "\t" + "\t" + str(self.clouds) + " %")
         print("weather_id: " + "\t" + "\t" + str(self.weather_id))
         print("weather_type: " + "\t" + "\t" + str(self.weather_type))
         print("weather_desc: " + "\t" + "\t" + str(self.weather_desc))
