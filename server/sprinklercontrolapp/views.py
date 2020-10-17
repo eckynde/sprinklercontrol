@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm, IrrigationPlanFormCreate
 import calendar
 
@@ -31,9 +31,9 @@ class overview(LoginRequiredMixin, ListView):
         context['Sprinklers'] = Sprinkler.objects.all()
         return context
 
-
-class settings(LoginRequiredMixin, TemplateView):
-    template_name = 'SprinklerControlDesign/settings.html'
+@login_required
+def settings(request):
+    return render(request, 'SprinklerControlDesign/settings.html', {'preferences': Preferences.load()})
 
 
 class create_sprinkler(LoginRequiredMixin, CreateView):
@@ -118,6 +118,7 @@ class create_irrigation_plan(LoginRequiredMixin, CreateView):
     success_url = "/"
 
 
+@login_required
 def CalendarView(request):
     active_plan = IrrigationPlan.objects.get(active=True)
     context = {
@@ -179,3 +180,12 @@ def sprinkler_mode(request, pk, mode):
     
 
     return JsonResponse({'message': 'Sprinkler has been set to ' + mode + 'successfully!'}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@login_required
+def update_city(request, city):
+
+    Preferences.objects.first().update(city = city)
+    
+    return JsonResponse({'message': 'City has been set to ' + city + 'successfully!'}, status=status.HTTP_200_OK)
