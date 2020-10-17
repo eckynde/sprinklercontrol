@@ -112,7 +112,7 @@ class alter_irrigation_plan(LoginRequiredMixin, UpdateView):
         return get_object_or_404(IrrigationPlan, id=id_)
 
 
-
+@login_required
 def CalendarView(request):
     active_plan = IrrigationPlan.objects.get(active=True)
     context = {
