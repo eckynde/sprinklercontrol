@@ -18,4 +18,5 @@ urlpatterns = [
     re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/activate$', views.sprinkler_activate),
     re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/deactivate$', views.sprinkler_deactivate),
     re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/mode/(?P<mode>[a-z]+)$', views.sprinkler_mode),
+    re_path(r'^api/update_city/(?P<city>(\w|,)+)$', views.update_city),
 ]

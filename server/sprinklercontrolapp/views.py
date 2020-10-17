@@ -174,3 +174,12 @@ def sprinkler_mode(request, pk, mode):
     
 
     return JsonResponse({'message': 'Sprinkler has been set to ' + mode + 'successfully!'}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@login_required
+def update_city(request, city):
+
+    Preferences.objects.first().update(city = city)
+    
+    return JsonResponse({'message': 'City has been set to ' + city + 'successfully!'}, status=status.HTTP_200_OK)
