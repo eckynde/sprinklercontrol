@@ -1,11 +1,20 @@
+## This script is meant to be executed hourly to gather weather data
+
 import requests
 import json
 import sys
-import datetime
-from weatherClass.weatherClass import weatherCurrent, weatherForecast
-#from models import WeatherCurrent, WeatherForecast
+import time
+from sprinklercontrolapp.models import WeatherCurrent, WeatherForecast
 
-apiKey = "ca55cf484b9838023ef2239091a6b5e9"
+## Settings
+## "exec(open('sprinklercontrolapp/getWeatherData.py').read())"
+apiKey = ""
+city = "Bielefeld"
+
+## Global Variables
+currentDT = ""
+sunriseDT = ""
+sunsetDT = ""
 
 ##Get Longitude and Latitude
 def getLonLat(city):
@@ -19,7 +28,6 @@ def getLonLat(city):
     else:
         if "message" in data:
             print(str(res)+": "+data['message'])
-            sys.exit(99)
 
 ##Get Weather Data win Longitude and Latitude as JSON File
 def getWeatherJson(lon, lat):
@@ -32,13 +40,16 @@ def getWeatherJson(lon, lat):
     else:
         if "message" in data:
             print(str(res)+": "+data['message'])
-            sys.exit(99)
 
 ##Parse current data
 def parseJsonCurrent(data):
+    global currentDT
+    global sunriseDT
+    global sunsetDT
 
     if "current" in data:
         dt = data['current']['dt']
+        currentDT = dt
         status = "200"
         
         if "rain" in data['current']:
@@ -46,69 +57,68 @@ def parseJsonCurrent(data):
         else:
             rain1h = "0" 
 
-        sprinkler1h = "0.00"
         clouds = data['current']['clouds']
         temperature = data['current']['temp']
         timeStamp_sunrise = data['current']['sunrise']
+        sunriseDT = timeStamp_sunrise
         timeStamp_sunset = data['current']['sunset']
+        sunsetDT = timeStamp_sunset
         weather_id = data['current']['weather'][0]['id']
         weather_type = data['current']['weather'][0]['main']
         weather_desc = data['current']['weather'][0]['description']
 
-        currentData = weatherCurrent(dt, city, status, rain1h, sprinkler1h, clouds,weather_id,weather_type,weather_desc,temperature,timeStamp_sunrise,timeStamp_sunset)
-        currentData.printObject()
-
-        #wC = WeatherCurrent(dt=dt, city=city, status=status, rain1h=rain1h, sprinkler1h=sprinkler1h,\
-        #    clouds=clouds, weather_id=weather_id, weather_type=weather_type,weather_desc=weather_desc, \
-        #    temperature=temperature, timeStamp_sunrise=timeStamp_sunrise, timeStamp_sunset=timeStamp_sunset)
-        #wC.save()
-
-        #print(datetime.datetime.fromtimestamp(dt).strftime('%H'))
+        wTemp = WeatherCurrent(dt=dt, city=city, status=status, rain1h=rain1h,\
+            clouds=clouds, weather_id=weather_id, weather_type=weather_type,weather_desc=weather_desc, \
+            temperature=temperature, timeStamp_sunrise=timeStamp_sunrise, timeStamp_sunset=timeStamp_sunset)
+        wTemp.save()
+    else:
+        writeError(404)
 
 ##Parse forecast data
 def parseJsonForecast(data):
-
-    forecastList = []
+    global currentDT
+    global sunriseDT
+    global sunsetDT
 
     if "hourly" in data:
         for objs in data['hourly']:
-            dt = objs['dt']
-            status = "200"
-        
-            if "rain" in objs:
-                rain1h = objs['rain']['1h']
-            else:
-                rain1h = "0" 
+            if objs['dt'] < sunsetDT: 
 
-            clouds = objs['clouds']
-            temperature = objs['temp']
-            weather_id = objs['weather'][0]['id']
-            weather_type = objs['weather'][0]['main']
-            weather_desc = objs['weather'][0]['description']   
+                dt = objs['dt']
+                status = "200"
+            
+                if "rain" in objs:
+                    rain1h = objs['rain']['1h']
+                else:
+                    rain1h = "0" 
 
-            forecastList.append(weatherForecast(dt, city, status, rain1h, clouds, weather_id, weather_type, weather_desc, temperature))   
+                clouds = objs['clouds']
+                temperature = objs['temp']
+                weather_id = objs['weather'][0]['id']
+                weather_type = objs['weather'][0]['main']
+                weather_desc = objs['weather'][0]['description']   
 
-    else:
-        print("yeetS")
+                wTemp = WeatherForecast(dt=dt, city=city, status=status, rain1h=rain1h,\
+                    clouds=clouds, weather_id=weather_id, weather_type=weather_type,weather_desc=weather_desc, \
+                    temperature=temperature)
+                wTemp.save()
 
-    for x in forecastList:
-        x.printObject()
-
-
-
+def writeError(num):
+    wTemp = WeatherCurrent(dt=int(time.time()) , city="", status=str(num), rain1h=0,\
+        clouds=0, weather_id=0, weather_type="",weather_desc="", \
+        temperature=0, timeStamp_sunrise=0, timeStamp_sunset=0)
+    wTemp.save()
+    sys.exit(num)
 
 
 #Prüfen ob Parameter übergeben wurde
-if not(len(sys.argv) != 2):
-    city = sys.argv[1]
-    
-    try:
-        lon, lat = getLonLat(city)
-    except:
-        sys.exit(99)
-    else:
-        parseJsonForecast(getWeatherJson(lon, lat))
-        parseJsonCurrent(getWeatherJson(lon, lat))
-
+try:
+    lon, lat = getLonLat(city)
+except:
+    writeError(404)
 else:
-    print('[ Invalid Number of Arguments. ]')
+    parseJsonCurrent(getWeatherJson(lon, lat))
+
+    ## Validiert, ob das skript zum Zeitpunkt des Sonnenaufgangs ausgeführt wurde
+    if sunriseDT >= currentDT-1800 and sunriseDT < currentDT+1800:
+        parseJsonForecast(getWeatherJson(lon, lat))

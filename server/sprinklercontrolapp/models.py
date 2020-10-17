@@ -55,7 +55,6 @@ class WeatherCurrent(models.Model):
     city = models.CharField(max_length=40, verbose_name='Stadt')
     status = models.CharField(max_length=16, verbose_name='Status')
     rain1h = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Regen 1h')
-    sprinkler1h = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Sprinkler 1h')
     clouds = models.IntegerField(verbose_name='Wolken')
     weather_id = models.IntegerField(verbose_name='Wetter ID')
     weather_type = models.CharField(max_length=40, verbose_name='Wetter Typ')
