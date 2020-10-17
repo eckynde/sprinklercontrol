@@ -1,19 +1,44 @@
 {% extends 'SprinklerControlDesign/base.html' %}
 
 {% block content %}
-<div class="row content">
-    <div class="col s12 m6 l4 xl3">
-        <div>
-            <a href="/settings/create_sprinkler" class="waves-effect waves-light btn">Sprinkler anlegen</a>
+<div class="container">
+    <div class="row content">
+        <div class="col s12">
+            <h5>Neuanlage</h5>
+            <div class="section">
+                <a href="/settings/create_sprinkler" class="waves-effect waves-light btn">Sprinkler anlegen</a>
+            </div>
+            <div class="section">
+                <a href="/settings/create_timer" class="waves-effect waves-light btn">Zeitintervall anlegen</a>
+            </div>
+            <div class="section">
+                <a href="/settings/create_irrigation_plan" class="waves-effect waves-light btn">Bewässerungszeitplan anlegen</a>
+            </div>
+            <div class="divider"></div>
         </div>
-        <div>
-            <a class="waves-effect waves-light btn">Bewässerungszeitplan anlegen</a>
-        </div>
-        <div>
-            <a href="/settings/create_timer" class="waves-effect waves-light btn">Zeitintervall anlegen</a>
-        </div>
-        
+    </div>
+    <div class="row">
+        <form class="col s12">
+            <h5>Wetter</h5>
+            <div class="section">
+                <p>SprinklerCtrl bezieht im Smart-Modus Wetterdaten über die OpenWeatherMap-API. Bitte tragen Sie im Folgenden Ihre Stadt ein.</p>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Bielefeld" id="city" type="text" class="validate" value="{{ preferences.city }}" autocomplete="off">
+                    <label for="city">Stadt</label>
+                    <span class="helper-text" >z.B. "Bielefeld,DE"</span>
+                </div>
+            </div>
+            <a class="waves-effect waves-light btn" onclick="updateCity()">Übernehmen</a>
+        </form>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    function updateCity() {
+        $.post('/api/update_city/' + $('#city')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {location.reload(); });
+    }
+</script>
 {% endblock %}

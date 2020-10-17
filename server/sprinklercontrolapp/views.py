@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm
 import calendar
 
@@ -31,9 +31,9 @@ class overview(LoginRequiredMixin, ListView):
         context['Sprinklers'] = Sprinkler.objects.all()
         return context
 
-
-class settings(LoginRequiredMixin, TemplateView):
-    template_name = 'SprinklerControlDesign/settings.html'
+@login_required
+def settings(request):
+    return render(request, 'SprinklerControlDesign/settings.html', {'preferences': Preferences.load()})
 
 
 class create_sprinkler(LoginRequiredMixin, CreateView):

@@ -5,7 +5,7 @@ from django.conf.urls import re_path
 from sprinklercontrolapp import views
 
 urlpatterns = [
-    path("settings/", settings.as_view(), name="settings"),
+    path("settings/", views.settings, name="settings"),
     path("", overview.as_view(), name="overview"),
     path("settings/create_sprinkler", create_sprinkler.as_view(), name="create_sprinkler"),
     path("settings/<int:id>_alter_sprinkler", alter_sprinkler.as_view(), name="alter_sprinkler"),
