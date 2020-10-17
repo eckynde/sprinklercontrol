@@ -79,3 +79,31 @@ class WeatherForecast(models.Model):
  
     def __str__(self):
         return f'{self.dt}'
+
+
+
+
+# Abstract singleton model, followed by settings model
+
+class Singleton(models.Model):
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(Singleton, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+
+class Preferences(Singleton):
+    city = models.CharField(max_length=40, default='Bielefeld,DE', verbose_name='Stadt')
+    apikey = models.CharField(max_length=40, default='', verbose_name='API-Key')
+    
