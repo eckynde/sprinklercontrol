@@ -4,12 +4,12 @@ import requests
 import json
 import sys
 import time
-from sprinklercontrolapp.models import WeatherCurrent, WeatherForecast
+from sprinklercontrolapp.models import WeatherCurrent, WeatherForecast, Preferences
 
 ## Settings
 ## "exec(open('sprinklercontrolapp/getWeatherData.py').read())"
-apiKey = ""
-city = "Bielefeld"
+apiKey = Preferences.objects.first().apiKey
+city = Preferences.objects.first().city
 
 ## Global Variables
 currentDT = ""
