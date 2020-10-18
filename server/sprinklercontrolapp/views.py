@@ -100,6 +100,15 @@ class create_weekly_timers(LoginRequiredMixin, CreateView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
 
+class delete_weekly_timers(LoginRequiredMixin, DeleteView):
+    template_name = 'sprinklerControlDesign/intervallDeleteForm.html'
+    model = WeeklyRepeatingTimer
+    success_url = "/"
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(WeeklyRepeatingTimer, id=id_)
+
 class alter_irrigation_plan(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/irrigationPlanAlterForm.html'
     model = IrrigationPlan
@@ -116,6 +125,15 @@ class create_irrigation_plan(LoginRequiredMixin, CreateView):
     model = IrrigationPlan
     form_class = IrrigationPlanFormCreate
     success_url = "/"
+
+class delete_irrigation_plan(LoginRequiredMixin, DeleteView):
+    template_name = 'sprinklerControlDesign/irrigationPlanDeleteForm.html'
+    model = IrrigationPlan
+    success_url = "/"
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(IrrigationPlan, id=id_)
 
 
 @login_required

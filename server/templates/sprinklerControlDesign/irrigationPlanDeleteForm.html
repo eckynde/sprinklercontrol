@@ -13,26 +13,22 @@
             <div class="col s12">
             <a href="/" class="breadcrumb">Übersicht</a>
             <a href="/settings" class="breadcrumb">Einstellungen</a>
-            <a class="breadcrumb">Sprinkler bearbeiten</a>
+            <a class="breadcrumb">Zeitplan bearbeiten</a>
+            <a class="breadcrumb">Zeitplan löschen</a>
             </div>
         </div>
     </nav>
     <div class="col s12 m9 l6">
         <div class="card">
             <div class="card-content">
-                            <div class="card-title">Sprinkler ändern</div>
+                            <div class="card-title">Willst du dieses Objekt wirklich löschen?</div>
             <form method="post">
                 {% csrf_token %}
-                {{ form|materializecss }}
                 <p>
                     <div class="row">
                         <button style="margin-top: 10px;" type="submit"
-                        class="waves-effect waves light btn-large col s3">Speichern</button>
-                        <div class="col s1"></div>
-                        <a style="margin-top: 10px;" href="/settings/{{object.id}}_delete_sprinkler"
-                        class="waves-effect waves light btn-large col s3">Löschen</a>
+                        class="waves-effect waves light btn-large col s3">Löschen</button>
                     </div>
-                        
                 </p>
             </form>
             </div>

@@ -17,9 +17,19 @@
     {% block title %}
     {% endblock %}
 
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-trigger').dropdown({
+                coverTrigger: false,
+                hover: true
+            });
+        });
+	</script>
+
 </head>
 
 <body>
+
     <nav>
         <div class="nav-wrapper" style="background: rgb(2,0,36); 
         background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
@@ -30,7 +40,10 @@
                 <li><a href="/weather"><i class="large material-icons left">cloud</i>Wetter</a></li>
                 <li><a href="/calendar"><i class="large material-icons left">event</i>Kalender</a></li>
                 <li><a href="/settings"><i class="large material-icons left">settings</i>Einstellungen</a></li>
-                <li><a href="/accounts/logout"><i class="large material-icons left">account_circle</i>Benutzer</a></li>
+                <li><a class='dropdown-trigger' data-target='dropdown1'><i class="large material-icons left">account_circle</i>Benutzer</a></li>
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a href="/accounts/logout"><i class="large material-icons">lock_outline</i>Logout</a></li>
+                </ul>
             </ul>
             
         </div>

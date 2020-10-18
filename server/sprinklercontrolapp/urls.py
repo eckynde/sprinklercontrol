@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import overview, settings, create_sprinkler, alter_sprinkler, delete_sprinkler, weekly_timers_list, alter_weekly_timers, create_weekly_timers, CalendarView, weather, alter_irrigation_plan, create_irrigation_plan
+from .views import overview, settings, create_sprinkler, alter_sprinkler, delete_sprinkler, weekly_timers_list, alter_weekly_timers, create_weekly_timers, CalendarView, weather, alter_irrigation_plan, create_irrigation_plan, delete_irrigation_plan, delete_weekly_timers
 from django.views.generic import TemplateView
 from django.conf.urls import re_path
 from sprinklercontrolapp import views
@@ -13,7 +13,9 @@ urlpatterns = [
     path("calendar/", CalendarView, name="calendar"),
     path("settings/create_timer", create_weekly_timers.as_view(), name="create_timer"),
     path("settings/<int:id>_alter_timer", alter_weekly_timers.as_view(), name="alter_timer"),
+    path("settings/<int:id>_delete_timer", delete_weekly_timers.as_view(), name="delete_timer"),
     path("settings/<int:id>_alter_irrigation_plan", alter_irrigation_plan.as_view(), name="alter_irrigation_plan"),
+    path("settings/<int:id>_delete_irrigation_plan", delete_irrigation_plan.as_view(), name="delete_irrigation_plan"),
     path("settings/create_irrigation_plan", create_irrigation_plan.as_view(), name="create_irrigation_plan"),
     path("weather/", weather.as_view(), name="weather"),
     re_path(r'^api/sprinkler/(?P<pk>[0-9]+)/activate$', views.sprinkler_activate),
