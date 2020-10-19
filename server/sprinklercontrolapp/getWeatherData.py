@@ -8,7 +8,7 @@ from sprinklercontrolapp.models import WeatherCurrent, WeatherForecast, Preferen
 
 ## Settings
 ## "exec(open('sprinklercontrolapp/getWeatherData.py').read())"
-apiKey = Preferences.objects.first().apiKey
+apiKey = Preferences.objects.first().apikey
 city = Preferences.objects.first().city
 
 ## Global Variables

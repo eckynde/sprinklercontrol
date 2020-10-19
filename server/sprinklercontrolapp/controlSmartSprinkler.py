@@ -5,4 +5,4 @@ from sprinklercontrolapp.models import WeatherCurrent, WeatherForecast, Sprinkle
 smartSprinklers = Sprinkler.objects.filter(mode='S')
 
 for objs in smartSprinklers:
-    print(x.label)
+    print(objs.label)
