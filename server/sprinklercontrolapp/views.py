@@ -39,7 +39,7 @@ def settings(request):
 class create_sprinkler(LoginRequiredMixin, CreateView):
     template_name = 'sprinklerControlDesign/sprinklercreateform.html'
     model = Sprinkler
-    fields=['label','description']
+    fields=['label','description','demand','output']
     success_url = "/"
     
 
