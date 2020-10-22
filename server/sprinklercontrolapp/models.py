@@ -7,6 +7,8 @@ class Sprinkler(models.Model):
     description = models.CharField(max_length=150, verbose_name='Ort/Beschreibung')
     power = models.BooleanField(verbose_name='Eingeschaltet', default=False)
     mode = models.CharField(max_length=1, default='P', verbose_name='Modus')
+    demand = models.DecimalField(max_digits=6, decimal_places=2, default='0', verbose_name='Bedarf in mm am Tag')
+    output = models.DecimalField(max_digits=6, decimal_places=2, default='0', verbose_name='Leistung in mm/h')
 
     class Meta:
         verbose_name_plural = "Sprinklers"
