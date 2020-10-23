@@ -55,7 +55,7 @@ class delete_sprinkler(LoginRequiredMixin, DeleteView):
 class alter_sprinkler(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/sprinkleralterform.html'
     model = Sprinkler
-    fields=['label','description']
+    fields=['label','description','demand','output']
     success_url = '/'
     
     def get_object(self):
