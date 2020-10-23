@@ -1,0 +1,120 @@
+{% extends 'sprinklerControlDesign/base.html' %}
+{% load timestamp_to_time %}
+{% block content %}
+
+<div class="section">
+    <h5 style="margin-left: 10px;"><b>Aktelles Wetter </b></h5>
+    <div class="row">
+        <div class="col s12 m12 l6 xl4">
+            {% if WeatherCurrent %}
+            <h5 class="header">{{WeatherCurrent.city}}</h5>
+            <div class="card horizontal">
+                <div class="card-image"
+                    style="background: rgb(2,0,36); 
+                    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
+                        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                            {% if WeatherCurrent.weather_id < 300 %}
+                            <img src="http://openweathermap.org/img/wn/11d@4x.png" />
+                            {% elif WeatherCurrent.weather_id < 500 %}
+                            <img src="http://openweathermap.org/img/wn/09d@4x.png" />
+                            {% elif WeatherCurrent.weather_id < 511 %}
+                            <img src="http://openweathermap.org/img/wn/10d@4x.png" />
+                            {% elif WeatherCurrent.weather_id == 511 %}
+                            <img src="http://openweathermap.org/img/wn/13d@4x.png" />
+                            {% elif WeatherCurrent.weather_id < 600 %}
+                            <img src="http://openweathermap.org/img/wn/09d@4x.png" />
+                            {% elif WeatherCurrent.weather_id < 700 %}
+                            <img src="http://openweathermap.org/img/wn/13d@4x.png" />
+                            {% elif WeatherCurrent.weather_id < 800 %}
+                            <img src="http://openweathermap.org/img/wn/50d@4x.png" />
+                            {% elif WeatherCurrent.weather_id == 800 %}
+                            <img src="http://openweathermap.org/img/wn/01d@4x.png" />
+                            {% elif WeatherCurrent.weather_id == 801 %}
+                            <img src="http://openweathermap.org/img/wn/02d@4x.png" />
+                            {% elif WeatherCurrent.weather_id == 802 %}
+                            <img src="http://openweathermap.org/img/wn/03d@4x.png" />
+                            {% elif WeatherCurrent.weather_id < 805 %}
+                            <img src="http://openweathermap.org/img/wn/04d@4x.png" />
+                            {% endif %}
+                        </div>
+                    <span class="card-title"><b>{{WeatherCurrent.temperature|floatformat }} <span>&#8451;</span></b></span>
+                </div>
+                <div class="card-stacked">  
+                    <div class="card-content">
+                        <p><b>Wetter:</b> {{WeatherCurrent.weather_type}}</p>
+                        <p><b>Wetterbeschreibung:</b> {{WeatherCurrent.weather_desc|title}}</p>
+                        <p><b>Bewölkung:</b> {{WeatherCurrent.clouds}} %</p>
+                        <p><b>Regen letzte Stunde:</b> {{WeatherCurrent.rain1h}} mm</p>
+                        <p><b>Sonnenaufgang:</b> {{WeatherCurrent.timeStamp_sunrise|timestamp_to_time|date:"H:i"}} Uhr</p>
+                        <p><b>Sonnenuntergang:</b> {{WeatherCurrent.timeStamp_sunset|timestamp_to_time|date:"H:i"}} Uhr</p>
+                    </div>
+                    <div class="card-action">
+                        <span style="color: gray;"><b>Letzte Aktualisierung:</b> {{ WeatherCurrent.dt|timestamp_to_time|date:"l d.m.Y H:i" }} Uhr</span>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <h5 class="header">Kein aktuelles Wetter verfügbar</h5>
+    {% endif %}
+</div>
+
+<div class="section">
+    <h5 style="margin-left: 10px;"><b>Wettervorhersage</b></h5>
+    <div class="row">
+        <div class="col s12 m12 l6 xl4">
+            {% if WeatherForecast %}
+            <h5 class="header">{{WeatherForecast.city}}</h5>
+            <div class="card horizontal">
+                <div class="card-image"
+                    style="background: rgb(2,0,36); 
+                    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
+                        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                            {% if WeatherForecast.weather_id < 300 %}
+                            <img src="http://openweathermap.org/img/wn/11d@4x.png" />
+                            {% elif WeatherForecast.weather_id < 500 %}
+                            <img src="http://openweathermap.org/img/wn/09d@4x.png" />
+                            {% elif WeatherForecast.weather_id < 511 %}
+                            <img src="http://openweathermap.org/img/wn/10d@4x.png" />
+                            {% elif WeatherForecast.weather_id == 511 %}
+                            <img src="http://openweathermap.org/img/wn/13d@4x.png" />
+                            {% elif WeatherForecast.weather_id < 600 %}
+                            <img src="http://openweathermap.org/img/wn/09d@4x.png" />
+                            {% elif WeatherForecast.weather_id < 700 %}
+                            <img src="http://openweathermap.org/img/wn/13d@4x.png" />
+                            {% elif WeatherForecast.weather_id < 800 %}
+                            <img src="http://openweathermap.org/img/wn/50d@4x.png" />
+                            {% elif WeatherForecast.weather_id == 800 %}
+                            <img src="http://openweathermap.org/img/wn/01d@4x.png" />
+                            {% elif WeatherForecast.weather_id == 801 %}
+                            <img src="http://openweathermap.org/img/wn/02d@4x.png" />
+                            {% elif WeatherForecast.weather_id == 802 %}
+                            <img src="http://openweathermap.org/img/wn/03d@4x.png" />
+                            {% elif WeatherForecast.weather_id < 805 %}
+                            <img src="http://openweathermap.org/img/wn/04d@4x.png" />
+                            {% endif %}
+                        </div>
+                    <span class="card-title"><b>{{WeatherForecast.temperature|floatformat }} <span>&#8451;</span></b></span>
+                </div>
+                <div class="card-stacked">  
+                    <div class="card-content">
+                        <b>Wetter:</b> {{WeatherForecast.weather_type}}<br>
+                        <b>Wetterbeschreibung:</b> {{WeatherForecast.weather_desc|title}}<br>
+                        <b>Bewölkung:</b> {{WeatherForecast.clouds}} %<br>
+                        <b>Regen letzte Stunde:</b> {{WeatherForecast.rain1h}} mm<br>
+                    </div>
+                    <div class="card-action">
+                        <span style="color: gray;"><b>Vorhersage für:</b> {{ WeatherForecast.dt|timestamp_to_time|date:"l d.m.Y H:i" }}</span>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <h5 class="header">Keine Wettervorhersage verfügbar</h5>
+    {% endif %}
+</div>
+
+
+{% endblock %}

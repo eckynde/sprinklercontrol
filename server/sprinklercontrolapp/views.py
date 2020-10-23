@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences, WeatherCurrent, WeatherForecast
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm, IrrigationPlanFormCreate
 import calendar
 
@@ -138,7 +138,10 @@ class delete_irrigation_plan(LoginRequiredMixin, DeleteView):
 
 @login_required
 def CalendarView(request):
-    active_plan = IrrigationPlan.objects.get(active=True)
+    try:
+        active_plan = IrrigationPlan.objects.get(active=True)
+    except IrrigationPlan.DoesNotExist:
+        active_plan = None
     context = {
         "plan":active_plan,
     }
@@ -147,8 +150,22 @@ def CalendarView(request):
 class weather(TemplateView):
     template_name = 'sprinklercontrolapp/weather.html'
 
+class weather(LoginRequiredMixin, ListView):
+    template_name = 'sprinklerControlDesign/weather.html'
+    model = WeatherCurrent
+    context_object_name = "WeatherCurrent"
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context['WeatherCurrent'] = WeatherCurrent.objects.latest('id')
+        except WeatherCurrent.DoesNotExist:
+            context['WeatherCurrent'] = None
+        try:
+            context['WeatherForecast'] = WeatherForecast.objects.latest('id')
+        except WeatherForecast.DoesNotExist:
+            context['WeatherForecast'] = None
+        return context
 
 @api_view(['POST'])
 @login_required
