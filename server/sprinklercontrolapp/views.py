@@ -207,3 +207,13 @@ def update_city(request, city):
     Preferences.objects.filter(pk=1).update(city = city)
     
     return JsonResponse({'message': 'City has been set to ' + city + ' successfully!'}, status=status.HTTP_200_OK)
+
+
+
+@api_view(['POST'])
+@login_required
+def update_apikey(request, apikey):
+
+    Preferences.objects.filter(pk=1).update(apikey = apikey)
+    
+    return JsonResponse({'message': 'API-Key has been set to ' + apikey + ' successfully!'}, status=status.HTTP_200_OK)

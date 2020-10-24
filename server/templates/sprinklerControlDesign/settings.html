@@ -21,11 +21,11 @@
         <form class="col s12">
             <h5>Wetter</h5>
             <div class="section">
-                <p>SprinklerCtrl bezieht im Smart-Modus Wetterdaten über die OpenWeatherMap-API. Bitte tragen Sie im Folgenden Ihre Stadt ein.</p>
+                <p>SprinklerCtrl bezieht im Smart-Modus Wetterdaten über die OpenWeatherMap-API. Bitte tragen Sie im Folgenden Ihre Stadt und Ihren API-Key ein.</p>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input placeholder="Bielefeld" id="city" type="text" class="validate" value="{{ preferences.city }}" autocomplete="off">
+                    <input placeholder="Bielefeld" id="city" type="text" value="{{ preferences.city }}" autocomplete="off">
                     <label for="city">Stadt</label>
                     <span class="helper-text" >z.B. "Bielefeld,DE"</span>
                 </div>
@@ -33,12 +33,27 @@
             <a class="waves-effect waves-light btn" onclick="updateCity()">Übernehmen</a>
         </form>
     </div>
+    <div class="row">
+        <form class="col s12">
+                <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="0123456789abcdef0123456789abcdef" id="apikey" type="text" value="{{ preferences.apikey }}" autocomplete="off">
+                    <label for="apikey">API-Key</label>
+                    <span class="helper-text" >z.B. "0123456789abcdef0123456789abcdef"</span>
+                </div>
+            </div>
+            <a class="waves-effect waves-light btn" onclick="updateApiKey()">Übernehmen</a>
+        </form>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     function updateCity() {
-        $.post('/api/update_city/' + $('#city')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {location.reload(); });
+        $.post('/api/update_city/' + $('#city')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Die Stadt wurde gesetzt.', displayLength: 6000});}).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Die Stadt konnte nicht gesetzt werden. Bitte nur Buchstaben und Kommas verwenden.', displayLength: 6000})});
+    }
+    function updateApiKey() {
+        $.post('/api/update_apikey/' + $('#apikey')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Der API-Key wurde gesetzt.', displayLength: 6000}) }).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Der API-Key konnte nicht gesetzt werden. Bitte den hexadezimalen API-Key mit 32 Zeichen eintragen.', displayLength: 6000})});
     }
 </script>
 {% endblock %}
