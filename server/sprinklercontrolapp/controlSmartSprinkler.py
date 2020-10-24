@@ -72,7 +72,7 @@ for objs in sprinklerRainFullHistory:
 
 
 #Calculation of daily demand for smart sprinklers
-if sunriseDT >= currentTimeDT-1800 and sunriseDT < currentTimeDT+1800:
+if sunriseDT-1800 >= currentTimeDT-1800 and sunriseDT-1800 < currentTimeDT+1800:
     sprinkler_list=[]
     name = day + '.' + month + '.' + year +' - deactivate morning - sprinkler: '
     for objs in smartSprinklers:
@@ -85,7 +85,8 @@ if sunriseDT >= currentTimeDT-1800 and sunriseDT < currentTimeDT+1800:
     #Schedule morning activation
     name = day + '.' + month + '.' + year +' - activate morning - sprinkler: '
     args = ','.join(map(str,sprinkler_list))
-    Schedule.objects.create(name=name+args,func='tasks.aktivate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunriseDT))
+    if args != '':
+        Schedule.objects.create(name=name+args,func='tasks.aktivate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunriseDT))
        
 else:
     sprinkler_list=[]
@@ -100,4 +101,5 @@ else:
     #Schedule evening activation
     name = day + '.' + month + '.' + year +' - activate evening - sprinkler: '
     args = ','.join(map(str,sprinkler_list))
-    Schedule.objects.create(name=name+args,func='tasks.aktivate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunsetDT))
+    if args != '':
+        Schedule.objects.create(name=name+args,func='tasks.aktivate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunsetDT))

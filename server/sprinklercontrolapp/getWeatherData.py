@@ -3,8 +3,11 @@
 import requests
 import json
 import sys
-import time
+import time, datetime
+from datetime import datetime
 from sprinklercontrolapp.models import WeatherCurrent, WeatherForecast, Preferences
+from django_q.models import Schedule
+
 
 ## Settings
 ## "exec(open('sprinklercontrolapp/getWeatherData.py').read())"
@@ -121,6 +124,15 @@ except:
 else:
     parseJsonCurrent(getWeatherJson(lon, lat))
 
-    ## Validiert, ob das skript zum Zeitpunkt des Sonnenaufgangs ausgeführt wurde
-    if sunriseDT >= currentDT-1800 and sunriseDT < currentDT+1800:
+
+
+    ## Validiert, ob das skript 1h vor dem Zeitpunkt des Sonnenaufgangs ausgeführt wurde
+    if sunriseDT-3600 >= currentDT-1800 and sunriseDT-3600 < currentDT+1800:
         parseJsonForecast(getWeatherJson(lon, lat))
+        
+        #Lastet das ansteuern der Sprinkler ein
+        name = str(datetime.fromtimestamp(currentDT)) + ' ctrlSprinkler Morning' 
+        Schedule.objects.create(name=name,func='tasks.controlSmartSprinkler',repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunriseDT-1800))
+
+        name = str(datetime.fromtimestamp(currentDT)) + ' ctrlSprinkler Evening' 
+        Schedule.objects.create(name=name,func='tasks.controlSmartSprinkler',repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunsetDT-1800))
