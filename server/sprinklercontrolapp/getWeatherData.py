@@ -66,10 +66,11 @@ def parseJsonCurrent(data):
         weather_id = data['current']['weather'][0]['id']
         weather_type = data['current']['weather'][0]['main']
         weather_desc = data['current']['weather'][0]['description']
+        weather_icon = data['current']['weather'][0]['icon']
 
         wTemp = WeatherCurrent(dt=dt, city=city, status=status, rain1h=rain1h,\
             clouds=clouds, weather_id=weather_id, weather_type=weather_type,weather_desc=weather_desc, \
-            temperature=temperature, timeStamp_sunrise=timeStamp_sunrise, timeStamp_sunset=timeStamp_sunset)
+            temperature=temperature, timeStamp_sunrise=timeStamp_sunrise, timeStamp_sunset=timeStamp_sunset, icon_ID=weather_icon)
         wTemp.save()
     else:
         writeError(404)
@@ -96,11 +97,12 @@ def parseJsonForecast(data):
                 temperature = objs['temp']
                 weather_id = objs['weather'][0]['id']
                 weather_type = objs['weather'][0]['main']
-                weather_desc = objs['weather'][0]['description']   
+                weather_desc = objs['weather'][0]['description']
+                weather_icon = objs['weather'][0]['icon']   
 
                 wTemp = WeatherForecast(dt=dt, city=city, status=status, rain1h=rain1h,\
                     clouds=clouds, weather_id=weather_id, weather_type=weather_type,weather_desc=weather_desc, \
-                    temperature=temperature)
+                    temperature=temperature, icon_ID=weather_icon)
                 wTemp.save()
 
 def writeError(num):
