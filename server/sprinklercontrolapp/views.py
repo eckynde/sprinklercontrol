@@ -63,12 +63,6 @@ class alter_sprinkler(LoginRequiredMixin, UpdateView):
         return get_object_or_404(Sprinkler, id=id_)
 
 
-class weekly_timers_list(LoginRequiredMixin, ListView):
-    template_name = 'sprinklercontrolapp/weekly_timers_list.html'
-    model = WeeklyRepeatingTimer
-    context_object_name = "WeeklyRepeatingTimer"
-
-
 class alter_weekly_timers(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/intervallAlterForm.html'
     form_class = WeeklyTimersForm
@@ -146,9 +140,6 @@ def CalendarView(request):
         "plan":active_plan,
     }
     return render(request,'sprinklerControlDesign/calendar.html',context)
-
-class weather(TemplateView):
-    template_name = 'sprinklercontrolapp/weather.html'
 
 class weather(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/weather.html'

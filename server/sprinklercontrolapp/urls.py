@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import overview, settings, create_sprinkler, alter_sprinkler, delete_sprinkler, weekly_timers_list, alter_weekly_timers, create_weekly_timers, CalendarView, weather, alter_irrigation_plan, create_irrigation_plan, delete_irrigation_plan, delete_weekly_timers, intervallSettings
+from .views import overview, settings, create_sprinkler, alter_sprinkler, delete_sprinkler, alter_weekly_timers, create_weekly_timers, CalendarView, weather, alter_irrigation_plan, create_irrigation_plan, delete_irrigation_plan, delete_weekly_timers, intervallSettings
 from django.views.generic import TemplateView
 from django.conf.urls import re_path
 from sprinklercontrolapp import views
