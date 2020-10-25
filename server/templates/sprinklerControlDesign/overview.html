@@ -6,8 +6,9 @@
 
 {% block content %}
 <div class="section">
-    <h5 style="margin-left: 10px;"><b>Sprinklerkreise </b><a href="/settings/create_sprinkler"
-            class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">add</i></a></h5>
+    <h5 class="abstand_links_mittel"><b>Sprinklerkreise </b><a href="/settings/create_sprinkler"
+        class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">add</i></a>
+    </h5>
 
     <div class="row">
         {% for s in Sprinkler|dictsort:"label" %}
@@ -16,13 +17,11 @@
                     class="btn-floating btn-medium waves-effect waves-light teal"><i
                         class="material-icons">settings</i></a></h5>
             <div class="card horizontal small">
-                <div class="card-image"
-                    style="background: rgb(2,0,36); 
-                    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
+                <div class="card-image navbarColor">
                     {% if s.power %}
                     <div>
                         <img src="https://i.ibb.co/nmg6ZG5/Icon-Sprinkler-An-V2.png" />
-                        <div style="text-align: center; padding-bottom: 5px" class="switch">
+                        <div class="switch centered padding_unten">
                             <label class="white-text">
                                 Off
                                 <input id="switch{{s.id}}" type="checkbox" onchange="switchSprinklingState('{{s.id}}')"
@@ -35,7 +34,7 @@
                     {% else %}
                     <div>
                         <img src="https://i.ibb.co/BZDg3z7/Icon-Sprinkler-Aus-V2.png" />
-                        <div style="text-align: center; padding-bottom: 5px" class="switch">
+                        <div class="switch centered padding_unten">
                             <label class="white-text">
                                 Off
                                 <input id="switch{{s.id}}" type="checkbox" onchange="switchSprinklingState('{{s.id}}')">
@@ -84,7 +83,7 @@
 
 </div>
 <div class="section">
-    <h5 style="margin-left: 10px;"><b>Zeitpläne </b><a href="/settings/create_irrigation_plan"
+    <h5 class="abstand_links_mittel"><b>Zeitpläne </b><a href="/settings/create_irrigation_plan"
             class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">add</i></a></h5>
 
     <div class="row">

@@ -7,9 +7,8 @@
 
 {% block content %}
 <div class="row">
-    <nav style="background: rgb(2,0,36); 
-			background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
-        <div class="nav-wrapper" style="margin-top: 10px;">
+    <nav class="navbarColor">
+        <div class="nav-wrapper abstand_oben_mittel">
             <div class="col s12">
             <a href="/" class="breadcrumb">Übersicht</a>
             <a href="/settings" class="breadcrumb">Einstellungen</a>
@@ -26,11 +25,11 @@
                 {{ form|materializecss }}
                 <p>
                     <div class="row">
-                        <button style="margin-top: 10px;" type="submit"
-                        class="waves-effect waves light btn-large col s3">Speichern</button>
+                        <button type="submit"
+                        class="waves-effect waves light btn-large col s3 abstand_oben_mittel">Speichern</button>
                         <div class="col s1"></div>
-                        <a style="margin-top: 10px;" href="/settings/{{object.id}}_delete_sprinkler"
-                        class="waves-effect waves light btn-large col s3">Löschen</a>
+                        <a href="/settings/{{object.id}}_delete_sprinkler"
+                        class="waves-effect waves light btn-large col s3 abstand_oben_mittel">Löschen</a>
                     </div>
                         
                 </p>

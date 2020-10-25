@@ -23,3 +23,60 @@
 #calendar .fc-col-header {
     background-color: #009688;
 }
+
+.navbarColor{
+    background: rgb(2,0,36); 
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);
+}
+
+.abstand_oben_groß{
+    margin-top: 20px;
+}
+
+.abstand_oben_mittel{
+    margin-top: 10px;
+}
+
+.abstand_links_mittel{
+    margin-left: 10px;
+}
+
+.centered{
+    text-align: center;
+}
+
+#timeintervall th{
+    text-align: center;
+}
+
+#timeintervall td{
+    text-align: center;
+}
+
+.float_right{
+    float: right;
+}
+
+.padding_unten{
+    padding-bottom: 5px
+}
+
+.wetter_icon_width{
+    width: 250px;
+}
+
+.wetter_icon_position{
+    position: absolute; 
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.gray{
+    color: gray;
+}
+
+.full, .login-box{
+    height: 100%;
+    width: 100%;
+}

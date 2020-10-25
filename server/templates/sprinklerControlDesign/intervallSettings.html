@@ -5,20 +5,9 @@
 
 {% block content %}
 
-<style>
-    .head_background{
-        background: rgb(2,0,36); 
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);
-    }
-    th, td{
-        text-align: center;
-    }
-</style>
-
 <div class="row">
-    <nav style="background: rgb(2,0,36); 
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
-        <div class="nav-wrapper" style="margin-top: 10px;">
+    <nav class="navbarColor">
+        <div class="nav-wrapper abstand_oben_mittel">
             <div class="col s12">
             <a href="/" class="breadcrumb">Übersicht</a>
             <a href="/settings" class="breadcrumb">Einstellungen</a>
@@ -28,8 +17,8 @@
     </nav>
     <div class="container">
         <h5>Zeitintervalle</h5>
-        <table>
-            <tr class="head_background">
+        <table id="timeintervall">
+            <tr class="navbarColor centered">
                 <th>Bezeichnung</th>
                 <th>Beschreibung</th>
                 <th>Startzeit</th>
@@ -39,7 +28,7 @@
                 <th><i class="small material-icons">edit</i></th>
             </tr>
             {% for w in WeeklyRepeatingTimer|dictsort:"label" %}
-            <tr>
+            <tr class="centered">
                 <td>{{w.label}}</td>
                 <td>{{w.description}}</td>
                 <td>{{w.timestart|date:'H:i'}} Uhr</td>
@@ -59,8 +48,7 @@
                     </ul>
                 </td>
                 <td><a href="/settings/{{w.id}}_alter_timer?next=/settings/timer_list" class="waves-effect waves-light btn">Editieren</a></td>
-            </tr>
-            
+            </tr>  
             {% endfor %}
         </table>
     </div>

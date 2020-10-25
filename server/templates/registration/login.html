@@ -1,8 +1,12 @@
 {% load materializecss %}
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html class="full">
 
 <head>
+
+  <link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
+
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
@@ -12,24 +16,13 @@
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    html,
-    body,
-    .login-box {
-      height: 100%;
-      width: 100%;
-    }
-  </style>
 </head>
 
-<body>
+<body class="full">
   <div class="valign-wrapper row login-box">
     <div class="col s6 offset-s3">
       <div class="card horizontal">
-        <div class="card-image white-text"
-          style="background: rgb(2,0,36); 
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 81%); width: 250px;">
-
+        <div class="card-image white-text navbarColor">
           <div>
             <img src="https://i.ibb.co/1X1ds9J/Icon-Sprinkler-An-V2.png" />
           </div>
