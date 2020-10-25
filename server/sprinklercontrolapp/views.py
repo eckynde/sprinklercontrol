@@ -167,6 +167,16 @@ class weather(LoginRequiredMixin, ListView):
             context['WeatherForecast'] = None
         return context
 
+class intervallSettings(LoginRequiredMixin, ListView):
+    template_name = 'sprinklerControlDesign/intervallSettings.html'
+    model = WeeklyRepeatingTimer
+    context_object_name = "WeeklyRepeatingTimer"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['WeeklyRepeatingTimer'] = WeeklyRepeatingTimer.objects.all()
+        return context
+
 @api_view(['POST'])
 @login_required
 def sprinkler_activate(request, pk):
