@@ -114,7 +114,7 @@ class Preferences(Singleton):
 
 
 class SprinklerPoweredHistory(models.Model):
-    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name=Sprinkler)
+    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name='Sprinkler')
     timeofevent = models.DateTimeField(verbose_name="Eventzeit")
     powered = models.BooleanField(verbose_name="Angeschaltet")
 

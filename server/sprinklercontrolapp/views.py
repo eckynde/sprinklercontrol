@@ -12,6 +12,8 @@ from datetime import datetime
 import pytz
 import time
 
+from sprinklercontrolapp.power import setPowerstate
+
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
@@ -274,11 +276,9 @@ def sprinkler_activate(request, pk):
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     # set mode to manual, turn on
-    Sprinkler.objects.filter(pk=pk).update(mode='M', power=True)
+    Sprinkler.objects.filter(pk=pk).update(mode='M')
+    setPowerstate(pk, True)
 
-    # add to history
-    SprinklerPoweredHistory.objects.create(sprinkler=Sprinkler.objects.get(
-        pk=pk), timeofevent=datetime.now(tz=pytz.timezone("Europe/Berlin")), powered=True)
     return JsonResponse({'message': 'Sprinkler has been activated successfully!'}, status=status.HTTP_200_OK)
 
 # overview page api endpoint: turn off sprinkler
@@ -293,11 +293,9 @@ def sprinkler_deactivate(request, pk):
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     # set mode to manual, turn off
-    Sprinkler.objects.filter(pk=pk).update(mode='M', power=False)
+    Sprinkler.objects.filter(pk=pk).update(mode='M')
+    setPowerstate(pk, False)
 
-    # add to history
-    SprinklerPoweredHistory.objects.create(sprinkler=Sprinkler.objects.get(
-        pk=pk), timeofevent=datetime.now(tz=pytz.timezone("Europe/Berlin")), powered=False)
     return JsonResponse({'message': 'Sprinkler has been deactivated successfully!'}, status=status.HTTP_200_OK)
 
 # overview page api endpoint: set sprinkler mode
@@ -314,7 +312,8 @@ def sprinkler_mode(request, pk, mode):
     # apply mode
     if mode == 'manual':
         # set mode to manual, turn off
-        Sprinkler.objects.filter(pk=pk).update(mode='M', power=False)
+        Sprinkler.objects.filter(pk=pk).update(mode='M')
+        setPowerstate(pk, False)
 
     elif mode == 'plan':
         # set mode to plan
@@ -325,13 +324,14 @@ def sprinkler_mode(request, pk, mode):
                 pk=i.get("timers")).values()
             now = datetime.now().time()
             if now > times[0]["timestart"] and now < times[0]["timestop"]:
-                Sprinkler.objects.filter(pk=pk).update(power=True)
+                setPowerstate(pk, True)
                 return JsonResponse({'message': 'Sprinkler has been set to ' + mode + ' successfully!'}, status=status.HTTP_200_OK)
-        Sprinkler.objects.filter(pk=pk).update(power=False)
+        setPowerstate(pk, False)
 
     elif mode == 'smart':
         # set mode to smart
         Sprinkler.objects.filter(pk=pk).update(mode='S')
+        setPowerstate(pk, False)
     else:
         return JsonResponse({'message': 'The mode ' + mode + ' does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
