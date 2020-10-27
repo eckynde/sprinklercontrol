@@ -86,10 +86,10 @@
             class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">add</i></a></h5>
 
     <div class="row">
-        {% for z in IrrigationPlan %}
+        {% for z in IrrigationPlan|dictsort:"label" %}
         <div class="col s12 m6">
-            <div class="card teal">
-                <div class="card-content white-text">
+            <div class="card {% if z.active %}teal{% else %} teal lighten-3 {% endif %}">
+                <div class="card-content {% if z.active %}white-text{% else %}black-text{% endif %}">
                     <span class="card-title vertical_centered"><b>{{z.label}} </b>
                         <a href="/settings/{{z.id}}_alter_irrigation_plan" class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons icon_width vertical_centered">settings</i></a>
                     </span>
