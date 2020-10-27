@@ -7,9 +7,8 @@
 
 {% block content %}
 <div class="row">
-    <nav style="background: rgb(2,0,36); 
-			background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
-        <div class="nav-wrapper" style="margin-top: 10px;">
+    <nav class="navbarColor">
+        <div class="nav-wrapper abstand_oben_mittel">
             <div class="col s12">
             <a href="/" class="breadcrumb">Übersicht</a>
             <a href="/settings" class="breadcrumb">Einstellungen</a>
@@ -26,8 +25,8 @@
                 {% csrf_token %}
                 <p>
                     <div class="row">
-                        <button style="margin-top: 10px;" type="submit"
-                        class="waves-effect waves light btn-large col s3">Löschen</button>
+                        <button type="submit"
+                        class="waves-effect waves light btn-large col s3 abstand_oben_mittel">Löschen</button>
                     </div>
                 </p>
             </form>

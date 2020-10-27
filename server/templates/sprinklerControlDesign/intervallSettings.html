@@ -1,0 +1,56 @@
+{% extends 'sprinklerControlDesign/base.html' %}
+{% load materializecss %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <nav class="navbarColor">
+        <div class="nav-wrapper abstand_oben_mittel">
+            <div class="col s12">
+            <a href="/" class="breadcrumb">Übersicht</a>
+            <a href="/settings" class="breadcrumb">Einstellungen</a>
+            <a class="breadcrumb">Zeitintervalle anzeigen</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h5>Zeitintervalle</h5>
+        <table id="timeintervall">
+            <tr class="navbarColor centered white-text">
+                <th>Bezeichnung</th>
+                <th>Beschreibung</th>
+                <th>Startzeit</th>
+                <th>Stopzeit</th>
+                <th>Wochentage</th>
+                <th>Zugeordnete<br>Sprinkler</th>
+                <th><i class="small material-icons">edit</i></th>
+            </tr>
+            {% for w in WeeklyRepeatingTimer|dictsort:"label" %}
+            <tr class="centered">
+                <td>{{w.label}}</td>
+                <td>{{w.description}}</td>
+                <td>{{w.timestart|date:'H:i'}} Uhr</td>
+                <td>{{w.timestop|date:'H:i'}} Uhr</td> 
+                <td>
+                    <ul>
+                        {% for wd in w.weekdays.all %}
+                        <li>{{wd.label}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for sp in w.sprinklers.all %}
+                        <li>{{sp.label}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td><a href="/settings/{{w.id}}_alter_timer?next=/settings/timer_list" class="waves-effect waves-light btn">Editieren</a></td>
+            </tr>  
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

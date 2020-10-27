@@ -74,12 +74,6 @@ class alter_sprinkler(LoginRequiredMixin, UpdateView):
         return get_object_or_404(Sprinkler, id=id_)
 
 
-class weekly_timers_list(LoginRequiredMixin, ListView):
-    template_name = 'sprinklercontrolapp/weekly_timers_list.html'
-    model = WeeklyRepeatingTimer
-    context_object_name = "WeeklyRepeatingTimer"
-
-
 class alter_weekly_timers(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/intervallAlterForm.html'
     form_class = WeeklyTimersForm
@@ -222,9 +216,6 @@ def CalendarView(request):
     return render(request, 'sprinklerControlDesign/calendar.html', context)
 
 
-class weather(TemplateView):
-    template_name = 'sprinklercontrolapp/weather.html'
-
 class weather(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/weather.html'
     model = WeatherCurrent
@@ -240,6 +231,16 @@ class weather(LoginRequiredMixin, ListView):
             context['WeatherForecast'] = WeatherForecast.objects.latest('id')
         except WeatherForecast.DoesNotExist:
             context['WeatherForecast'] = None
+        return context
+
+class intervallSettings(LoginRequiredMixin, ListView):
+    template_name = 'sprinklerControlDesign/intervallSettings.html'
+    model = WeeklyRepeatingTimer
+    context_object_name = "WeeklyRepeatingTimer"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['WeeklyRepeatingTimer'] = WeeklyRepeatingTimer.objects.all()
         return context
 
 @api_view(['POST'])

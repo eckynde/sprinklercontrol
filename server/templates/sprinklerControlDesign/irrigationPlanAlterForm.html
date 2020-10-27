@@ -4,7 +4,6 @@
 
 {% endblock %}
 
-
 {% block content %}
 
 <script>
@@ -14,9 +13,8 @@
 </script>
 
 <div class="row">
-    <nav style="background: rgb(2,0,36); 
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
-        <div class="nav-wrapper" style="margin-top: 10px;">
+    <nav class="navbarColor">
+        <div class="nav-wrapper abstand_oben_mittel">
             <div class="col s12">
             <a href="/" class="breadcrumb">Übersicht</a>
             <a href="/settings" class="breadcrumb">Einstellungen</a>
@@ -53,8 +51,9 @@
                     <div class="input-field col s12">
                         <div class="card teal white-text">
                             <div class="card-content">
-                                <span class="card-title"><b>{{timers.label}} 
-                                <a style="float: right;" href="/settings/{{timers.id}}_alter_timer?next=/settings/{{form.instance.id}}_alter_irrigation_plan" class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons">settings</i></a>
+                                <span class="card-title vertical_centered"><b>{{timers.label}} 
+                                <a href="/settings/{{timers.id}}_alter_timer?next=/settings/{{form.instance.id}}_alter_irrigation_plan" 
+                                class="btn-floating btn-medium waves-effect waves-light teal float_right vertical_centered"><i class="material-icons vertical_centered">settings</i></a>
                                 </b>
                             </div>
                         </div>   
@@ -62,11 +61,11 @@
                     {% endfor %}
                     <div class="row">
                         <div class="col s12">
-                            <button style="margin-top: 10px;" type="submit"
-                            class="waves-effect waves light btn-large col s3">Speichern</button>
+                            <button type="submit"
+                            class="waves-effect waves light btn-large col s3 abstand_oben_mittel">Speichern</button>
                             <div class="col s1"></div>
-                            <a style="margin-top: 10px;" href="/settings/{{object.id}}_delete_irrigation_plan"
-                            class="waves-effect waves light btn-large col s3">Löschen</a>
+                            <a href="/settings/{{object.id}}_delete_irrigation_plan"
+                            class="waves-effect waves light btn-large col s3 abstand_oben_mittel">Löschen</a>
                         </div>
                     </div>
                 </form>

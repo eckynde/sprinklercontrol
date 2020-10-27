@@ -1,78 +1,67 @@
 {% extends 'sprinklerControlDesign/base.html' %}
-{% load static %}
 {% load materializecss %}
 {% block title %}
 {% endblock %}
 
 {% block content %}
 
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
 
-	<script>
-		$(document).ready(function () {
-			$('select').formSelect();
+<script>
+	$(document).ready(function () {
+		$('select').formSelect();
+	});
+</script>
+
+
+<script>
+	$(document).ready(function () {
+		$('#id_timestart').timepicker({
+			twelveHour: false,
+			i18n: {
+				cancel: 'Abbrechen',
+				clear: 'Leeren',
+				done: 'Weiter'
+			}
 		});
-	</script>
-
-	<link rel="stylesheet" type="text/css" href='{% static "sprinklerControlDesign/style.css" %}'>
-
-	<script>
-		$(document).ready(function () {
-			$('#id_timestart').timepicker({
-				twelveHour: false,
-				i18n: {
-					cancel: 'Abbrechen',
-					clear: 'Leeren',
-					done: 'Weiter'
-				}
-			});
-			$('#id_timestop').timepicker({
-				twelveHour: false,
-				i18n: {
-					cancel: 'Abbrechen',
-					clear: 'Leeren',
-					done: 'Weiter'
-				}
-			});
+		$('#id_timestop').timepicker({
+			twelveHour: false,
+			i18n: {
+				cancel: 'Abbrechen',
+				clear: 'Leeren',
+				done: 'Weiter'
+			}
 		});
-	</script>
+	});
+</script>
 
-</head>
+<div class="row">
 
-	<body>
-		<div class="row">
-
-			<nav style="background: rgb(2,0,36); 
-			background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(77,182,172,1) 0%, rgba(0,150,136,1) 100%);">
-				<div class="nav-wrapper" style="margin-top: 20px;">
-					<div class="col s12">
-					<a href="/settings" class="breadcrumb">Einstellungen</a>
-					<a class="breadcrumb">Zeitintervall erstellen</a>
-					</div>
-				</div>
-            </nav>
-
-            <div class="col s12 m9 l6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-title">Zeitintervall erstellen</div>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form|materializecss }}
-                        <p>
-                            <div class="row">
-                                <button style="margin-top: 10px;" type="submit"
-                                class="waves-effect waves light btn-large col s3">Erstellen</button>
-                            </div>    
-                        </p>
-                    </form>
-                    </div>
-                </div>
-            </div>
+	<nav class="navbarColor">
+		<div class="nav-wrapper abstand_oben_groß">
+			<div class="col s12">
+			<a href="/settings" class="breadcrumb">Einstellungen</a>
+			<a class="breadcrumb">Zeitintervall erstellen</a>
+			</div>
 		</div>
-	</body>
-</html>
+	</nav>
+
+	<div class="col s12 m9 l6">
+		<div class="card">
+			<div class="card-content">
+				<div class="card-title">Zeitintervall erstellen</div>
+			<form method="post">
+				{% csrf_token %}
+				{{ form|materializecss }}
+				<p>
+					<div class="row">
+						<button type="submit"
+						class="waves-effect waves light btn-large col s3 abstand_oben_mittel">Erstellen</button>
+					</div>    
+				</p>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
