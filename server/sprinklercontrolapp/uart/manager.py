@@ -6,10 +6,12 @@ logger = logging.getLogger(__name__)
 
 class UARTManager:
     def __init__(self, uart_port, uart_baudrate = None):
+        # Create and configure a Serial instance that represents the UART interface
         uart = Serial()
         uart.port = uart_port
 
         if uart_baudrate == None:
+            # If not specified, use highest available baudrate
             uart.baudrate = uart.BAUDRATES[:1]
         else:
             uart.baudrate = uart_baudrate
@@ -25,10 +27,10 @@ class UARTManager:
         with self.open_uart() as uart:
             results = []
 
-            while uart.in_waiting > 4: # 4 for document length + 1 terminating byte
+            while uart.in_waiting > 4: # Minimal BSON document is 5 bytes long
                 first_four_bytes = uart.read(4)
-                byte_count = int.from_bytes(first_four_bytes, "little", signed=True)
-                rest_of_bson = uart.read(byte_count - 4)
+                doc_length = int.from_bytes(first_four_bytes, "little", signed=True)
+                rest_of_bson = uart.read(doc_length - 4)
                 results.insert(first_four_bytes + rest_of_bson)
 
             if uart.in_waiting > 0: 
@@ -48,4 +50,5 @@ class UARTManager:
             logger.error("Error on opening UART: Invalid configuration (" + ve + ")")
             return None
         else:
+            logger.info("UART port has been opened")
             return self.uart
