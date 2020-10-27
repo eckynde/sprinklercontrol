@@ -86,13 +86,13 @@ if sunrise_DT-1800 >= current_time_DT-1800 and sunrise_DT-1800 < current_time_DT
         if demandSunrise > 0:
             #Schedule morning deactivation
             sprinkler_list.append(objs.id)
-            Schedule.objects.create(name=name+str(objs.id),func='tasks.deaktivate', args=str(objs.id),repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunrise_DT+demandSunrise))
+            Schedule.objects.create(name=name+str(objs.id),func='tasks.deactivate', args=str(objs.id),repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunrise_DT+demandSunrise))
 
     #Schedule morning activation
     name = day + '.' + month + '.' + year +' - activate morning - sprinkler: '
     args = ','.join(map(str,sprinkler_list))
     if args != '':
-        Schedule.objects.create(name=name+args,func='tasks.aktivate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunrise_DT))
+        Schedule.objects.create(name=name+args,func='tasks.activate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunrise_DT))
        
 else:
     sprinkler_list=[]
@@ -102,10 +102,10 @@ else:
         if demandSunset > 0:
             #Schedule evening deactivation
             sprinkler_list.append(objs.id)
-            Schedule.objects.create(name=name+str(objs.id),func='tasks.deaktivate', args=str(objs.id),repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunset_DT+demandSunset))
+            Schedule.objects.create(name=name+str(objs.id),func='tasks.deactivate', args=str(objs.id),repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunset_DT+demandSunset))
 
     #Schedule evening activation
     name = day + '.' + month + '.' + year +' - activate evening - sprinkler: '
     args = ','.join(map(str,sprinkler_list))
     if args != '':
-        Schedule.objects.create(name=name+args,func='tasks.aktivate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunset_DT))
+        Schedule.objects.create(name=name+args,func='tasks.activate', args=args,repeats=1 ,schedule_type=Schedule.ONCE,next_run=datetime.fromtimestamp(sunset_DT))

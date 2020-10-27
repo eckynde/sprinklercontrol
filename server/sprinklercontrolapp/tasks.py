@@ -1,12 +1,17 @@
-from sprinklercontrolapp.models import Sprinkler
+from sprinklercontrolapp.models import SprinklerPoweredHistory, Sprinkler
 
-def aktivate(args):
+import pytz
+from datetime import datetime
+
+def activate(*args):
     for objs in args:
         Sprinkler.objects.filter(pk=objs).update(power=True)
+        SprinklerPoweredHistory.objects.create(sprinkler=Sprinkler.objects.get(pk=objs), timeofevent=datetime.now(tz=pytz.timezone("Europe/Berlin")), powered=True)
 
-def deaktivate(args):
+def deactivate(*args):
     for objs in args:
         Sprinkler.objects.filter(pk=objs).update(power=False)
+        SprinklerPoweredHistory.objects.create(sprinkler=Sprinkler.objects.get(pk=objs), timeofevent=datetime.now(tz=pytz.timezone("Europe/Berlin")), powered=False)
 
 def controlSmartSprinkler():
     import sprinklercontrolapp.controlSmartSprinkler
