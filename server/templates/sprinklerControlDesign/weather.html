@@ -40,32 +40,33 @@
     <div class="section">
         <h5 class="abstand_links_mittel"><b>Wettervorhersage</b></h5>
         <div class="row">
-            <div class="col s12 m12 l6 xl4">
+            <div class="col s12 m12 l12 xl6">
                 {% if WeatherForecast %}
                 <h5 class="header">{{WeatherForecast.city}}</h5>
                 <div class="card horizontal">
                     <div class="card-image wetter_icon_width navbarColor">
-                        <img src="http://openweathermap.org/img/wn/{{WeatherForecast.icon_ID}}@4x.png" />
+                        <div class="wetter_icon_position">
+                            <img src="http://openweathermap.org/img/wn/{{WeatherForecast.icon_ID}}@4x.png" />
+                        </div>
+                        <span class="card-title"><b>{{WeatherForecast.temperature|floatformat }} <span>&#8451;</span></b></span>
                     </div>
-                    <span class="card-title"><b>{{WeatherForecast.temperature|floatformat }} <span>&#8451;</span></b></span>
-                </div>
-                <div class="card-stacked">  
-                    <div class="card-content">
-                        <b>Wetter:</b> {{WeatherForecast.weather_type}}<br>
-                        <b>Wetterbeschreibung:</b> {{WeatherForecast.weather_desc|title}}<br>
-                        <b>Bewölkung:</b> {{WeatherForecast.clouds}} %<br>
-                        <b>Regen letzte Stunde:</b> {{WeatherForecast.rain1h}} mm<br>
+                    <div class="card-stacked">  
+                        <div class="card-content">
+                            <p><b>Wetter:</b> {{WeatherForecast.weather_type}}</p>
+                            <p><b>Wetterbeschreibung:</b> {{WeatherForecast.weather_desc|title}}</p>
+                            <p><b>Bewölkung:</b> {{WeatherForecast.clouds}} %</p>
+                            <p><b>Regen letzte Stunde:</b> {{WeatherForecast.rain1h}} mm</p>
+                        </div>
+                        <div class="card-action">
+                            <span class="gray"><b>Vorhersage für:</b> {{ WeatherForecast.dt|timestamp_to_time|date:"l d.m.Y H:i" }} Uhr</span>
+                        </div> 
                     </div>
-                    <div class="card-action">
-                        <span class="gray"><b>Vorhersage für:</b> {{ WeatherForecast.dt|timestamp_to_time|date:"l d.m.Y H:i" }}</span>
-                    </div> 
                 </div>
             </div>
         </div>
-    </div>
-    {% else %}
-    <h5 class="header">Keine Wettervorhersage verfügbar</h5>
-    {% endif %}
+        {% else %}
+        <h5 class="header">Kein aktuelles Wetter verfügbar</h5>
+        {% endif %}
     </div>
 </div>
 
