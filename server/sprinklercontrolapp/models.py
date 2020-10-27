@@ -7,6 +7,8 @@ class Sprinkler(models.Model):
     description = models.CharField(max_length=150, verbose_name='Ort/Beschreibung')
     power = models.BooleanField(verbose_name='Eingeschaltet', default=False)
     mode = models.CharField(max_length=1, default='P', verbose_name='Modus')
+    demand = models.DecimalField(max_digits=6, decimal_places=2, default='0', verbose_name='Bedarf in mm am Tag')
+    output = models.DecimalField(max_digits=6, decimal_places=2, default='0', verbose_name='Leistung in mm/h')
 
     class Meta:
         verbose_name_plural = "Sprinklers"
@@ -62,6 +64,7 @@ class WeatherCurrent(models.Model):
     temperature = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Temperatur')
     timeStamp_sunrise = models.BigIntegerField(verbose_name='Zeitstempel Sonnenaufgang')
     timeStamp_sunset = models.BigIntegerField(verbose_name='Zeitstempel Sonnenuntergang')
+    icon_ID = models.CharField(max_length=5,default='', verbose_name='Icon ID')
 
     def __str__(self):
         return f'{self.dt}'
@@ -76,6 +79,7 @@ class WeatherForecast(models.Model):
     weather_type = models.CharField(max_length=40, verbose_name='Wetter Typ')
     weather_desc = models.CharField(max_length=40, verbose_name='Wetter Beschreibung')
     temperature = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Temperatur')
+    icon_ID = models.CharField(max_length=5,default='', verbose_name='Icon ID')
  
     def __str__(self):
         return f'{self.dt}'

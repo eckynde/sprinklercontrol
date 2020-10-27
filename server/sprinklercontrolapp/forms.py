@@ -4,7 +4,7 @@ from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, Irrigati
 class SprinklerForm(forms.ModelForm):
     class Meta:
         model = Sprinkler
-        fields = ['label', 'description', 'power', 'mode']
+        fields = ['label', 'description', 'power', 'mode','demand','output']
 
 
 class WeeklyTimersForm(forms.ModelForm):
