@@ -6,45 +6,46 @@ import time, datetime
 from datetime import timezone, datetime
 from django_q.models import Schedule
 
-# Simple queries
-smart_sprinklers = Sprinkler.objects.filter(mode='S')
-latest_current = WeatherCurrent.objects.latest('dt')
+def run():
+    # Simple queries
+    smart_sprinklers = Sprinkler.objects.filter(mode='S')
+    latest_current = WeatherCurrent.objects.latest('dt')
 
-# TimeCalc
-current_time = datetime.utcnow()
-year = current_time.strftime("%Y")
-month = current_time.strftime("%m")
-day = current_time.strftime("%d")
-hour = current_time.strftime("%H")
-minute = current_time.strftime("%M")
-second = current_time.strftime("%S")
+    # TimeCalc
+    current_time = datetime.utcnow()
+    year = current_time.strftime("%Y")
+    month = current_time.strftime("%m")
+    day = current_time.strftime("%d")
+    hour = current_time.strftime("%H")
+    minute = current_time.strftime("%M")
+    second = current_time.strftime("%S")
 
-# year / month / day / hour / min / sec
-current_time_DT = current_time.replace(tzinfo=timezone.utc).timestamp()
-current_day_DT = int(datetime(int(year),int(month),int(day),0,0,0).replace(tzinfo=timezone.utc).timestamp())
-sunrise_DT = int(latest_current.timeStamp_sunrise)
-sunset_DT = int(latest_current.timeStamp_sunset)
+    # year / month / day / hour / min / sec
+    current_time_DT = current_time.replace(tzinfo=timezone.utc).timestamp()
+    current_day_DT = int(datetime(int(year),int(month),int(day),0,0,0).replace(tzinfo=timezone.utc).timestamp())
+    sunrise_DT = int(latest_current.timeStamp_sunrise)
+    sunset_DT = int(latest_current.timeStamp_sunset)
 
-# Advanced queries
-sprinkler_rain_history = WeatherCurrent.objects.filter(dt__gte = current_day_DT, dt__lte = latest_current.timeStamp_sunrise)
-sprinkler_rain_forecast = WeatherForecast.objects.filter(dt__gte = current_day_DT)
-sprinkler_rain_full_history = WeatherCurrent.objects.filter(dt__gte = current_day_DT)
+    # Advanced queries
+    sprinkler_rain_history = WeatherCurrent.objects.filter(dt__gte = current_day_DT, dt__lte = latest_current.timeStamp_sunrise)
+    sprinkler_rain_forecast = WeatherForecast.objects.filter(dt__gte = current_day_DT)
+    sprinkler_rain_full_history = WeatherCurrent.objects.filter(dt__gte = current_day_DT)
 
-# Calculation of rain since 0:00 current day (cumulative) 
-cumulative_rain1h_history = 0.00
-for objs in sprinkler_rain_history:
-    cumulative_rain1h_history += float(objs.rain1h)
+    # Calculation of rain since 0:00 current day (cumulative) 
+    cumulative_rain1h_history = 0.00
+    for objs in sprinkler_rain_history:
+        cumulative_rain1h_history += float(objs.rain1h)
 
-cumulative_rain1h_forecast = 0.00
-for objs in sprinkler_rain_forecast:
-    cumulative_rain1h_forecast += float(objs.rain1h)
+    cumulative_rain1h_forecast = 0.00
+    for objs in sprinkler_rain_forecast:
+        cumulative_rain1h_forecast += float(objs.rain1h)
 
-cumulative_rain1h_fullhistory = 0.00
-for objs in sprinkler_rain_full_history:
-    cumulative_rain1h_fullhistory += float(objs.rain1h)
+    cumulative_rain1h_fullhistory = 0.00
+    for objs in sprinkler_rain_full_history:
+        cumulative_rain1h_fullhistory += float(objs.rain1h)
 
-task_activate = 'sprinklercontrolapp.tasks.activate'
-task_deactivate = 'sprinklercontrolapp.tasks.deactivate'
+    task_activate = 'sprinklercontrolapp.tasks.activate'
+    task_deactivate = 'sprinklercontrolapp.tasks.deactivate'
 
 # Calculation of daily demand for smart sprinklers
 def schedule():
