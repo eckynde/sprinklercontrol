@@ -26,3 +26,4 @@ urlpatterns = [
     re_path(r'^api/update_city/(?P<city>(\w|,)+)$', views.update_city),
     re_path(r'^api/update_apikey/(?P<apikey>[0-9a-f]{32})$', views.update_apikey),
 ]
+# api calls use regex with named capture groups which are passed as named args
