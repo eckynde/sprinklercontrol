@@ -23,12 +23,13 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
-
+# Classbased ListView to render IrrigationPlans and Sprinklers
 class overview(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/overview.html'
     model = Sprinkler
     context_object_name = "Sprinkler"
 
+    # Get additional context Data: IrrigationPlan, Weekdays, Sprinklers
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['IrrigationPlan'] = IrrigationPlan.objects.all()
@@ -37,11 +38,13 @@ class overview(LoginRequiredMixin, ListView):
         return context
 
 
+# Settings page, not classbased
 @login_required
 def settings(request):
     return render(request, 'SprinklerControlDesign/settings.html', {'preferences': Preferences.load()})
 
 
+# Classbased view: CreateView to create Sprinklers
 class create_sprinkler(LoginRequiredMixin, CreateView):
     template_name = 'sprinklerControlDesign/sprinklercreateform.html'
     model = Sprinkler
@@ -49,22 +52,26 @@ class create_sprinkler(LoginRequiredMixin, CreateView):
     success_url = "/"
 
 
+# Classbased view: DeleteView to delete Sprinklers
 class delete_sprinkler(LoginRequiredMixin, DeleteView):
     template_name = 'sprinklerControlDesign/sprinklerdeleteform.html'
     model = Sprinkler
     success_url = "/"
 
+    # Get object, which should be deleted from URL. Not as Querystring.
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Sprinkler, id=id_)
 
 
+# Classbased view: UpdateView to alter Sprinklers
 class alter_sprinkler(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/sprinkleralterform.html'
     model = Sprinkler
     fields=['label','description','demand','output']
     success_url = '/'
 
+    # Get object, which should be altered from URL. Not as Querystring.
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Sprinkler, id=id_)
@@ -142,14 +149,17 @@ class delete_irrigation_plan(LoginRequiredMixin, DeleteView):
         return get_object_or_404(IrrigationPlan, id=id_)
 
 
+# TemplateView as classbased view
 class statistics(LoginRequiredMixin, TemplateView):
     template_name = "sprinklerControlDesign/statistics.html"
 
+    # Process context data
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         d = datetime.now(tz=pytz.timezone("Europe/Berlin"))
-
+        
+        # List of dates of last 7 days.
         dates = []
         dates.insert(1, (d-timedelta(days=1)))
         dates.insert(2, (d-timedelta(days=2)))
@@ -161,8 +171,10 @@ class statistics(LoginRequiredMixin, TemplateView):
 
         sprinklers = []
 
+        # Process all sprinklers
         for s in Sprinkler.objects.all():
             times = []
+            # Process all dates
             for d in dates:
                 anfang = d.replace(hour=0, minute=0, second=0, microsecond=0)
                 ende = d.replace(hour=23, minute=59, second=59, microsecond=0)
@@ -170,31 +182,35 @@ class statistics(LoginRequiredMixin, TemplateView):
 
                 zeitinsek = 0
 
+                # Add up the durations of the sprinklers
                 for a in alltimes:
                     if a.powered == True:
                         zeitinsek = zeitinsek - a.timeofevent.time().hour*60*60 - a.timeofevent.minute*60 - a.timeofevent.second
                     else:
                         zeitinsek = zeitinsek + a.timeofevent.time().hour*60*60 + a.timeofevent.minute*60 + a.timeofevent.second
                 
+                # Correct time, if sprinkler isnt put off until midnight
                 if alltimes.count()>0:
                     if alltimes[alltimes.count()-1].powered == True:
                         zeitinsek = zeitinsek + 24*60*60
 
                 times.append(zeitinsek/60)
             
+            # Create dictionary of sprinkler specific data
             data = {
                 'id': s.pk,
                 'label': s.label,
                 'times': times,
             }
+            # add sprinkler specific data to iterable list
             sprinklers.append(data)
         
+        # Get good readable dates
         datesf = []
-
         for d in dates:
             datesf.append(d.date().strftime("%d.%m.%Y"))
 
-        
+        # Add all to template context
         context['sprinklers'] = sprinklers
         context['dates'] = datesf
 
