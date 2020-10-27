@@ -243,48 +243,59 @@ class intervallSettings(LoginRequiredMixin, ListView):
 @login_required
 def sprinkler_activate(request, pk):
 
+    # check if sprinkler exists
     try:
         sprinkler = Sprinkler.objects.get(pk=pk)
     except Sprinkler.DoesNotExist:
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
+    # set mode to manual, turn on
     Sprinkler.objects.filter(pk=pk).update(mode='M', power=True)
 
+    # add to history
     SprinklerPoweredHistory.objects.create(sprinkler=Sprinkler.objects.get(
         pk=pk), timeofevent=datetime.now(tz=pytz.timezone("Europe/Berlin")), powered=True)
     return JsonResponse({'message': 'Sprinkler has been activated successfully!'}, status=status.HTTP_200_OK)
 
-
+# overview page api endpoint: turn off sprinkler
 @api_view(['POST'])
 @login_required
 def sprinkler_deactivate(request, pk):
 
+    # check if sprinkler exists
     try:
         sprinkler = Sprinkler.objects.get(pk=pk)
     except Sprinkler.DoesNotExist:
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
+    # set mode to manual, turn off
     Sprinkler.objects.filter(pk=pk).update(mode='M', power=False)
 
+    # add to history
     SprinklerPoweredHistory.objects.create(sprinkler=Sprinkler.objects.get(
         pk=pk), timeofevent=datetime.now(tz=pytz.timezone("Europe/Berlin")), powered=False)
     return JsonResponse({'message': 'Sprinkler has been deactivated successfully!'}, status=status.HTTP_200_OK)
 
-
+# overview page api endpoint: set sprinkler mode
 @api_view(['POST'])
 @login_required
 def sprinkler_mode(request, pk, mode):
 
+    # check if sprinkler exists
     try:
         sprinkler = Sprinkler.objects.get(pk=pk)
     except Sprinkler.DoesNotExist:
         return JsonResponse({'message': 'The sprinkler does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
+    # apply mode
     if mode == 'manual':
-        Sprinkler.objects.filter(pk=pk).update(mode='M')
-        Sprinkler.objects.filter(pk=pk).update(power=False)
+        # set mode to manual, turn off
+        Sprinkler.objects.filter(pk=pk).update(mode='M', power=False)
+
     elif mode == 'plan':
+        # set mode to plan
         Sprinkler.objects.filter(pk=pk).update(mode='P')
+        # check if sprinkler is scheduled to be running now and set state accordingly
         for i in IrrigationPlan.objects.filter(active=True).values("timers"):
             times = WeeklyRepeatingTimer.objects.filter(
                 pk=i.get("timers")).values()
@@ -293,7 +304,9 @@ def sprinkler_mode(request, pk, mode):
                 Sprinkler.objects.filter(pk=pk).update(power=True)
                 return JsonResponse({'message': 'Sprinkler has been set to ' + mode + ' successfully!'}, status=status.HTTP_200_OK)
         Sprinkler.objects.filter(pk=pk).update(power=False)
+
     elif mode == 'smart':
+        # set mode to smart
         Sprinkler.objects.filter(pk=pk).update(mode='S')
     else:
         return JsonResponse({'message': 'The mode ' + mode + ' does not exist'}, status=status.HTTP_404_NOT_FOUND)
@@ -301,6 +314,7 @@ def sprinkler_mode(request, pk, mode):
     return JsonResponse({'message': 'Sprinkler has been set to ' + mode + ' successfully!'}, status=status.HTTP_200_OK)
 
 
+# settings page api endpoint: set OpenWeatherMap city
 @api_view(['POST'])
 @login_required
 def update_city(request, city):
@@ -310,7 +324,7 @@ def update_city(request, city):
     return JsonResponse({'message': 'City has been set to ' + city + ' successfully!'}, status=status.HTTP_200_OK)
 
 
-
+# settings page api endpoint: set OpenWeatherMap api key
 @api_view(['POST'])
 @login_required
 def update_apikey(request, apikey):
