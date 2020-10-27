@@ -44,10 +44,10 @@ class UARTManager:
         try:
             self.uart.open()
         except SerialException as se:
-            logger.error("Error on opening UART:" + se)
+            logger.error("Error on opening UART:" + str(se))
             return None
         except ValueError as ve:
-            logger.error("Error on opening UART: Invalid configuration (" + ve + ")")
+            logger.error("Error on opening UART: Invalid configuration (" + str(ve) + ")")
             return None
         else:
             logger.info("UART port has been opened")
