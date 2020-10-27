@@ -10,7 +10,7 @@
 <div class="row content">
     <div class="col s12">
         <h5>
-            <b>5-Tage-Verlauf</b>
+            <b>7-Tage-Verlauf</b>
         </h5>
     </div>
     {% for s in sprinklers %}
@@ -42,7 +42,7 @@
     datasets: [{
         label: '{{s.label}}',
         data: [{% for t in s.times %}
-        {{ t }},
+        {{ t|floatformat:2 }},
     {% endfor %}],
         backgroundColor: [
             '#00897b',

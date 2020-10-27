@@ -29,9 +29,7 @@
     <div class="row">
         <form class="col s12">
             <h5>Wetter</h5>
-            <div class="section">
-                <p>SprinklerCtrl bezieht im Smart-Modus Wetterdaten über die OpenWeatherMap-API. Bitte tragen Sie im Folgenden Ihre Stadt und Ihren API-Key ein.</p>
-            </div>
+            <p>SprinklerCtrl bezieht im Smart-Modus Wetterdaten über die OpenWeatherMap-API. Bitte tragen Sie im Folgenden Ihre Stadt und Ihren API-Key ein.</p>
             <div class="row">
                 <div class="input-field col s12">
                     <input placeholder="Wietmarschen" id="city" type="text" value="{{ preferences.city }}" autocomplete="off">
@@ -42,8 +40,11 @@
             <a class="waves-effect waves-light btn" onclick="updateCity()">Übernehmen</a>
         </form>
     </div>
+    <div class="divider"></div>
     <div class="row">
         <form class="col s12">
+            <h5>API-Key</h5>
+            <p>Hier muss ein Weather-API-Key eingetragen werden, um den Smart-Modus aktivieren zu können.</p>
                 <div class="row">
                 <div class="input-field col s12">
                     <input placeholder="0123456789abcdef0123456789abcdef" id="apikey" type="text" value="{{ preferences.apikey }}" autocomplete="off">

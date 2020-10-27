@@ -20,60 +20,68 @@
                         <div class="wetter_icon_position">
                             <img src="http://openweathermap.org/img/wn/{{WeatherCurrent.icon_ID}}@4x.png" />
                         </div>
-                        <span class="card-title"><b>{{WeatherCurrent.temperature|floatformat }} <span>&#8451;</span></b></span>
+                        <span class="card-title"><b>{{WeatherCurrent.temperature|floatformat }}
+                                <span>&#8451;</span></b></span>
                     </div>
-                    <div class="card-stacked">  
+                    <div class="card-stacked">
                         <div class="card-content">
                             <p><b>Wetter:</b> {{WeatherCurrent.weather_type}}</p>
                             <p><b>Wetterbeschreibung:</b> {{WeatherCurrent.weather_desc|title}}</p>
                             <p><b>Bewölkung:</b> {{WeatherCurrent.clouds}} %</p>
                             <p><b>Regen letzte Stunde:</b> {{WeatherCurrent.rain1h}} mm</p>
-                            <p><b>Sonnenaufgang:</b> {{WeatherCurrent.timeStamp_sunrise|timestamp_to_time|date:"H:i"}} Uhr</p>
-                            <p><b>Sonnenuntergang:</b> {{WeatherCurrent.timeStamp_sunset|timestamp_to_time|date:"H:i"}} Uhr</p>
+                            <p><b>Sonnenaufgang:</b> {{WeatherCurrent.timeStamp_sunrise|timestamp_to_time|date:"H:i"}}
+                                Uhr</p>
+                            <p><b>Sonnenuntergang:</b> {{WeatherCurrent.timeStamp_sunset|timestamp_to_time|date:"H:i"}}
+                                Uhr</p>
                         </div>
                         <div class="card-action">
-                            <span class="gray"><b>Letzte Aktualisierung:</b> {{ WeatherCurrent.dt|timestamp_to_time|date:"l d.m.Y H:i" }} Uhr</span>
-                        </div> 
+                            <span class="gray"><b>Letzte Aktualisierung:</b>
+                                {{ WeatherCurrent.dt|timestamp_to_time|date:"l d.m.Y H:i" }} Uhr</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         {% else %}
         <h5 class="header">Kein aktuelles Wetter verfügbar</h5>
-        {% endif %}
     </div>
+    {% endif %}
+</div>
 
-    <div class="section">
-        <h5 class="abstand_links_mittel"><b>Wettervorhersage</b></h5>
-        <div class="row">
-            <div class="col s12 m12 l12 xl6">
-                {% if WeatherForecast %}
-                <h5 class="header">{{WeatherForecast.city}}</h5>
-                <div class="card horizontal">
-                    <div class="card-image wetter_icon_width navbarColor">
-                        <div class="wetter_icon_position">
-                            <img src="http://openweathermap.org/img/wn/{{WeatherForecast.icon_ID}}@4x.png" />
-                        </div>
-                        <span class="card-title"><b>{{WeatherForecast.temperature|floatformat }} <span>&#8451;</span></b></span>
+<div class="section">
+    <h5 class="abstand_links_mittel"><b>Wettervorhersage</b></h5>
+    <div class="row">
+        <div class="col s12 m12 l12 xl6">
+            {% if WeatherForecast %}
+            <h5 class="header">{{WeatherForecast.city}}</h5>
+            <div class="card horizontal">
+                <div class="card-image wetter_icon_width navbarColor">
+                    <div class="wetter_icon_position">
+                        <img src="http://openweathermap.org/img/wn/{{WeatherForecast.icon_ID}}@4x.png" />
                     </div>
-                    <div class="card-stacked">  
-                        <div class="card-content">
-                            <p><b>Wetter:</b> {{WeatherForecast.weather_type}}</p>
-                            <p><b>Wetterbeschreibung:</b> {{WeatherForecast.weather_desc|title}}</p>
-                            <p><b>Bewölkung:</b> {{WeatherForecast.clouds}} %</p>
-                            <p><b>Regen letzte Stunde:</b> {{WeatherForecast.rain1h}} mm</p>
-                        </div>
-                        <div class="card-action">
-                            <span class="gray"><b>Vorhersage für:</b> {{ WeatherForecast.dt|timestamp_to_time|date:"l d.m.Y H:i" }} Uhr</span>
-                        </div> 
+                    <span class="card-title"><b>{{WeatherForecast.temperature|floatformat }}
+                            <span>&#8451;</span></b></span>
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p><b>Wetter:</b> {{WeatherForecast.weather_type}}</p>
+                        <p><b>Wetterbeschreibung:</b> {{WeatherForecast.weather_desc|title}}</p>
+                        <p><b>Bewölkung:</b> {{WeatherForecast.clouds}} %</p>
+                        <p><b>Regen letzte Stunde:</b> {{WeatherForecast.rain1h}} mm</p>
+                    </div>
+                    <div class="card-action">
+                        <span class="gray"><b>Vorhersage für:</b>
+                            {{ WeatherForecast.dt|timestamp_to_time|date:"l d.m.Y H:i" }} Uhr</span>
                     </div>
                 </div>
             </div>
         </div>
-        {% else %}
-        <h5 class="header">Kein aktuelles Wetter verfügbar</h5>
-        {% endif %}
     </div>
+    {% else %}
+    <h5 class="header">Kein aktuelles Wetter verfügbar</h5>
+</div>
+{% endif %}
+</div>
 </div>
 
 

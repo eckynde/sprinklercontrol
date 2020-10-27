@@ -148,3 +148,5 @@ def write_error(num):
         temperature=0, timeStamp_sunrise=0, timeStamp_sunset=0)
     weather_db_entry.save()
     sys.exit(num)
+
+#fetch_and_schedule()

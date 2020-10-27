@@ -16,10 +16,6 @@
     color: black !important;
 }
 
-#calendar a {
-    color: #000000 !important;
-}
-
 #calendar .fc-col-header {
     background-color: #009688;
 }
@@ -88,4 +84,12 @@
 
 .icon_width{
     width: 100% !important;
+}
+
+#calendar .fc-timegrid-axis-cushion .fc-scrollgrid-shrink-cushion .fc-scrollgrid-sync-inner, .fc-col-header-cell-cushion, a.fc-timegrid-axis-cushion.fc-scrollgrid-shrink-cushion.fc-scrollgrid-sync-inner, .fc-event-main-frame div.fc-event-time, .fc-event-title.fc-sticky {
+    color: white;
+}
+
+#calendar .fc-daygrid-day-number, .fc-event-title, .fc-event-time{
+    color: black;
 }
