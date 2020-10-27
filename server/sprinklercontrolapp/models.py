@@ -19,6 +19,7 @@ class Sprinkler(models.Model):
 
 
 class Weekday(models.Model):
+    id = models.IntegerField(editable=True, primary_key=True)
     label = models.CharField(max_length=20, verbose_name='Bezeichnung')
     
     def __str__(self):
@@ -117,4 +118,3 @@ class SprinklerPoweredHistory(models.Model):
     sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name='Sprinkler')
     timeofevent = models.DateTimeField(verbose_name="Eventzeit")
     powered = models.BooleanField(verbose_name="Angeschaltet")
-

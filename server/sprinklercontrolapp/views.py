@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, ListView, CreateView, UpdateView,
 from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences, WeatherCurrent, WeatherForecast, SprinklerPoweredHistory
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm, IrrigationPlanFormCreate
 import calendar
-from datetime import datetime
+
 import pytz
 import time
 

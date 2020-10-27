@@ -161,7 +161,9 @@ CORS_ORIGIN_WHITELIST = (
 
 # UART Interface configuration
 UART = {
-    "device": "/dev/serial0", # Primary UART
-    "baudrate": 115200, # Mentioned in the config page, should work
+    #"device": "/dev/serial0", # Primary UART
+    "device": "COM1",
+    #"baudrate": 115200, # Mentioned in the config page, should work
+    "baudrate": 9600,
 }
 

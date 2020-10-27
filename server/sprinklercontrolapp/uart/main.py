@@ -1,10 +1,10 @@
-import uart.bson_helper
+import sprinklercontrolapp.uart.bson_helper
 import bson
 from server.settings import UART as UART_CONFIG
-from uart.manager import UARTManager
-from sprinklercontrolapp.models import Sprinkler
+from sprinklercontrolapp.uart.manager import UARTManager
+from sprinklercontrolapp.models import Sprinkler, SprinklerPoweredHistory
 
-manager = UARTManager(UART_CONFIG.device, UART_CONFIG.baudrate)
+manager = UARTManager(UART_CONFIG['device'], UART_CONFIG['baudrate'])
 
 # Directly control the sprinkler (on/off)
 def direct_sprinkler_control(sprinkler_uuid, active):
@@ -80,6 +80,14 @@ def get_sprinklers():
     manager.write_to_uart(bson.dumps(to_send))
     handle_read()
 
+def get_history():
+    to_send = {
+        "type": "req_history"
+    }
+
+    manager.write_to_uart(bson.dumps(to_send))
+    handle_read()
+
 def handle_read():
     docs = manager.read_from_uart()
     for doc in docs:
@@ -88,12 +96,23 @@ def handle_read():
         d_type = None
         try:
             d_type = d['type']
+
+            # res_sprinklers
             if d_type == 'res_sprinklers':
                 # this key exists (specification)
                 sprinklers = d['res_sprinklers']
                 for spr in sprinklers:
-                    Sprinkler.objects.filter(uuid=spr['uuid'])
-                    if Sprinkler.objects.count() == 0:
+                    queryset = Sprinkler.objects.filter(uuid=spr['uuid'])
+                    if queryset.count() == 0:
                         Sprinkler.objects.create(uuid=spr['uuid'], label=spr['label'])
+
+            # res_history
+            elif d_type == 'res_history':
+                history = d['res_history']
+                for hist in history:
+                    queryset = Sprinkler.objects.filter(uuid=hist['uuid'])
+                    if queryset.count() == 1:
+                        SprinklerPoweredHistory.objects.create(sprinkler=queryset[0], timeofevent=datetime.fromtimestamp(int(hist['time'])), powered=hist['power'])
+
         except KeyError:
             continue
