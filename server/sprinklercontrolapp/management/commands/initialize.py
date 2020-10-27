@@ -13,11 +13,11 @@ class Command(BaseCommand):
                 print('Aborted!')
                 return
 
-        print ('Initializing...')
+        print('Initializing...')
+        Weekday.objects.create(label='Sonntag')
         Weekday.objects.create(label='Montag')
         Weekday.objects.create(label='Dienstag')
         Weekday.objects.create(label='Mittwoch')
         Weekday.objects.create(label='Donnerstag')
         Weekday.objects.create(label='Freitag')
         Weekday.objects.create(label='Samstag')
-        Weekday.objects.create(label='Sonntag')
