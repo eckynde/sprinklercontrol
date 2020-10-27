@@ -13,8 +13,8 @@ django-materializecss-form = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 bson = "0.5.10"
-django-q = "*"
 requests = "*"
+django-q = {git = "https://github.com/Koed00/django-q.git", ref = "master"}
 
 [requires]
 python_version = "3.8"
