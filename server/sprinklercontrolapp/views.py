@@ -69,15 +69,17 @@ class alter_sprinkler(LoginRequiredMixin, UpdateView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Sprinkler, id=id_)
 
-
+# View for the altering of weekly_timers
 class alter_weekly_timers(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/intervallAlterForm.html'
     form_class = WeeklyTimersForm
 
+    # Get current weekly_timer based of the id
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
 
+    # Check after a post is submitted; If the form is valid save the changed data and send a request to a page that is defined in the 'next' variable; If not redirect to overview page
     def post(self, request, *args, **kwargs):
         id_ = self.kwargs.get("id")
         instance = WeeklyRepeatingTimer.objects.get(id=id_)
@@ -91,51 +93,50 @@ class alter_weekly_timers(LoginRequiredMixin, UpdateView):
             else:
                 return HttpResponseRedirect("/")
 
-
+# View for creating of weekly_timers
 class create_weekly_timers(LoginRequiredMixin, CreateView):
     template_name = 'sprinklerControlDesign/intervallCreateForm.html'
     model = WeeklyRepeatingTimer
     form_class = WeeklyTimersForm
     success_url = "/settings"
 
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(WeeklyRepeatingTimer, id=id_)
-
-
+# View for deleting of weekly_timers
 class delete_weekly_timers(LoginRequiredMixin, DeleteView):
     template_name = 'sprinklerControlDesign/intervallDeleteForm.html'
     model = WeeklyRepeatingTimer
     success_url = "/"
 
+    # Get current weekly_timer based of the id
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WeeklyRepeatingTimer, id=id_)
 
-
+# View for altering of irrigation_plans
 class alter_irrigation_plan(LoginRequiredMixin, UpdateView):
     template_name = 'sprinklerControlDesign/irrigationPlanAlterForm.html'
     model = IrrigationPlan
     form_class = IrrigationPlanForm
     success_url = "/"
 
+    # Get current irrigation_plan based of the id
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(IrrigationPlan, id=id_)
 
-
+# View for creating of irrigation_plans
 class create_irrigation_plan(LoginRequiredMixin, CreateView):
     template_name = 'sprinklerControlDesign/irrigationPlanCreateForm.html'
     model = IrrigationPlan
     form_class = IrrigationPlanFormCreate
     success_url = "/"
 
-
+# View for deleting of irrigation_plans
 class delete_irrigation_plan(LoginRequiredMixin, DeleteView):
     template_name = 'sprinklerControlDesign/irrigationPlanDeleteForm.html'
     model = IrrigationPlan
     success_url = "/"
 
+    # Get current irrigation_plan based of the id
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(IrrigationPlan, id=id_)
@@ -199,9 +200,10 @@ class statistics(LoginRequiredMixin, TemplateView):
 
         return context
 
-
+# View for the calendar; Loads the active irrigation plan for weekly_timers
 @login_required
 def CalendarView(request):
+    # Try-catch block for getting the active block; If no active irrigation plan is found define the variable as None
     try:
         active_plan = IrrigationPlan.objects.get(active=True)
     except IrrigationPlan.DoesNotExist:
@@ -209,31 +211,37 @@ def CalendarView(request):
     context = {
         "plan": active_plan,
     }
+    # Return render of the calendar template with the context of the active irrigation plan
     return render(request, 'sprinklerControlDesign/calendar.html', context)
 
-
+# View for the calendar 
 class weather(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/weather.html'
     model = WeatherCurrent
     context_object_name = "WeatherCurrent"
 
+    # Get latest current and forecast of weather data and returns in context
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Try and save the latest current weather data; If nothing found save as None
         try:
             context['WeatherCurrent'] = WeatherCurrent.objects.latest('id')
         except WeatherCurrent.DoesNotExist:
             context['WeatherCurrent'] = None
+        # Try and save the latest forecast weather data; If nothing found save as None
         try:
             context['WeatherForecast'] = WeatherForecast.objects.latest('id')
         except WeatherForecast.DoesNotExist:
             context['WeatherForecast'] = None
         return context
 
+# View for intervall page accessible from settings
 class intervallSettings(LoginRequiredMixin, ListView):
     template_name = 'sprinklerControlDesign/intervallSettings.html'
     model = WeeklyRepeatingTimer
     context_object_name = "WeeklyRepeatingTimer"
 
+    # Returns context of all weekly_repeating_timers to be displayed in a table for the template
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['WeeklyRepeatingTimer'] = WeeklyRepeatingTimer.objects.all()

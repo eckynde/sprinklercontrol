@@ -1,5 +1,11 @@
 {% extends 'sprinklerControlDesign/base.html' %}
 {% load timestamp_to_time %}
+
+<!--
+    Weather template. This template is used to display the newest saved weather data. The current weather is loaded each hour, while the forecast for data is loaded on sunrise.
+    Author: Frank Wagner
+-->
+
 {% block content %}
 
 <div class="container">
