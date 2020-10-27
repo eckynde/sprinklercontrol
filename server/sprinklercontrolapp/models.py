@@ -1,8 +1,9 @@
 from django.db import models
-
+import uuid
 
 # Create your models here.
 class Sprinkler(models.Model):
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False, db_index=True)
     label = models.CharField(max_length=40, verbose_name='Bezeichnung')
     description = models.CharField(max_length=150, verbose_name='Ort/Beschreibung')
     power = models.BooleanField(verbose_name='Eingeschaltet', default=False)

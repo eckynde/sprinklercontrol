@@ -21,7 +21,7 @@ class UARTManager:
             return uart.write(content)
     
     # Reads all BSON documents from the UART interface
-    def read_from_uart(self):
+    def read_from_uart(self) -> list:
         with self.open_uart() as uart:
             results = []
 
@@ -38,7 +38,7 @@ class UARTManager:
 
             return results
 
-    def open_uart(self):
+    def open_uart(self) -> Serial:
         try:
             self.uart.open()
         except SerialException as se:
