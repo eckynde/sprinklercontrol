@@ -5,11 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
-<<<<<<<
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences, WeatherCurrent, WeatherForecast
-=======
-from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences, SprinklerPoweredHistory
->>>>>>>
+from sprinklercontrolapp.models import Sprinkler, WeeklyRepeatingTimer, IrrigationPlan, Weekday, Preferences, WeatherCurrent, WeatherForecast, SprinklerPoweredHistory
 from sprinklercontrolapp.forms import SprinklerForm, WeeklyTimersForm, IrrigationPlanForm, IrrigationPlanFormCreate
 import calendar
 from datetime import datetime
