@@ -61,10 +61,10 @@
 <script>
     /* These functions are called by the apply buttons. Make api request and generate success/error toast*/
     function updateCity() {
-        $.post('/api/update_city/' + $('#city')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Die Stadt wurde gesetzt.', displayLength: 6000});}).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Die Stadt konnte nicht gesetzt werden. Bitte nur Buchstaben und Kommas verwenden.', displayLength: 6000})});
+        $.post('/api/update_city/' + $('#city')[0].value.replace(/ /g, ''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Die Stadt wurde gesetzt.', displayLength: 6000});}).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Die Stadt konnte nicht gesetzt werden. Bitte nur Buchstaben und Kommas verwenden.', displayLength: 6000})});
     }
     function updateApiKey() {
-        $.post('/api/update_apikey/' + $('#apikey')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Der API-Key wurde gesetzt.', displayLength: 6000}) }).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Der API-Key konnte nicht gesetzt werden. Bitte den hexadezimalen API-Key mit 32 Zeichen eintragen.', displayLength: 6000})});
+        $.post('/api/update_apikey/' + $('#apikey')[0].value, { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Der API-Key wurde gesetzt.', displayLength: 6000}) }).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Der API-Key konnte nicht gesetzt werden. Bitte den hexadezimalen API-Key mit 32 Zeichen eintragen.', displayLength: 6000})});
     }
 </script>
 {% endblock %}
