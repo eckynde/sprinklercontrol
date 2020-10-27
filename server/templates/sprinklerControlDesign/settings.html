@@ -34,9 +34,9 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input placeholder="Bielefeld" id="city" type="text" value="{{ preferences.city }}" autocomplete="off">
+                    <input placeholder="Wietmarschen" id="city" type="text" value="{{ preferences.city }}" autocomplete="off">
                     <label for="city">Stadt</label>
-                    <span class="helper-text" >z.B. "Bielefeld,DE"</span>
+                    <span class="helper-text" >z.B. "Wietmarschen,DE"</span>
                 </div>
             </div>
             <a class="waves-effect waves-light btn" onclick="updateCity()">Übernehmen</a>
@@ -58,6 +58,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
+    /* These functions are called by the apply buttons. Make api request and generate success/error toast*/
     function updateCity() {
         $.post('/api/update_city/' + $('#city')[0].value.replaceAll(' ',''), { csrfmiddlewaretoken: "{{ csrf_token }}"}, function () {M.toast({html: '<i class=\'material-icons green-text\'>done</i> &nbsp;Die Stadt wurde gesetzt.', displayLength: 6000});}).fail(function(){ M.toast({html: '<i class=\'material-icons red-text\'>error</i> &nbsp;Die Stadt konnte nicht gesetzt werden. Bitte nur Buchstaben und Kommas verwenden.', displayLength: 6000})});
     }
