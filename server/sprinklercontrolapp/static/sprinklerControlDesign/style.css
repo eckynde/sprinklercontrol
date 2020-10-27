@@ -85,3 +85,7 @@
     vertical-align:middle;
     display:inline;
 }
+
+.icon_width{
+    width: 100% !important;
+}

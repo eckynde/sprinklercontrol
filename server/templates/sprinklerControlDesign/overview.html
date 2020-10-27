@@ -92,14 +92,19 @@
             <div class="card teal">
                 <div class="card-content white-text">
                     <span class="card-title vertical_centered"><b>{{z.label}} </b>
-                        <a href="/settings/{{z.id}}_alter_irrigation_plan" class="btn-floating btn-medium waves-effect waves-light teal vertical_centered"><i class="material-icons vertical_centered">settings</i></a>
+                        <a href="/settings/{{z.id}}_alter_irrigation_plan" class="btn-floating btn-medium waves-effect waves-light teal"><i class="material-icons icon_width vertical_centered">settings</i></a>
                     </span>
                     <ul class="collapsible expandable">
                         {% for t in z.timers.all %}
                         <li>
-                            <div class="collapsible-header black-text grey lighten-4"><b>{{t.label}}</b></div>
+                            <div class="collapsible-header black-text grey lighten-4"><b>{{t.label}} <a href="/settings/{{t.id}}_alter_timer" class="btn-floating waves-effect waves-light"><i class="small material-icons icon_width">settings</i></a></b></div>
                             <div class="collapsible-body white black-text">
                                 <div class="section">
+                                    <p>
+                                        <b>Beschreibung: </b><br>
+                                        {{t.description}}
+                                    </p>
+                                    <br>
                                     <p>
                                         <b>Wochentage: </b>
                                         {% for w in Weekdays %}
@@ -110,6 +115,7 @@
                                     {% endif %}
                                     {% endfor %}
                                     </p>
+                                    <br>
                                     <p>
                                         <b>Zeit: </b>
                                     <div class="chip teal white-text">
@@ -117,7 +123,7 @@
                                     </div>
                                     </br>
                                     </p>
-
+                                    <br>
                                     <p>
                                         <b>Sprinklerkreise: </b>
                                         {% for s in t.sprinklers.all %}
@@ -126,7 +132,6 @@
                                     <div class="chip teal white-text">
                                         {{s.label}}
                                     </div>
-
 
                                     {% endfor %}
                                     </p>

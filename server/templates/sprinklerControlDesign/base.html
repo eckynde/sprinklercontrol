@@ -22,15 +22,6 @@
     {% block title %}
     {% endblock %}
 
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-trigger').dropdown({
-                coverTrigger: false,
-                hover: true
-            });
-        });
-    </script>
-
 </head>
 
 <body>
@@ -58,9 +49,9 @@
         <li><a href="/"><i class="small material-icons left">home</i>Übersicht</a></li>
         <li><a href="/weather"><i class="small material-icons left">cloud</i>Wetter</a></li>
         <li><a href="/calendar/"><i class="small material-icons left">event</i>Kalender</a></li>
-        <li><a href="/statistics"><i class="large material-icons left">insert_chart</i>Statistik</a></li>
+        <li><a href="/statistics"><i class="small material-icons left">insert_chart</i>Statistik</a></li>
         <li><a href="/settings/"><i class="small material-icons left">settings</i>Einstellungen</a></li>
-        <li><a href="/accounts/logout"><i class="small material-icons left">account_circle</i>Benutzer</a></li>
+        <li><a href="/accounts/logout"><i class="small material-icons left">lock_outline</i>Logout</a></li>    
     </ul>
 
 
@@ -69,6 +60,39 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-trigger').dropdown({
+                coverTrigger: false,
+                hover: true
+            });
+        });
+    </script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            M.AutoInit();
+
+            let el = document.querySelector('.tabs');
+            let instance = M.Tabs.init(el, {});
+
+
+            let elem = document.querySelectorAll('.collapsible.expandable');
+            let instanceCollapsible = M.Collapsible.init(elem, {
+                accordion: false,
+                onOpenStart: function () {
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+            $('select').formSelect();
+        });
+
+    </script>
 
     {% block script %}
     {% endblock %}
