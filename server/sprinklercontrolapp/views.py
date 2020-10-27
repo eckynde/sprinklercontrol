@@ -176,25 +176,25 @@ class statistics(LoginRequiredMixin, TemplateView):
             times = []
             # Process all dates
             for d in dates:
-                anfang = d.replace(hour=0, minute=0, second=0, microsecond=0)
-                ende = d.replace(hour=23, minute=59, second=59, microsecond=0)
-                alltimes = SprinklerPoweredHistory.objects.filter(timeofevent__range=(anfang, ende), sprinkler=s.pk).order_by("timeofevent")
+                start = d.replace(hour=0, minute=0, second=0, microsecond=0)
+                end = d.replace(hour=23, minute=59, second=59, microsecond=0)
+                alltimes = SprinklerPoweredHistory.objects.filter(timeofevent__range=(start, end), sprinkler=s.pk).order_by("timeofevent")
 
-                zeitinsek = 0
+                timeinsec = 0
 
                 # Add up the durations of the sprinklers
                 for a in alltimes:
                     if a.powered == True:
-                        zeitinsek = zeitinsek - a.timeofevent.time().hour*60*60 - a.timeofevent.minute*60 - a.timeofevent.second
+                        timeinsec = timeinsec - a.timeofevent.time().hour*60*60 - a.timeofevent.minute*60 - a.timeofevent.second
                     else:
-                        zeitinsek = zeitinsek + a.timeofevent.time().hour*60*60 + a.timeofevent.minute*60 + a.timeofevent.second
+                        timeinsec = timeinsec + a.timeofevent.time().hour*60*60 + a.timeofevent.minute*60 + a.timeofevent.second
                 
                 # Correct time, if sprinkler isnt put off until midnight
                 if alltimes.count()>0:
                     if alltimes[alltimes.count()-1].powered == True:
-                        zeitinsek = zeitinsek + 24*60*60
+                        timeinsec = timeinsec + 24*60*60
 
-                times.append(zeitinsek/60)
+                times.append(timeinsec/60/60*float(s.output))
             
             # Create dictionary of sprinkler specific data
             data = {
