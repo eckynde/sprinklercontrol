@@ -106,4 +106,10 @@ class Singleton(models.Model):
 class Preferences(Singleton):
     city = models.CharField(max_length=40, default='Bielefeld,DE', verbose_name='Stadt')
     apikey = models.CharField(max_length=40, default='', verbose_name='API-Key')
-    
+
+
+class SprinklerPoweredHistory(models.Model):
+    sprinkler = models.ForeignKey(Sprinkler, on_delete=models.CASCADE, verbose_name=Sprinkler)
+    timeofevent = models.DateTimeField(verbose_name="Eventzeit")
+    powered = models.BooleanField(verbose_name="Angeschaltet")
+

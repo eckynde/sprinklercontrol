@@ -1,0 +1,81 @@
+{% extends 'sprinklerControlDesign/base.html' %}
+{% load materializecss %}
+{% load custom_tags %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row content">
+    <div class="col s12">
+        <h5>
+            <b>5-Tage-Verlauf</b>
+        </h5>
+    </div>
+    {% for s in sprinklers %}
+    <div class="col s12 m12 l6 xl6">
+        <div class="card">
+            <div class="card-content">
+                <canvas id="sprinkler{{s.id}}chart"></canvas>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+{% for s in sprinklers %}
+<script>
+    var ctx = document.getElementById('sprinkler{{s.id}}chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for d in dates %}
+                    "{{d}}",
+                {% endfor %}
+            ],
+    datasets: [{
+        label: '{{s.label}}',
+        data: [{% for t in s.times %}
+        {{ t }},
+    {% endfor %}],
+        backgroundColor: [
+            '#00897b',
+            '#009688',
+            '#26a69a',
+            '#4db6ac',
+            '#80cbc4',
+            '#b2dfdb',
+            '#e0f2f1'
+        ],
+            borderColor: [
+                '#00897b',
+                '#009688',
+                '#26a69a',
+                '#4db6ac',
+                '#80cbc4',
+                '#b2dfdb',
+                '#e0f2f1'
+            ],
+                borderWidth: 1
+    }]
+        },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+    });
+</script>
+{% endfor %}
+
+{% endblock %}
