@@ -23,34 +23,35 @@ task_name = 'sprinklercontrolapp.tasks.control_smart_sprinkler.run'
 
 # Fetch weather data for the configured city and schedule the calculation of sprinkler demand
 def fetch_and_schedule():
-    try:
-        lon, lat = get_lon_lat(city)
-    except:
-        write_error(404)
-    else:
-        parse_json_current(get_weather_json(lon, lat))
+    if(api_key != "" or api_key is not None):
+        try:
+            lon, lat = get_lon_lat(city)
+        except:
+            write_error(404)
+        else:
+            parse_json_current(get_weather_json(lon, lat))
 
 
-        # Validates wether or not this script has been triggered 1h before sunrise within an intervall of 30 minutes
-        if sunrise_DT - 3600 >= current_DT - 1800 and sunrise_DT - 3600 < current_DT + 1800:
-            parse_json_forecast(get_weather_json(lon, lat))
-            
-            # Schedules the demand calculation 1h before sunrise and 1h before sunset
-            Schedule.objects.create(
-                name='[Morning] Calculate sprinkler demand',
-                func=task_name,
-                repeats=0,
-                schedule_type=Schedule.ONCE,
-                next_run=datetime.fromtimestamp(sunrise_DT - 1800)
-            )
+            # Validates wether or not this script has been triggered 1h before sunrise within an intervall of 30 minutes
+            if sunrise_DT - 3600 >= current_DT - 1800 and sunrise_DT - 3600 < current_DT + 1800:
+                parse_json_forecast(get_weather_json(lon, lat))
+                
+                # Schedules the demand calculation 1h before sunrise and 1h before sunset
+                Schedule.objects.create(
+                    name='[Morning] Calculate sprinkler demand',
+                    func=task_name,
+                    repeats=1,
+                    schedule_type=Schedule.ONCE,
+                    next_run=datetime.fromtimestamp(sunrise_DT - 1800)
+                )
 
-            Schedule.objects.create(
-                name='[Evening] Calculate sprinkler demand',
-                func=task_name,
-                repeats=0,
-                schedule_type=Schedule.ONCE,
-                next_run=datetime.fromtimestamp(sunset_DT - 1800)
-            )
+                Schedule.objects.create(
+                    name='[Evening] Calculate sprinkler demand',
+                    func=task_name,
+                    repeats=1,
+                    schedule_type=Schedule.ONCE,
+                    next_run=datetime.fromtimestamp(sunset_DT - 1800)
+                )
 
 # Get Longitude and Latitude for a city
 def get_lon_lat(city):
