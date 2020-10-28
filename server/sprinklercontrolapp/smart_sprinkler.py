@@ -6,7 +6,8 @@ import time, datetime
 from datetime import timezone, datetime
 from django_q.models import Schedule
 
-def run():
+# Calculation of daily demand for smart sprinklers
+def schedule():
     # Simple queries
     smart_sprinklers = Sprinkler.objects.filter(mode='S')
     latest_current = WeatherCurrent.objects.latest('dt')
@@ -16,9 +17,6 @@ def run():
     year = current_time.strftime("%Y")
     month = current_time.strftime("%m")
     day = current_time.strftime("%d")
-    hour = current_time.strftime("%H")
-    minute = current_time.strftime("%M")
-    second = current_time.strftime("%S")
 
     # year / month / day / hour / min / sec
     current_time_DT = current_time.replace(tzinfo=timezone.utc).timestamp()
@@ -47,15 +45,14 @@ def run():
     task_activate = 'sprinklercontrolapp.tasks.activate'
     task_deactivate = 'sprinklercontrolapp.tasks.deactivate'
 
-# Calculation of daily demand for smart sprinklers
-def schedule():
+
     is_morning = sunrise_DT-1800 >= current_time_DT-1800 and sunrise_DT-1800 < current_time_DT+1800
     name_prefix = '[Morning] ' if is_morning else '[Evening] '
     sprinkler_list = []
 
     # Schedule sprinkler activations
     for objs in smart_sprinklers:
-        demand = calc_demand_sunrise(objs) if is_morning else calc_demand_sunset(objs)
+        demand = calc_demand_sunrise(objs, cumulative_rain1h_history, cumulative_rain1h_forecast) if is_morning else calc_demand_sunset(objs, cumulative_rain1h_history, cumulative_rain1h_forecast, cumulative_rain1h_fullhistory)
 
         if demand > 0:
             sprinkler_list.append(objs.id)
@@ -63,9 +60,9 @@ def schedule():
                 name=name_prefix + 'Deactivate sprinkler(s) ' + str(objs.id),
                 func=task_deactivate,
                 args=str(objs.id),
-                repeats=0,
+                repeats=1,
                 schedule_type=Schedule.ONCE,
-                next_run=get_next_run(is_morning, demand)
+                next_run=get_next_run(is_morning, sunrise_DT,sunset_DT, demand)
             )
     
     sprinkler_ids = ','.join(map(str, sprinkler_list))
@@ -74,17 +71,17 @@ def schedule():
             name=name_prefix + 'Activate sprinkler(s) ' + sprinkler_ids,
             func=task_activate,
             args=sprinkler_ids,
-            repeats=0,
+            repeats=1,
             schedule_type=Schedule.ONCE,
-            next_run=get_next_run(is_morning)
+            next_run=get_next_run(is_morning, sunrise_DT,sunset_DT)
         )
 
-def get_next_run(morning, demand = 0):
+def get_next_run(morning, sunrise_DT,sunset_DT, demand = 0,):
     demand += sunrise_DT if morning else sunset_DT
     return datetime.fromtimestamp(demand)
 
 #returns demand in sprinklertime (h)
-def calc_demand_sunrise(objs):
+def calc_demand_sunrise(objs, cumulative_rain1h_history, cumulative_rain1h_forecast):
     demand = float(objs.demand)
     output = float(objs.output)
     demand_until_sunset = (demand - cumulative_rain1h_history - cumulative_rain1h_forecast)*0.75
@@ -94,7 +91,7 @@ def calc_demand_sunrise(objs):
         return 0
 
 
-def calc_demand_sunset(objs):
+def calc_demand_sunset(objs, cumulative_rain1h_history, cumulative_rain1h_forecast, cumulative_rain1h_fullhistory):
     demand = float(objs.demand)
     output = float(objs.output)
     demand_until_sunset = (demand - cumulative_rain1h_history - cumulative_rain1h_forecast)*0.75

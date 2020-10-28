@@ -21,5 +21,3 @@ def control_smart_sprinkler():
 
 def get_weather_data():
     fetch_and_schedule()
-
-#get_weather_data()
