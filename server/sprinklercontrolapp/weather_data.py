@@ -19,7 +19,7 @@ current_DT = ""
 sunrise_DT = ""
 sunset_DT = ""
 
-task_name = 'sprinklercontrolapp.tasks.control_smart_sprinkler.run'
+task_name = 'sprinklercontrolapp.tasks.control_smart_sprinkler'
 
 # Fetch weather data for the configured city and schedule the calculation of sprinkler demand
 def fetch_and_schedule():
